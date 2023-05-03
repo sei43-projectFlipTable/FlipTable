@@ -1,7 +1,12 @@
 import React from "react";
+import PhoneTopBar from "../components/PhoneTopBar";
 
 function HomePage() {
-  return <div>HomePage</div>;
+  return (
+    <>
+      <PhoneTopBar />
+    </>
+  );
 }
 
 export default HomePage;

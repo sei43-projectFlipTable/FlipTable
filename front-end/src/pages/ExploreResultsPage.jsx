@@ -1,7 +1,12 @@
 import React from "react";
+import PhoneTopBar from "../components/PhoneTopBar";
 
 function ExploreResultsPage() {
-  return <div>ExploreResultsPage</div>;
+  return (
+    <>
+      <PhoneTopBar />
+    </>
+  );
 }
 
 export default ExploreResultsPage;

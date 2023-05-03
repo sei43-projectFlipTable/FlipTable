@@ -1,7 +1,12 @@
 import React from "react";
+import PhoneTopBar from "../components/PhoneTopBar";
 
 function AboutCafePage() {
-  return <div>AboutCafePage</div>;
+  return (
+    <>
+      <PhoneTopBar />
+    </>
+  );
 }
 
 export default AboutCafePage;
