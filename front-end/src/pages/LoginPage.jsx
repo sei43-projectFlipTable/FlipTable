@@ -1,7 +1,12 @@
 import React from "react";
+import PhoneTopBar from "../components/PhoneTopBar";
 
 function LoginPage() {
-  return <div>LoginPage</div>;
+  return (
+    <>
+      <PhoneTopBar />
+    </>
+  );
 }
 
 export default LoginPage;
