@@ -11,6 +11,9 @@ html {
 body {
   margin: 0;
   background-color: whitesmoke;
+  /* Dimension as per UI/UX prototype */
+  width: 430px;
+  height: 932px;
 }
 
 .centered {
