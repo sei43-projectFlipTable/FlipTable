@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
 
 @font-face {
-  font-family: roca_one;
-  src: url(roca-one-regular.ttf);
+  font-family: "RocaOne-Rg";
+  src: url("/fonts/RocaOne-Rg.woff2") format("woff2"),
+    url("/fonts/RocaOne-Rg.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
@@ -10,8 +14,7 @@
 }
 
 html {
-  /* font-family: "Oxygen", sans-serif; */
-  font-family: roca_one;
+  font-family: "Oxygen", sans-serif;
 }
 
 body {
