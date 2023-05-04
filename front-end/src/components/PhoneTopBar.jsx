@@ -8,7 +8,7 @@ function PhoneTopBar() {
   const time = new Date();
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.phone_time}>{`${
         time.getUTCHours() - time.getTimezoneOffset() / 60
       }:${
@@ -22,7 +22,7 @@ function PhoneTopBar() {
         <SignalCellular4BarIcon sx={{ height: "18px" }} />
         <Battery6BarIcon sx={{ height: "18px" }} />
       </div>
-    </>
+    </div>
   );
 }
 
