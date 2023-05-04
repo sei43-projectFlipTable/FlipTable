@@ -1,7 +1,3 @@
-div {
-  display: inline-block;
-}
-
 .container {
   position: relative;
   height: 52px;
@@ -9,6 +5,7 @@ div {
 }
 
 .phone_time {
+  position: absolute;
   margin: 16px 24px;
   font-size: 14px;
   line-height: 20px;
