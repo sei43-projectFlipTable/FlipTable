@@ -25,7 +25,7 @@ function NavBar() {
       // value={value}
     >
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF" }}
+        sx={{ color: "#FFFFFF", zIndex: 10 }}
         label="Home"
         icon={
           <Link style={{ color: "white" }} to="/home">
@@ -34,7 +34,7 @@ function NavBar() {
         }
       />
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF" }}
+        sx={{ color: "#FFFFFF", zIndex: 10 }}
         label="Explore"
         icon={
           <Link style={{ color: "white" }} to="/explore">
@@ -43,7 +43,7 @@ function NavBar() {
         }
       />
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF", top: "-13px" }}
+        sx={{ color: "#FFFFFF", zIndex: 10, top: "-13px" }}
         label="Scan"
         icon={
           <Link style={{ color: "white" }} to="/scan">
@@ -55,8 +55,7 @@ function NavBar() {
       <Box
         sx={{
           position: "absolute",
-          display: "grid",
-          zIndex: -1,
+          zIndex: 9,
           borderRadius: "100px",
           backgroundColor: "#264343",
           left: "182px",
@@ -66,7 +65,7 @@ function NavBar() {
         }}
       />
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF" }}
+        sx={{ color: "#FFFFFF", zIndex: 10 }}
         label="Saved"
         icon={
           <Link style={{ color: "white" }} to="/saved">
@@ -75,7 +74,7 @@ function NavBar() {
         }
       />
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF" }}
+        sx={{ color: "#FFFFFF", zIndex: 10 }}
         label="Profile"
         icon={
           <Link style={{ color: "white" }} to="/profile">
