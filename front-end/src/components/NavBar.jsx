@@ -7,14 +7,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import CropFreeIcon from "@mui/icons-material/CropFree";
 import PersonIcon from "@mui/icons-material/Person";
 import { Link, NavLink } from "react-router-dom";
+import styles from "./Navbar.module.css";
 
 function NavBar() {
   return (
     <BottomNavigation
       showLabels
       sx={{
-        width: 430,
-        height: 50,
+        width: "430px",
+        height: "50px",
         position: "absolute",
         bottom: 0,
         left: 0,
@@ -42,7 +43,7 @@ function NavBar() {
         }
       />
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF" }}
+        sx={{ color: "#FFFFFF", top: "-13px" }}
         label="Scan"
         icon={
           <Link style={{ color: "white" }} to="/scan">
@@ -50,7 +51,7 @@ function NavBar() {
           </Link>
         }
       />
-
+      <div className={styles.circle} />
       <BottomNavigationAction
         sx={{ color: "#FFFFFF" }}
         label="Saved"
