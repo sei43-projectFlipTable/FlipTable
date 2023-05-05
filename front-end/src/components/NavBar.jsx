@@ -43,7 +43,15 @@ function NavBar() {
         }
       />
       <BottomNavigationAction
-        sx={{ color: "#FFFFFF", zIndex: 10, top: "-13px" }}
+        sx={{
+          color: "#FFFFFF",
+          zIndex: 10,
+          top: "-21px",
+          width: "50px",
+          height: "66px",
+          margin: "0 12px",
+          borderRadius: "100%",
+        }}
         label="Scan"
         icon={
           <Link style={{ color: "white" }} to="/scan">
