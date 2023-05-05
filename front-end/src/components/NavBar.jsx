@@ -1,13 +1,13 @@
 import React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import Box from "@mui/material/Box";
 import HomeIcon from "@mui/icons-material/Home";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import CropFreeIcon from "@mui/icons-material/CropFree";
 import PersonIcon from "@mui/icons-material/Person";
 import { Link, NavLink } from "react-router-dom";
-import styles from "./Navbar.module.css";
 
 function NavBar() {
   return (
@@ -51,7 +51,20 @@ function NavBar() {
           </Link>
         }
       />
-      <div className={styles.circle} />
+      {/* <div className={styles.circle} /> */}
+      <Box
+        sx={{
+          position: "absolute",
+          display: "grid",
+          zIndex: -1,
+          borderRadius: "100px",
+          backgroundColor: "#264343",
+          left: "182px",
+          top: "-21px",
+          width: "66px",
+          height: "66px",
+        }}
+      />
       <BottomNavigationAction
         sx={{ color: "#FFFFFF" }}
         label="Saved"
