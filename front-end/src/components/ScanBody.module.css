@@ -1,0 +1,75 @@
+.mainBody {
+  display: grid;
+  grid-template-columns: 50px 25px auto 25px 50px;
+  grid-template-rows: repeat(4);
+}
+
+.collect {
+  display: flex;
+  grid-area: 1/2/2/5;
+  font-size: 34px;
+  font-weight: 900;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: "Poppins";
+  color: #264343;
+}
+
+.helpicon {
+  display: flex;
+  grid-area: 1/4/2/5;
+  align-items: center;
+  color: #264343;
+}
+
+.instructions {
+  grid-area: 2/3/3/4;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  justify-items: center;
+  padding-bottom: 50px;
+  font-family: "Poppins";
+  font-size: 16px;
+  letter-spacing: 0.7px;
+  font-weight: 600;
+  color: #979797;
+}
+
+.cameraView {
+  grid-area: 3/2/4/5;
+
+  height: 400px;
+  width: 100%;
+  border: 1px solid red;
+  margin-bottom: 30px;
+}
+
+.cameraFunctions {
+  grid-area: 4/3/5/4;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  height: fit-content;
+}
+
+.cameraFunctions > button {
+  height: 68px;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  color: #979797;
+}
+
+.cameraFunctions > .captureButton {
+  height: 68px;
+  width: 68px;
+  border: 4px solid #264343;
+  border-radius: 50%;
+  background-color: transparent;
+}
+.cameraFunctions > .captureButton > circle {
+  display: none;
+}

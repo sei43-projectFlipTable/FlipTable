@@ -54,7 +54,11 @@ function NavBar() {
         }}
         label="Scan"
         icon={
-          <Link style={{ color: "white" }} to="/scan">
+          <Link
+            style={{ color: "white" }}
+            to="/scan"
+            state={{ promptScanCollect: true }}
+          >
             <CropFreeIcon />
           </Link>
         }
