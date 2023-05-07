@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
+import { Link } from "react-router-dom";
+
 import { Box, Button, Modal, Typography } from "@mui/material";
 
 function ScanPage() {
@@ -31,7 +33,9 @@ function ScanPage() {
           <br />
           <Button onClick={handleClose}>Collect Points</Button>
           <br />
-          <Button>Redeem Cash</Button>
+          <Link to="/redeem">
+            <Button>Redeem Cash</Button>
+          </Link>
         </Box>
       </Modal>
 
