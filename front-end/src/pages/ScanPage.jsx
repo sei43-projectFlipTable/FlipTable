@@ -6,16 +6,14 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 
 function ScanPage() {
   const [showModal, setShowModal] = useState(true);
-  const handleOpen = () => setShowModal(true);
+  // const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
   const style = {
     position: "absolute",
     textAlign: "center",
-    top: "40%",
     width: "100%",
     bgcolor: "background.paper",
-    border: "2px solid #000",
     p: 2,
     fontSize: "1.5rem",
   };
@@ -27,14 +25,20 @@ function ScanPage() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
       >
         <Box sx={style}>
           Please Select
           <br />
-          <Button onClick={handleClose}>Collect Points</Button>
+          <Button onClick={handleClose} sx={{ border: "1px solid black" }}>
+            Collect Points
+          </Button>
           <br />
           <Link to="/redeem">
-            <Button>Redeem Cash</Button>
+            <Button sx={{ border: "1px solid black" }}>Redeem Cash</Button>
           </Link>
         </Box>
       </Modal>
