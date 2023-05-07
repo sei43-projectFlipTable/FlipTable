@@ -1,0 +1,10 @@
+.appHeader {
+  position: fixed;
+  margin: 0;
+  left: 0;
+  text-align: center;
+  font-size: 35px;
+  letter-spacing: -2.5px;
+  justify-content: center;
+  width: 100%;
+}

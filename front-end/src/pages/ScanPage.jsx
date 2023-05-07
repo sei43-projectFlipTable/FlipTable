@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
+import AppHeader from "../components/AppHeader";
 import { Link } from "react-router-dom";
 
 import { Box, Button, Modal, Typography } from "@mui/material";
 
 function ScanPage() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   // const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -23,8 +24,8 @@ function ScanPage() {
       <Modal
         open={showModal}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="scan-page-modal"
+        aria-describedby="scan-page-modal"
         sx={{
           display: "flex",
           alignItems: "center",
@@ -44,10 +45,9 @@ function ScanPage() {
       </Modal>
 
       <PhoneTopBar />
-      <div>
-        FlipTable
-        <div>?</div>
-      </div>
+      <br />
+      <AppHeader />
+
       <br />
       <div>Scan your receipt purchase to collect points!</div>
       <br />
