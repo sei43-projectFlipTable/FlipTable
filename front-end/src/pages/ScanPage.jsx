@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import NavBar from "../components/NavBar";
@@ -11,7 +11,10 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 function ScanPage() {
-  const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
+  const [showModal, setShowModal] = useState(
+    location.state?.promptScanCollect || false
+  );
   // const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -95,14 +98,18 @@ function ScanPage() {
           <HelpIcon /> {/*onclick =  popup for the help*/}
         </div>
 
-        <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+        <div className={styles.instructions}>
+          Scan your receipt purchase to collect points!
+        </div>
         <div className={styles.cameraView}>Camera Viewport</div>
         <div className={styles.cameraFunctions}>
           <button className="light-button">
             <FlashAutoIcon />
           </button>
           <button className={styles.captureButton}>
-            <PhotoCameraIcon sx={{ color: "#264343", height: "26px", width: "24px" }} />
+            <PhotoCameraIcon
+              sx={{ color: "#264343", height: "26px", width: "24px" }}
+            />
           </button>
           <button className="upload-photo">
             <AddPhotoAlternateIcon />
