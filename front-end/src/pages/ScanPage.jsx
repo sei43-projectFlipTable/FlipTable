@@ -4,6 +4,7 @@ import AppHeader from "../components/AppHeader";
 import { Link } from "react-router-dom";
 
 import { Box, Button, Modal, Typography } from "@mui/material";
+import NavBar from "../components/NavBar";
 
 function ScanPage() {
   const [showModal, setShowModal] = useState(false);
@@ -58,6 +59,7 @@ function ScanPage() {
       <button className="light-button">Light</button>
       <button className="capture-button">Capture</button>
       <button className="upload-photo">photo</button>
+      <NavBar />
     </>
   );
 }

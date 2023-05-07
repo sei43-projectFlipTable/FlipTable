@@ -5,6 +5,7 @@ function LoginPage() {
   return (
     <>
       <PhoneTopBar />
+      <div>Login here</div>
     </>
   );
 }
