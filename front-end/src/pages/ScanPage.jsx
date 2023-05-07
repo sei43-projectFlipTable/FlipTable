@@ -18,10 +18,16 @@ function ScanPage() {
   const style = {
     position: "absolute",
     textAlign: "center",
-    width: "100%",
+    left: "5%",
+    width: "90%",
+    borderRadius: "6px",
     bgcolor: "background.paper",
     p: 2,
-    fontSize: "1.5rem",
+    fontSize: "20px",
+    fontFamily: "Poppins",
+    color: "#264343",
+    fontWeight: 700,
+    spacing: "1px",
   };
 
   return (
@@ -39,12 +45,44 @@ function ScanPage() {
         <Box sx={style}>
           Please Select
           <br />
-          <Button onClick={handleClose} sx={{ border: "1px solid black" }}>
+          <Button
+            variant="contained"
+            onClick={handleClose}
+            sx={{
+              textTransform: "none",
+              width: "350px",
+              height: "50px",
+              borderRadius: "6px",
+              backgroundColor: "#264343",
+              mt: 1,
+              mb: 1,
+              fontSize: "20px",
+              fontFamily: "Poppins",
+              color: "white",
+              fontWeight: 700,
+            }}
+          >
             Collect Points
           </Button>
           <br />
           <Link to="/redeem">
-            <Button sx={{ border: "1px solid black" }}>Redeem Cash</Button>
+            <Button
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                width: "350px",
+                height: "50px",
+                borderRadius: "6px",
+                backgroundColor: "#E88252",
+                fontSize: "20px",
+                fontFamily: "Poppins",
+                color: "white",
+                fontWeight: 700,
+                textShadow: "none",
+              }}
+            >
+              Redeem Cash
+            </Button>
           </Link>
         </Box>
       </Modal>
