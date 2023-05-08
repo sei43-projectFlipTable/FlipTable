@@ -12,9 +12,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 function ScanPage() {
   const location = useLocation();
-  const [showModal, setShowModal] = useState(
-    location.state?.promptScanCollect || false
-  );
+  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
   // const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -98,21 +96,17 @@ function ScanPage() {
           <HelpIcon /> {/*onclick =  popup for the help*/}
         </div>
 
-        <div className={styles.instructions}>
-          Scan your receipt purchase to collect points!
-        </div>
+        <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
         <div className={styles.cameraView}>Camera Viewport</div>
         <div className={styles.cameraFunctions}>
           <button className="light-button">
-            <FlashAutoIcon />
+            <FlashAutoIcon sx={{ fontSize: 35 }} />
           </button>
           <button className={styles.captureButton}>
-            <PhotoCameraIcon
-              sx={{ color: "#264343", height: "26px", width: "24px" }}
-            />
+            <PhotoCameraIcon sx={{ color: "#264343", fontSize: 35 }} />
           </button>
           <button className="upload-photo">
-            <AddPhotoAlternateIcon />
+            <AddPhotoAlternateIcon sx={{ fontSize: 40 }} />
           </button>
         </div>
       </div>
