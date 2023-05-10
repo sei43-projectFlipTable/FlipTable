@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./css/Card.module.css";
-import StarIcon from "@mui/icons-material/Star";
+import { Rating } from "@mui/material";
 
 const Card = () => {
   return (
@@ -14,7 +14,13 @@ const Card = () => {
           <div className={styles.cardTitle}>Cafe name</div>
           <div className={styles.cardCaption}>Address here</div>
           <div className={styles.cardRating}>
-            <StarIcon sx={{ fontSize: "medium" }} />
+            <Rating
+              name="half-rating-read"
+              defaultValue={3.5}
+              precision={0.5}
+              sx={{ color: "#264343" }}
+              readOnly
+            />
           </div>
         </div>
       </div>
