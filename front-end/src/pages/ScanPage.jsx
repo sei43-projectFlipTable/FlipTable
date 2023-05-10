@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import NavBar from "../components/NavBar";
-import styles from "../components/ScanBody.module.css";
+import styles from "./css/ScanBody.module.css";
 import FlashAutoIcon from "@mui/icons-material/FlashAuto";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -104,15 +104,13 @@ function ScanPage() {
         <div className={styles.cameraView}>Camera Viewport</div>
         <div className={styles.cameraFunctions}>
           <button className="light-button">
-            <FlashAutoIcon />
+            <FlashAutoIcon sx={{ fontSize: 35 }} />
           </button>
           <button className={styles.captureButton}>
-            <PhotoCameraIcon
-              sx={{ color: "#264343", height: "26px", width: "24px" }}
-            />
+            <PhotoCameraIcon sx={{ color: "#264343", fontSize: 35 }} />
           </button>
           <button className="upload-photo">
-            <AddPhotoAlternateIcon />
+            <AddPhotoAlternateIcon sx={{ fontSize: 40 }} />
           </button>
         </div>
       </div>

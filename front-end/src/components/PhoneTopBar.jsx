@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./PhoneTopBar.module.css";
+import styles from "./css/PhoneTopBar.module.css";
 import SignalWifi4BarIcon from "@mui/icons-material/SignalWifi4Bar";
 import SignalCellular4BarIcon from "@mui/icons-material/SignalCellular4Bar";
 import Battery6BarIcon from "@mui/icons-material/Battery6Bar";
@@ -10,8 +10,12 @@ function PhoneTopBar() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.phone_time}>{`${time.getUTCHours() - time.getTimezoneOffset() / 60}:${
-        time.getUTCMinutes() < 10 ? "0" + time.getUTCMinutes() : time.getUTCMinutes()
+      <div className={styles.phone_time}>{`${
+        time.getUTCHours() - time.getTimezoneOffset() / 60
+      }:${
+        time.getUTCMinutes() < 10
+          ? "0" + time.getUTCMinutes()
+          : time.getUTCMinutes()
       }`}</div>
       <div className={styles.camera_hole}>
         <CircleIcon />
