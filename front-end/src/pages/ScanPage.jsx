@@ -5,14 +5,16 @@ import { Link, useLocation } from "react-router-dom";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import NavBar from "../components/NavBar";
-import styles from "../components/ScanBody.module.css";
+import styles from "./css/ScanBody.module.css";
 import FlashAutoIcon from "@mui/icons-material/FlashAuto";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 function ScanPage() {
   const location = useLocation();
-  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
+  const [showModal, setShowModal] = useState(
+    location.state?.promptScanCollect || false
+  );
   // const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -96,7 +98,9 @@ function ScanPage() {
           <HelpIcon /> {/*onclick =  popup for the help*/}
         </div>
 
-        <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+        <div className={styles.instructions}>
+          Scan your receipt purchase to collect points!
+        </div>
         <div className={styles.cameraView}>Camera Viewport</div>
         <div className={styles.cameraFunctions}>
           <button className="light-button">
