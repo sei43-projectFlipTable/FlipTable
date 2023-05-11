@@ -32,7 +32,9 @@ async function getAverageRating(req, res) {
     const avgRating =
       allReviews.reduce((accum, item) => {
         return accum + item.rating;
-      }, 0) / reviewCount;
+      }, 0) /
+      reviewCount /
+      2;
     res.json(avgRating);
   } catch (error) {
     console.error(error.message);
