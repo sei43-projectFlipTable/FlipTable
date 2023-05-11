@@ -1,4 +1,4 @@
-const CafesModel = require("../modesl/Cafes");
+const CafesModel = require("../models/Cafes");
 
 async function getCafes(req, res) {
   try {
@@ -10,4 +10,24 @@ async function getCafes(req, res) {
   }
 }
 
-module.exports = { getCafes };
+async function putCafes(req, res) {
+  try {
+    await CafesModel.create({
+      name: req.body.name,
+      address: req.body.address,
+      image: req.body.image,
+      website: req.body.website,
+      priceRating: req.body.priceRating,
+      openingHours: req.body.openingHours,
+      description: req.body.description,
+      tags: req.body.tags,
+    });
+
+    res.json({ status: "ok", message: "cafe added" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error adding cafes" });
+  }
+}
+
+module.exports = { getCafes, putCafes };

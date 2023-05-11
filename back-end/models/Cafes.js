@@ -3,18 +3,18 @@ const mongoose = require("mongoose");
 const CafesSchema = new mongoose.Schema(
   {
     name: { type: String, require: true, minLength: 1 },
-    address: { type: String },
+    address: { type: String, require: true },
     image: { type: String },
     website: { type: String },
     priceRating: { type: Number, min: 1, max: 3 },
-    openingHours: { type: Map, of: String },
+    openingHours: { type: String },
     description: { type: String },
     tags: {
       type: [String],
-      enums: ["wifi", "power", "aircon", "workspace", "lighting"],
+      enum: ["wifi", "power", "aircon", "workspace", "lighting"],
     },
   },
   { collection: "cafes" }
 );
 
-module.exports = CafesSchema;
+module.exports = mongoose.model("Cafes", CafesSchema);
