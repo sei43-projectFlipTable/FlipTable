@@ -6,6 +6,12 @@ const CafesSchema = new mongoose.Schema(
     address: { type: String },
     website: { type: String },
     priceRating: { type: Number, min: 1, max: 3 },
+    openingHours: { type: Map, of: String },
+    description: { type: String },
+    tags: {
+      type: [String],
+      enums: ["wifi", "power", "aircon", "workspace", "lighting"],
+    },
   },
   { collection: "cafes" }
 );
