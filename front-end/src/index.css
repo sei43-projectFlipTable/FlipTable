@@ -2,7 +2,8 @@
 
 @font-face {
   font-family: "RocaOne-Rg";
-  src: url("/fonts/RocaOne-Rg.woff2") format("woff2"), url("/fonts/RocaOne-Rg.woff") format("woff");
+  src: url("/fonts/RocaOne-Rg.woff2") format("woff2"),
+    url("/fonts/RocaOne-Rg.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -14,6 +15,8 @@
 
 html {
   font-family: "Oxygen", sans-serif;
+  /* font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif; */
 }
 
 body {
