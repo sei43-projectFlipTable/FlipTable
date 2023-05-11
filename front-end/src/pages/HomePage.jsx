@@ -7,7 +7,6 @@ function HomePage() {
   return (
     <>
       <PhoneTopBar />
-      <Card />
       <NavBar />
     </>
   );
