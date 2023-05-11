@@ -12,6 +12,17 @@ async function getCafes(req, res) {
 
 async function putCafes(req, res) {
   try {
+    const targetCafe = await CafesModel.findOne({ address: req.body.address });
+
+    if (targetCafe) {
+      return res
+        .status(400)
+        .json({
+          status: "error",
+          message: "another cafe already exists at this address",
+        });
+    }
+
     await CafesModel.create({
       name: req.body.name,
       address: req.body.address,
