@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
@@ -9,8 +9,15 @@ import styles from "./css/ScanBody.module.css";
 import FlashAutoIcon from "@mui/icons-material/FlashAuto";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import Webcam from "react-webcam";
 
 function ScanPage() {
+  const webcamRef = React.useRef(null);
+  const capture = React.useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setImg(imageSrc);
+  }, [webcamRef]);
+  const [img, setImg] = useState(null);
   const location = useLocation();
   const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
   const handleClose = (event, reason) => {
@@ -18,6 +25,10 @@ function ScanPage() {
     else setShowModal(false);
   };
 
+  const videoConstraints = {
+    width: 330,
+    height: 400,
+  };
   const style = {
     position: "absolute",
     textAlign: "center",
@@ -100,12 +111,25 @@ function ScanPage() {
         </div>
 
         <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
-        <div className={styles.cameraView}>Camera Viewport</div>
+        {img === null ? (
+          <Webcam
+            className={styles.cameraView}
+            audio={false}
+            mirrored={true}
+            height={400}
+            width={330}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            videoConstraints={videoConstraints}
+          />
+        ) : (
+          <img src={img} alt="screenshot" className={styles.cameraView} />
+        )}
         <div className={styles.cameraFunctions}>
           <button className="light-button">
             <FlashAutoIcon sx={{ fontSize: 35 }} />
           </button>
-          <button className={styles.captureButton}>
+          <button className={styles.captureButton} onClick={capture}>
             <PhotoCameraIcon sx={{ color: "#264343", fontSize: 35 }} />
           </button>
           <button className="upload-photo">

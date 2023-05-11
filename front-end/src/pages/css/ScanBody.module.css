@@ -39,10 +39,8 @@
 
 .cameraView {
   grid-area: 3/2/4/5;
-
   height: 400px;
   width: 100%;
-  border: 1px solid red;
   margin-bottom: 30px;
 }
 
