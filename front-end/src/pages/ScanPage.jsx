@@ -12,11 +12,11 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 function ScanPage() {
   const location = useLocation();
-  const [showModal, setShowModal] = useState(
-    location.state?.promptScanCollect || false
-  );
-  // const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
+  const handleClose = (event, reason) => {
+    if (reason == "backdropClick") return;
+    else setShowModal(false);
+  };
 
   const style = {
     position: "absolute",
@@ -31,6 +31,7 @@ function ScanPage() {
     color: "#264343",
     fontWeight: 700,
     spacing: "1px",
+    outline: 0,
   };
 
   return (
@@ -98,9 +99,7 @@ function ScanPage() {
           <HelpIcon /> {/*onclick =  popup for the help*/}
         </div>
 
-        <div className={styles.instructions}>
-          Scan your receipt purchase to collect points!
-        </div>
+        <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
         <div className={styles.cameraView}>Camera Viewport</div>
         <div className={styles.cameraFunctions}>
           <button className="light-button">
