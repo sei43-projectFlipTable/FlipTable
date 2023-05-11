@@ -1,4 +1,5 @@
 const CafesModel = require("../models/Cafes");
+const mongoose = require("mongoose");
 
 async function getCafes(req, res) {
   try {
@@ -15,12 +16,10 @@ async function putCafes(req, res) {
     const targetCafe = await CafesModel.findOne({ address: req.body.address });
 
     if (targetCafe) {
-      return res
-        .status(400)
-        .json({
-          status: "error",
-          message: "another cafe already exists at this address",
-        });
+      return res.status(400).json({
+        status: "error",
+        message: "another cafe already exists at this address",
+      });
     }
 
     await CafesModel.create({
@@ -41,4 +40,14 @@ async function putCafes(req, res) {
   }
 }
 
-module.exports = { getCafes, putCafes };
+async function postCafes(req, res) {
+  try {
+    const targetCafe = await CafesModel.findById(req.params.cafeId);
+    res.json(targetCafe);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error getting cafe" });
+  }
+}
+
+module.exports = { getCafes, putCafes, postCafes };
