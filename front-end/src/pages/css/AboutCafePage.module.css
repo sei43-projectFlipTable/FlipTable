@@ -1,4 +1,4 @@
-img {
+.cafeImage > img {
   position: fixed;
   max-width: 430px;
   z-index: -1;

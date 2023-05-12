@@ -41,7 +41,7 @@ function AboutCafePage() {
   return (
     <>
       <PhoneTopBar />
-      <img src={cafeData.image} />
+      <img className={styles.cafeImage} src={cafeData.image} />
       <div className={styles.blocker} />
       <div className={styles.curvedTop}>
         <div className={styles.content}>
