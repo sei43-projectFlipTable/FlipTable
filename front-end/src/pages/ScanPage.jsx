@@ -105,37 +105,40 @@ function ScanPage() {
       <PhoneTopBar />
       <AppHeader />
       <div className={styles.mainBody}>
-        <div className={styles.collect}>Collect</div>
-        <div className={styles.helpicon}>
-          <HelpIcon /> {/*onclick =  popup for the help*/}
-        </div>
-
-        <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
-        {img === null ? (
-          <Webcam
-            className={styles.cameraView}
-            audio={false}
-            mirrored={true}
-            height={400}
-            width={330}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={videoConstraints}
-          />
-        ) : (
-          <img src={img} alt="screenshot" className={styles.cameraView} />
+        {!showModal && (
+          <>
+            <div className={styles.collect}>Collect</div>
+            <div className={styles.helpicon}>
+              <HelpIcon /> {/*onclick =  popup for the help*/}
+            </div>
+            <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+            {img === null ? (
+              <Webcam
+                className={styles.cameraView}
+                audio={false}
+                mirrored={true}
+                height={400}
+                width={330}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                videoConstraints={videoConstraints}
+              />
+            ) : (
+              <img src={img} alt="screenshot" className={styles.cameraView} />
+            )}
+            <div className={styles.cameraFunctions}>
+              <button className="light-button">
+                <FlashAutoIcon sx={{ fontSize: 35 }} />
+              </button>
+              <button className={styles.captureButton} onClick={capture}>
+                <PhotoCameraIcon sx={{ color: "#264343", fontSize: 35 }} />
+              </button>
+              <button className="upload-photo">
+                <AddPhotoAlternateIcon sx={{ fontSize: 40 }} />
+              </button>
+            </div>
+          </>
         )}
-        <div className={styles.cameraFunctions}>
-          <button className="light-button">
-            <FlashAutoIcon sx={{ fontSize: 35 }} />
-          </button>
-          <button className={styles.captureButton} onClick={capture}>
-            <PhotoCameraIcon sx={{ color: "#264343", fontSize: 35 }} />
-          </button>
-          <button className="upload-photo">
-            <AddPhotoAlternateIcon sx={{ fontSize: 40 }} />
-          </button>
-        </div>
       </div>
 
       <NavBar />
