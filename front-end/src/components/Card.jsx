@@ -10,19 +10,19 @@ const Card = () => {
         className={styles.cardImg}
       />
       <div className={styles.cardInfo}>
-        <div className={styles.infoFrame}>
-          <div className={styles.cardTitle}>Cafe name</div>
-          <div className={styles.cardCaption}>Address here</div>
-          <div className={styles.cardRating}>
-            <Rating
-              name="half-rating-read"
-              defaultValue={3.5}
-              precision={0.5}
-              sx={{ color: "#264343" }}
-              readOnly
-            />
-          </div>
+        {/* <div className={styles.infoFrame}> */}
+        <div className={styles.cardTitle}>Cafe name</div>
+        <div className={styles.cardCaption}>Address here</div>
+        <div className={styles.cardRating}>
+          <Rating
+            name="half-rating-read"
+            defaultValue={3.5}
+            precision={0.5}
+            sx={{ color: "#264343", fontSize: 19 }}
+            readOnly
+          />
         </div>
+        {/* </div> */}
       </div>
     </div>
   );
