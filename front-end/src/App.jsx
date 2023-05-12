@@ -22,7 +22,7 @@ function App() {
         <Route path="/referral" element={<ReferralPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/explore/results" element={<ExploreResultsPage />} />
-        <Route path="/about" element={<AboutCafePage />} />
+        <Route path="/about/:cafeId" element={<AboutCafePage />} />
         <Route path="/saved" element={<SavedCafesPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
