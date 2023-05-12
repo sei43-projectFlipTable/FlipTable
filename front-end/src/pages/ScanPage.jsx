@@ -12,16 +12,13 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Webcam from "react-webcam";
 
 function ScanPage() {
-  const webcamRef = React.useRef(null);
-  const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImg(imageSrc);
-  }, [webcamRef]);
+  const webcamRef = useRef(null);
   const [img, setImg] = useState(null);
   const location = useLocation();
   const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
-  const handleClose = (event, reason) => {
-    if (reason == "backdropClick") return;
+
+  const handleClose = (e, r) => {
+    if (r == "backdropClick") return;
     else setShowModal(false);
   };
 
@@ -29,6 +26,14 @@ function ScanPage() {
     width: 330,
     height: 400,
   };
+
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot(); //returns base64 encoded string
+    saveImg(imageSrc);
+    setImg(imageSrc);
+    // console.log("img is", imageSrc);
+  }, [webcamRef]);
+
   const style = {
     position: "absolute",
     textAlign: "center",
@@ -43,6 +48,22 @@ function ScanPage() {
     fontWeight: 700,
     spacing: "1px",
     outline: 0,
+  };
+
+  const saveImg = async (img) => {
+    const res = await fetch(import.meta.env.VITE_SERVER + "/scan/img", {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        receipt: img,
+      }),
+    });
+
+    if (res.status === 200) {
+      alert("image saved");
+    } else alert("an error has occured");
   };
 
   return (
@@ -105,6 +126,7 @@ function ScanPage() {
       <PhoneTopBar />
       <AppHeader />
       <div className={styles.mainBody}>
+        {/* show functions only when modal is closed */}
         {!showModal && (
           <>
             <div className={styles.collect}>Collect</div>
@@ -112,6 +134,9 @@ function ScanPage() {
               <HelpIcon /> {/*onclick =  popup for the help*/}
             </div>
             <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+
+            {/* conditional formatting to toggle webcam and screenshot */}
+            {/* will change to a component*/}
             {img === null ? (
               <Webcam
                 className={styles.cameraView}
@@ -128,7 +153,7 @@ function ScanPage() {
             )}
             <div className={styles.cameraFunctions}>
               <button className="light-button">
-                <FlashAutoIcon sx={{ fontSize: 35 }} />
+                <FlashAutoIcon sx={{ fontSize: 40 }} />
               </button>
               <button className={styles.captureButton} onClick={capture}>
                 <PhotoCameraIcon sx={{ color: "#264343", fontSize: 35 }} />
