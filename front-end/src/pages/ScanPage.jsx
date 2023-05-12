@@ -3,9 +3,10 @@ import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, IconButton } from "@mui/material";
 import NavBar from "../components/NavBar";
 import styles from "./css/ScanBody.module.css";
+import CloseIcon from "@mui/icons-material/Close";
 import FlashAutoIcon from "@mui/icons-material/FlashAuto";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -16,10 +17,16 @@ function ScanPage() {
   const [img, setImg] = useState(null);
   const location = useLocation();
   const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
+  const [showCollection, setShowCollection] = useState(true);
 
   const handleClose = (e, r) => {
     if (r == "backdropClick") return;
     else setShowModal(false);
+  };
+
+  const handleCollectionClose = (e, r) => {
+    if (r == "backdropClick") return;
+    else setShowCollection(false);
   };
 
   const videoConstraints = {
@@ -31,7 +38,6 @@ function ScanPage() {
     const imageSrc = webcamRef.current.getScreenshot(); //returns base64 encoded string
     saveImg(imageSrc);
     setImg(imageSrc);
-    // console.log("img is", imageSrc);
   }, [webcamRef]);
 
   const style = {
@@ -48,6 +54,24 @@ function ScanPage() {
     fontWeight: 700,
     spacing: "1px",
     outline: 0,
+  };
+
+  const collectionStyle = {
+    position: "absolute",
+    textAlign: "center",
+    width: "382px",
+    height: "232px",
+    left: "24px",
+    borderRadius: "8px",
+    bgcolor: "#264343",
+    p: "45px",
+    fontSize: "20px",
+    fontFamily: "Poppins",
+    color: "#FFFFFF",
+    fontWeight: 700,
+    spacing: "1px",
+    outline: 0,
+    alignItems: "center",
   };
 
   const saveImg = async (img) => {
@@ -68,6 +92,7 @@ function ScanPage() {
 
   return (
     <>
+      {/* scan page modal */}
       <Modal
         open={showModal}
         onClose={handleClose}
@@ -114,12 +139,46 @@ function ScanPage() {
                 fontFamily: "Poppins",
                 color: "white",
                 fontWeight: 700,
-                textShadow: "none",
               }}
             >
               Redeem Cash
             </Button>
           </Link>
+        </Box>
+      </Modal>
+
+      {/* collect modal */}
+      <Modal
+        open={showCollection}
+        onClose={handleCollectionClose}
+        aria-labelledby="collection-modal"
+        aria-describedby="collection-modal"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Box sx={collectionStyle}>
+          <IconButton sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}>
+            <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+          </IconButton>
+          <p>Receipt Total Amount</p>
+          <input id={styles.collectAmt} type="number" min={1} max={4} outline={0}></input>
+          <Button
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              width: "120px",
+              height: "40px",
+              borderRadius: "6px",
+              backgroundColor: "#E88252",
+              fontSize: "20px",
+              fontFamily: "Poppins",
+              fontWeight: 700,
+            }}
+          >
+            Confirm
+          </Button>
         </Box>
       </Modal>
 

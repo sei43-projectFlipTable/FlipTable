@@ -68,3 +68,16 @@
   border-radius: 50%;
   background-color: transparent;
 }
+
+#collectAmt {
+  width: 300px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: white;
+  text-align: center;
+  border: none;
+  color: #264343;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 24px;
+}
