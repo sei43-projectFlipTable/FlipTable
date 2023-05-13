@@ -30,6 +30,24 @@
   flex-grow: 0;
 }
 
+.emptyFrame {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 15px;
+  width: 66px;
+  height: 66px;
+  background: #264343;
+  border-radius: 100px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  z-index: -999;
+  left: 182px;
+}
+
 .iconLabel {
   width: 40px;
   height: 15px;
@@ -53,14 +71,19 @@
   padding: 3px 15px;
   width: 66px;
   height: 66px;
-  background: #264343;
   border-radius: 100px;
   flex: none;
   order: 1;
   flex-grow: 0;
 }
+
 .active {
   text-decoration: "none";
   background: #839788;
   border-radius: 6px;
+}
+
+.activeScan {
+  background: #839788;
+  border-radius: 100px;
 }
