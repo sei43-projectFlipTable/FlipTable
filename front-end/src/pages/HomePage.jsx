@@ -4,6 +4,8 @@ import NavBar from "../components/NavBar";
 import PointsAndCashValue from "../components/PointsAndCashValue";
 import CardsDisplay from "../components/CardsDisplay";
 import { fetchData } from "../helpers/common";
+import AppHeader from "../components/AppHeader";
+import styles from "./css/HomePage.module.css";
 
 function HomePage() {
   const [cafes, setCafes] = useState([]);
@@ -60,8 +62,12 @@ function HomePage() {
   return (
     <>
       <PhoneTopBar />
-      <PointsAndCashValue />
-      <CardsDisplay cafes={cafes} />
+      <AppHeader />
+      <div className={styles.scrollable}>
+        <PointsAndCashValue />
+        <div className={styles.nearMeTitle}>Cafes Near Me</div>
+        <CardsDisplay cafes={cafes} />
+      </div>
       <NavBar />
     </>
   );

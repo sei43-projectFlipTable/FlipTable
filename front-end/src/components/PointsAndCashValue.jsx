@@ -4,7 +4,7 @@ import styles from "./css/PointsAndCashValue.module.css";
 const PointsAndCashValue = () => {
   return (
     <>
-      <div className={styles.fliptable}>FlipTable</div>
+      {/* <div className={styles.fliptable}>FlipTable</div> */}
       <div className={styles.pointsTracker}>
         <div className={styles.pointsBox}>
           <div className={styles.points}>Points</div>
