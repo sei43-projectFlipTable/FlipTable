@@ -1,5 +1,4 @@
 const CafesModel = require("../models/Cafes");
-const mongoose = require("mongoose");
 
 async function getCafes(req, res) {
   try {
@@ -43,6 +42,7 @@ async function putCafes(req, res) {
 async function postCafes(req, res) {
   try {
     const targetCafe = await CafesModel.findById(req.params.cafeId);
+    // targetCafe.image = targetCafe.image.toString("base64");
     res.json(targetCafe);
   } catch (error) {
     console.error(error.message);
@@ -50,4 +50,21 @@ async function postCafes(req, res) {
   }
 }
 
-module.exports = { getCafes, putCafes, postCafes };
+async function getAverageRating(req, res) {
+  try {
+    const targetCafe = await CafesModel.findById(req.params.cafeId);
+    let avgRating = 0;
+    if (targetCafe.reviewRating.reviewCount > 0) {
+      avgRating =
+        targetCafe.reviewRating.ratingTotal /
+        targetCafe.reviewRating.reviewCount /
+        2;
+    }
+    res.json(avgRating);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error getting rating" });
+  }
+}
+
+module.exports = { getCafes, putCafes, postCafes, getAverageRating };
