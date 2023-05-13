@@ -2,16 +2,19 @@ import React from "react";
 import styles from "./css/CardsDisplay.module.css";
 import Card from "./Card";
 
-function CardsDisplay() {
+function CardsDisplay(props) {
   return (
     <div className={styles.display}>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {props.cafes.map((cafe) => {
+        return (
+          <Card
+            image={cafe.image}
+            name={cafe.name}
+            address={cafe.address}
+            reviewRating={cafe.reviewRating}
+          />
+        );
+      })}
     </div>
   );
 }
