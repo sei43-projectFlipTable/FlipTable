@@ -37,8 +37,6 @@ function HomePage() {
     const convertedD = Math.round(d * 100000) / 100; //meters
     return convertedD;
   };
-
-  console.log(cafes);
   return (
     <>
       <PhoneTopBar />
