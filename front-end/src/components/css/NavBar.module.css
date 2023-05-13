@@ -61,11 +61,6 @@
 }
 .active {
   text-decoration: "none";
-
   background: #839788;
   border-radius: 6px;
-}
-
-.scanIconFrame:hover {
-  background: #839788;
 }
