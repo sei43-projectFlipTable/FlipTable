@@ -48,3 +48,11 @@ export function handleNewline(paragraph) {
     }
   });
 }
+
+export function calculateRating(ratingObj) {
+  if (ratingObj.reviewCount == 0) {
+    return 0;
+  } else {
+    return ratingObj.ratingTotal / ratingObj.reviewCount / 2;
+  }
+}

@@ -1,19 +1,32 @@
 .container {
+  margin-top: 25px;
   width: 350px;
 }
 
-.address,
-.description {
+.infoGridTop {
+  display: flex;
+  column-gap: 10px;
   margin: 15px auto;
 }
 
-.pricetime {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
+.infoGridBot {
+  display: grid;
+  grid-template-columns: 20px 50px 10px 20px 210px;
+  column-gap: 10px;
 }
 
-.pricerating {
-  min-width: 60px;
-  vertical-align: middle;
+.description {
+  margin: 15px auto;
+  overflow: scroll;
+  max-height: 90px;
+}
+
+.tagset {
+  display: flex;
+  column-gap: 5px;
+}
+
+.primaryTags {
+  display: flex;
+  column-gap: 20px;
 }
