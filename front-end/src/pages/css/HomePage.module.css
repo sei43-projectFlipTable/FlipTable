@@ -1,4 +1,7 @@
 .nearMeTitle {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   width: 430px;
   height: 30px;
   padding: 25px;
@@ -21,5 +24,4 @@
   position: absolute;
   height: 800px;
   overflow: scroll;
-
 }
