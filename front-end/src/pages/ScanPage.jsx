@@ -3,7 +3,7 @@ import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Button, Modal, IconButton } from "@mui/material";
+import { Box, Button, Modal, IconButton, Dialog } from "@mui/material";
 import NavBar from "../components/NavBar";
 import styles from "./css/ScanBody.module.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,11 +13,14 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Webcam from "react-webcam";
 
 function ScanPage() {
+  const collectAmtRef = useRef();
   const webcamRef = useRef(null);
   const [img, setImg] = useState(null);
   const location = useLocation();
   const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
-  const [showCollection, setShowCollection] = useState(true);
+  const [showCollection, setShowCollection] = useState(false);
+  const [amountSubmitted, setAmountSubmitted] = useState(false);
+  const [popUpHelp, setPopUpHelp] = useState(false);
 
   const handleClose = (e, r) => {
     if (r == "backdropClick") return;
@@ -26,7 +29,17 @@ function ScanPage() {
 
   const handleCollectionClose = (e, r) => {
     if (r == "backdropClick") return;
-    else setShowCollection(false);
+    else {
+      setShowCollection(false);
+      setAmountSubmitted(false);
+      setImg(null);
+      collectAmtRef.current.value = "";
+    }
+  };
+
+  const handleHelpClose = (e, r) => {
+    if (r == "backdropClick") return;
+    else setPopUpHelp(false);
   };
 
   const videoConstraints = {
@@ -36,8 +49,9 @@ function ScanPage() {
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot(); //returns base64 encoded string
-    saveImg(imageSrc);
     setImg(imageSrc);
+    saveImg(imageSrc);
+    setShowCollection(true);
   }, [webcamRef]);
 
   const style = {
@@ -71,7 +85,6 @@ function ScanPage() {
     fontWeight: 700,
     spacing: "1px",
     outline: 0,
-    alignItems: "center",
   };
 
   const saveImg = async (img) => {
@@ -88,6 +101,15 @@ function ScanPage() {
     if (res.status === 200) {
       alert("image saved");
     } else alert("an error has occured");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setAmountSubmitted(true);
+  };
+
+  const handleHelp = () => {
+    setPopUpHelp(true);
   };
 
   return (
@@ -159,28 +181,79 @@ function ScanPage() {
         }}
       >
         <Box sx={collectionStyle}>
-          <IconButton sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}>
+          <IconButton
+            sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}
+            onClick={handleCollectionClose}
+          >
             <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
           </IconButton>
-          <p>Receipt Total Amount</p>
-          <input id={styles.collectAmt} type="number" min={1} max={4} outline={0}></input>
-          <Button
-            variant="contained"
-            sx={{
-              textTransform: "none",
-              width: "120px",
-              height: "40px",
-              borderRadius: "6px",
-              backgroundColor: "#E88252",
-              fontSize: "20px",
-              fontFamily: "Poppins",
-              fontWeight: 700,
-            }}
-          >
-            Confirm
-          </Button>
+          {!amountSubmitted ? (
+            <>
+              <p>Receipt Total Amount</p>
+              <input
+                id="collect-amount"
+                className={styles.collectAmt}
+                required
+                type="number"
+                minLength={1}
+                step={0.01}
+                ref={collectAmtRef}
+              ></input>
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  width: "120px",
+                  height: "40px",
+                  borderRadius: "6px",
+                  backgroundColor: "#E88252",
+                  fontSize: "20px",
+                  fontFamily: "Poppins",
+                  fontWeight: 700,
+                }}
+                onClick={handleSubmit}
+              >
+                Confirm
+              </Button>
+            </>
+          ) : (
+            <>
+              <p>You have collected</p>
+              <div>
+                ${collectAmtRef.current.value} ({Math.floor(collectAmtRef.current.value * 10)}{" "}
+                points)
+              </div>
+              <div>Your receipt will be verified within 24hrs</div>
+            </>
+          )}
         </Box>
       </Modal>
+
+      <Dialog
+        hideBackdrop
+        open={popUpHelp}
+        onClose={handleHelpClose}
+        fullScreen
+        sx={{ height: "90%", top: "44px", zIndex: 0, borderRadius: "8px" }}
+        // TransitionComponent={Transition}
+      >
+        <IconButton
+          sx={{
+            bgcolor: "#264343",
+            position: "absolute",
+            right: "18px",
+            top: "15px",
+            zIndex: 1,
+            // fontSize: "20px",
+          }}
+          size="small"
+          onClick={handleHelpClose}
+        >
+          <CloseIcon sx={{ color: "white" }} />
+        </IconButton>
+        {/* to re-do after mvp done */}
+        <img className={styles.helpPopUp} src="\collect.png"></img>
+      </Dialog>
 
       <PhoneTopBar />
       <AppHeader />
@@ -190,12 +263,11 @@ function ScanPage() {
           <>
             <div className={styles.collect}>Collect</div>
             <div className={styles.helpicon}>
-              <HelpIcon /> {/*onclick =  popup for the help*/}
+              <HelpIcon onClick={handleHelp} />
             </div>
             <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
 
             {/* conditional formatting to toggle webcam and screenshot */}
-            {/* will change to a component*/}
             {img === null ? (
               <Webcam
                 className={styles.cameraView}
