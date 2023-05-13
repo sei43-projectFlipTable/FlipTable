@@ -1,0 +1,11 @@
+.appHeader {
+  margin: 0;
+  left: 0;
+  font-family: "RocaOne-Rg";
+  color: #264343;
+  font-size: 35px;
+  letter-spacing: -2.5px;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}

@@ -5,6 +5,7 @@ function RedeemPage() {
   return (
     <>
       <PhoneTopBar />
+      Redeem Here
     </>
   );
 }
