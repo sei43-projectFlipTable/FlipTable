@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CollectionImgSchema = new mongoose.Schema(
   {
-    receipt: { type: String, require: true },
+    receipt: { type: Buffer, require: true },
   },
   { collection: "collection-img" }
 );
