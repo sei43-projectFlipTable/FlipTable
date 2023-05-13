@@ -13,7 +13,7 @@ function AboutCafe(props) {
   async function getRating() {
     try {
       const { ok, data } = await fetchData(
-        "/api/review/rate/" + props.cafeId,
+        "/api/cafes/rate/" + props.cafeId,
         "POST"
       );
       if (ok) {
