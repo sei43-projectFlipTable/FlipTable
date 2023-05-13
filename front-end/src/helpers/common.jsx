@@ -30,10 +30,21 @@ export async function fetchData(endpoint, method, body) {
   return returnValue;
 }
 
-export function handleDates(flightDate) {
-  let departureDate = flightDate.toString();
-  if (flightDate - new Date() < 0) {
-    departureDate += " *";
+export function handleNewline(paragraph) {
+  if (!paragraph) {
+    return;
   }
-  return departureDate;
+  const strArr = paragraph.split("\n");
+  return strArr.map((item, idx) => {
+    if (idx === 0) {
+      return <span key={idx}>{item}</span>;
+    } else {
+      return (
+        <span key={idx}>
+          <br />
+          <>{item}</>
+        </span>
+      );
+    }
+  });
 }

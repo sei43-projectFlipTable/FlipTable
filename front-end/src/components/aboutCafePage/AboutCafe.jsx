@@ -5,7 +5,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import { Rating } from "@mui/material";
 import styles from "../css/AboutCafe.module.css";
-import { fetchData } from "../../helpers/common";
+import { fetchData, handleNewline } from "../../helpers/common";
 
 function AboutCafe(props) {
   const [rating, setRating] = useState(0);
@@ -35,16 +35,17 @@ function AboutCafe(props) {
     <div className={styles.container}>
       <h5>{props.cafeData.name}</h5>
       <div className={styles.address}>
-        <PlaceOutlinedIcon /> {props.cafeData.address} <OpenInNewOutlinedIcon />
+        <PlaceOutlinedIcon /> {handleNewline(props.cafeData.address)}{" "}
+        <OpenInNewOutlinedIcon />
       </div>
       <div className={styles.pricetime}>
-        <div>
+        <div className={styles.pricerating}>
           <MonetizationOnOutlinedIcon />
           {"$".repeat(props.cafeData.priceRating)}
         </div>
         <div>
           <AccessTimeOutlinedIcon />
-          {props.cafeData.openingHours}
+          {handleNewline(props.cafeData.openingHours)}
         </div>
       </div>
       <div className={styles.description}>{props.cafeData.description}</div>

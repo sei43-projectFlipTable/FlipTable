@@ -12,3 +12,8 @@
   flex-direction: row;
   gap: 30px;
 }
+
+.pricerating {
+  min-width: 60px;
+  vertical-align: middle;
+}
