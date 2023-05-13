@@ -22,6 +22,13 @@
 
 .scrollable {
   position: absolute;
-  height: 800px;
+  height: 675px;
   overflow: scroll;
+}
+
+.emptyDiv {
+  width: 430px;
+  height: 25px;
+  background-color: #ededed;
+  border-radius: 25px 25px 0px 0px;
 }
