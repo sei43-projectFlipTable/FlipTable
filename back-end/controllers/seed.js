@@ -49,7 +49,6 @@ async function seedCafes(req, res) {
         coordinates: [coordinatesArray[i][0], coordinatesArray[i][1]],
       });
     }
-
     res.json({ status: "ok", message: "cafes seeded" });
   } catch (error) {
     console.error(error.message);
