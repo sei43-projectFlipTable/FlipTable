@@ -1,32 +1,13 @@
 .mainCard {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 0px 0px;
-  width: 180px;
-  height: 255px;
-  background: #ffffff;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.16), 0px 2px 4px rgba(0, 0, 0, 0.12),
-    0px 1px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  flex: none;
-  order: 0;
-  flex-grow: 0; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 10px 10px 14px 10px;
   gap: 10px;
-
   position: relative;
   width: 180px;
   height: 255px;
-
-  /* ◇ Light/FlipTable Colours/Light */
-
   background: #ffffff;
-  /* 2dp | Button */
-
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.16), 0px 2px 4px rgba(0, 0, 0, 0.12),
     0px 1px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -35,7 +16,6 @@
 .cardImg {
   width: 160px;
   height: 160px;
-  /* background: url(); */
   border-radius: 8px;
   flex: none;
   order: 0;
@@ -43,86 +23,29 @@
 }
 
 .cardInfo {
-  /* display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10px 10px 14px 10px;
-  gap: 10px;
-  width: 180px;
-  height: 85px;
-  background: #ffffff;
-  border-radius: 0px 0px 4px 4px;
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
   gap: 2px;
-
   width: 160px;
   height: 61px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   flex-grow: 1;
 }
-
-/* .infoFrame {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  gap: 2px;
-  width: 160px;
-  height: 61px;
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-} */
-
 .cardTitle {
-  /* width: 148px;
-  height: 24px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.15px;
-  color: #264343;
-  flex: none;
-  order: 0;
-  flex-grow: 0; */
   width: 160px;
   height: 24px;
-
-  /* FlipTable Text Styles/16 sp • H7 Headline */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  /* identical to box height */
-
   display: flex;
   align-items: center;
   letter-spacing: 0.15px;
-
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   color: #264343;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -132,31 +55,22 @@
 .cardCaption {
   width: 160px;
   height: 15px;
-
-  /* FlipTable Text Styles/12 sp • Subtitle */
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  /* identical to box height */
-
   display: flex;
   align-items: center;
-
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   color: #264343;
-
   opacity: 0.54;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
   flex-grow: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardRating {
