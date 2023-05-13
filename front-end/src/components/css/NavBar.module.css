@@ -1,0 +1,71 @@
+.navBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 5px 10px;
+  gap: 22px;
+  position: absolute;
+  height: 50px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #264343;
+  border-radius: 6px 6px 0px 0px;
+  width: 430px;
+}
+
+.iconFrame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 15px;
+  width: 64px;
+  height: 40px;
+  border-radius: 6px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.iconLabel {
+  width: 40px;
+  height: 15px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #ffffff;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.scanIconFrame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 15px;
+  width: 66px;
+  height: 66px;
+  background: #264343;
+  border-radius: 100px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+.active {
+  text-decoration: "none";
+
+  background: #839788;
+  border-radius: 6px;
+}
+
+.scanIconFrame:hover {
+  background: #839788;
+}

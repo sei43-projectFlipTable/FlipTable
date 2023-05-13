@@ -1,0 +1,14 @@
+.container {
+  width: 350px;
+}
+
+.address,
+.description {
+  margin: 15px auto;
+}
+
+.pricetime {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}

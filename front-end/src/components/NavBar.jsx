@@ -1,101 +1,67 @@
 import React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import Box from "@mui/material/Box";
+import styles from "./css/NavBar.module.css";
 import HomeIcon from "@mui/icons-material/Home";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import SearchIcon from "@mui/icons-material/Search";
+import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import CropFreeIcon from "@mui/icons-material/CropFree";
 import PersonIcon from "@mui/icons-material/Person";
 import { Link, NavLink } from "react-router-dom";
 
 function NavBar() {
   return (
-    <>
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 10,
-          left: "182px",
-          // textAlign: "center",
-          zIndex: 9,
-          borderRadius: "100px",
-          backgroundColor: "#264343",
-          p: 0,
-          width: "66px",
-          height: "66px",
-        }}
-      />
-      <BottomNavigation
-        showLabels
-        sx={{
-          width: "430px",
-          height: "50px",
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          backgroundColor: "#264343",
-          borderRadius: "6px 6px 0px 0px",
-        }}
-        // value={value}
+    <div className={styles.navBar}>
+      <NavLink
+        className={(navData) => (navData.isActive ? styles.active : "")}
+        to="/home"
+        style={{ textDecoration: "none" }}
       >
-        <BottomNavigationAction
-          sx={{ color: "#FFFFFF", zIndex: 10 }}
-          label="Home"
-          icon={
-            <Link style={{ color: "white" }} to="/home">
-              <HomeIcon />
-            </Link>
-          }
-        />
-        <BottomNavigationAction
-          sx={{ color: "#FFFFFF", zIndex: 10 }}
-          label="Explore"
-          icon={
-            <Link style={{ color: "white" }} to="/explore">
-              <SearchIcon />
-            </Link>
-          }
-        />
-        <BottomNavigationAction
-          sx={{
-            color: "#FFFFFF",
-            zIndex: 10,
-            top: "-21px",
-            width: "50px",
-            height: "66px",
-            margin: "0 12px",
-            borderRadius: "100%",
-          }}
-          label="Scan"
-          icon={
-            <Link style={{ color: "white" }} to="/scan" state={{ promptScanCollect: true }}>
-              <CropFreeIcon />
-            </Link>
-          }
-        />
-        {/* <div className={styles.circle} /> */}
-
-        <BottomNavigationAction
-          sx={{ color: "#FFFFFF", zIndex: 10 }}
-          label="Saved"
-          icon={
-            <Link style={{ color: "white" }} to="/saved">
-              <FavoriteBorderOutlinedIcon />
-            </Link>
-          }
-        />
-        <BottomNavigationAction
-          sx={{ color: "#FFFFFF", zIndex: 10 }}
-          label="Profile"
-          icon={
-            <Link style={{ color: "white" }} to="/profile">
-              <PersonIcon />
-            </Link>
-          }
-        />
-      </BottomNavigation>
-    </>
+        <div className={styles.iconFrame}>
+          <HomeIcon sx={{ color: "#FFFFFF" }} />
+          <div className={styles.iconLabel}>Home</div>
+        </div>
+      </NavLink>
+      <NavLink
+        className={(navData) => (navData.isActive ? styles.active : "")}
+        to="/explore"
+        style={{ textDecoration: "none" }}
+      >
+        <div className={styles.iconFrame}>
+          <SearchSharpIcon sx={{ color: "#FFFFFF" }} />
+          <div className={styles.iconLabel}>Explore</div>
+        </div>
+      </NavLink>
+      <NavLink
+        className={(navData) => (navData.isActive ? styles.activeScan : "")}
+        to="/scan"
+        state={{ promptScanCollect: true }}
+        style={{ textDecoration: "none" }}
+      >
+        <div className={styles.scanIconFrame}>
+          <CropFreeIcon sx={{ color: "#FFFFFF" }} />
+          <div className={styles.iconLabel}>Scan</div>
+        </div>
+      </NavLink>
+      <NavLink
+        className={(navData) => (navData.isActive ? styles.active : "")}
+        to="/saved"
+        style={{ textDecoration: "none" }}
+      >
+        <div className={styles.iconFrame}>
+          <FavoriteBorderOutlinedIcon sx={{ color: "#FFFFFF" }} />
+          <div className={styles.iconLabel}>Saved</div>
+        </div>
+      </NavLink>
+      <NavLink
+        className={(navData) => (navData.isActive ? styles.active : "")}
+        to="/profile"
+        style={{ textDecoration: "none" }}
+      >
+        <div className={styles.iconFrame}>
+          <PersonIcon sx={{ color: "#FFFFFF" }} />
+          <div className={styles.iconLabel}>Profile</div>
+        </div>
+      </NavLink>
+    </div>
   );
 }
 
