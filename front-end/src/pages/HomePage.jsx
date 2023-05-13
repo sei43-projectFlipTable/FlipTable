@@ -29,7 +29,7 @@ function HomePage() {
     const convertedD = Math.round(d * 100000) / 100; //meters
     return convertedD;
   };
-
+  
   const getCafes = async () => {
     const { ok, data } = await fetchData("/api/cafes/");
     //sort before setting data
@@ -55,6 +55,7 @@ function HomePage() {
   useEffect(() => {
     getCafes();
   }, [coords]);
+
 
   return (
     <>
