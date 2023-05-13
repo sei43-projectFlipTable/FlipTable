@@ -42,7 +42,7 @@ async function putCafes(req, res) {
 async function postCafes(req, res) {
   try {
     const targetCafe = await CafesModel.findById(req.params.cafeId);
-    targetCafe.image = targetCafe.image.toString("base64");
+    // targetCafe.image = targetCafe.image.toString("base64");
     res.json(targetCafe);
   } catch (error) {
     console.error(error.message);
