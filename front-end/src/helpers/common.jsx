@@ -29,11 +29,3 @@ export async function fetchData(endpoint, method, body) {
   }
   return returnValue;
 }
-
-export function handleDates(flightDate) {
-  let departureDate = flightDate.toString();
-  if (flightDate - new Date() < 0) {
-    departureDate += " *";
-  }
-  return departureDate;
-}

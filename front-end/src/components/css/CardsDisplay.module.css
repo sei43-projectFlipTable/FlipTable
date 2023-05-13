@@ -1,0 +1,14 @@
+.display {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0px 25px 65px 25px;
+  gap: 8px 20px;
+  width: 430px;
+  height: 870px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  overflow: scroll;
+}
