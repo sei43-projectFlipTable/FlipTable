@@ -18,6 +18,9 @@ const CafesSchema = new mongoose.Schema(
       type: [String],
       enum: ["wifi", "power", "aircon", "workspace", "lighting"],
     },
+    coordinates: {
+      type: [Number],
+    },
   },
   { collection: "cafes" }
 );
