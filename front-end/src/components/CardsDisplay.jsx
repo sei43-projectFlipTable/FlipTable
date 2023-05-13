@@ -8,6 +8,7 @@ function CardsDisplay(props) {
       {props.cafes.map((cafe) => {
         return (
           <Card
+            key={cafe._id}
             image={cafe.image}
             name={cafe.name}
             address={cafe.address}
