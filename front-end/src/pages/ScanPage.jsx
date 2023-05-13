@@ -234,7 +234,7 @@ function ScanPage() {
         open={popUpHelp}
         onClose={handleHelpClose}
         fullScreen
-        sx={{ height: "90%", top: "44px", zIndex: 0, borderRadius: "8px" }}
+        sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute" }}
         // TransitionComponent={Transition}
       >
         <IconButton
@@ -244,21 +244,21 @@ function ScanPage() {
             right: "18px",
             top: "15px",
             zIndex: 1,
-            // fontSize: "20px",
           }}
           size="small"
           onClick={handleHelpClose}
         >
           <CloseIcon sx={{ color: "white" }} />
         </IconButton>
-        {/* to re-do after mvp done */}
+        {/* to re-do into own css after mvp done */}
         <img className={styles.helpPopUp} src="\collect.png"></img>
       </Dialog>
 
       <PhoneTopBar />
+
       <AppHeader />
       <div className={styles.mainBody}>
-        {/* show functions only when modal is closed */}
+        {/* show functions only when scan modal is closed */}
         {!showModal && (
           <>
             <div className={styles.collect}>Collect</div>
