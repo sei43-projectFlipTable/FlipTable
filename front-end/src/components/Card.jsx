@@ -8,7 +8,6 @@ import { styled } from "@mui/material/styles";
 const Card = (props) => {
   const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
-      fontSize: 19,
       color: "#264343",
     },
   });
@@ -39,8 +38,8 @@ const Card = (props) => {
               2
             }
             precision={0.5}
-            icon={<StarRoundedIcon />}
-            emptyIcon={<StarOutlineRoundedIcon />}
+            icon={<StarRoundedIcon sx={{ fontSize: 20 }} />}
+            emptyIcon={<StarOutlineRoundedIcon sx={{ fontSize: 20 }} />}
             readOnly
           />
         </div>
