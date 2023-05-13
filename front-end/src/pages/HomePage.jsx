@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import NavBar from "../components/NavBar";
+import PointsAndCashValue from "../components/PointsAndCashValue";
 import CardsDisplay from "../components/CardsDisplay";
 import { fetchData } from "../helpers/common";
 
@@ -29,7 +30,7 @@ function HomePage() {
     const convertedD = Math.round(d * 100000) / 100; //meters
     return convertedD;
   };
-  
+
   const getCafes = async () => {
     const { ok, data } = await fetchData("/api/cafes/");
     //sort before setting data
@@ -56,10 +57,10 @@ function HomePage() {
     getCafes();
   }, [coords]);
 
-
   return (
     <>
       <PhoneTopBar />
+      <PointsAndCashValue />
       <CardsDisplay cafes={cafes} />
       <NavBar />
     </>
