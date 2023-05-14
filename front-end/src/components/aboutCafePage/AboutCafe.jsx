@@ -66,9 +66,15 @@ function AboutCafe(props) {
           <PlaceOutlinedIcon sx={{ color: "#E88252" }} />
         </div>
         <div>{handleNewline(props.cafeData.address)}</div>
-        <div>
-          <OpenInNewOutlinedIcon />
-        </div>
+        {props.cafeData.coordinates && (
+          <a
+            href={`https://maps.google.com?q=${props.cafeData.coordinates[0]},${props.cafeData.coordinates[1]}`}
+            target="_blank"
+            className={styles.gmaplink}
+          >
+            <OpenInNewOutlinedIcon />
+          </a>
+        )}
       </div>
 
       <div className={styles.infoGridBot}>

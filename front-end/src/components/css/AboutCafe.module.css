@@ -17,6 +17,10 @@
   margin: 15px auto;
 }
 
+.gmaplink {
+  color: #264343;
+}
+
 .infoGridBot {
   display: grid;
   grid-template-columns: 20px 50px 10px 20px 210px;
@@ -26,7 +30,7 @@
 .description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   margin: 15px auto;
   overflow: hidden;
   text-overflow: ellipsis;
