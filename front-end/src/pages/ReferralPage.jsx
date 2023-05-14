@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import NavBar from "../components/NavBar";
 import styles from "./css/ReferralPage.module.css";
 
+import { Drawer, Box, Typography } from "@mui/material";
+
 function ReferralPage() {
+  const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
+  const toggleInviteDrawer = (anchor, open) => () => {
+    setInviteDrawer({ [anchor]: open });
+  };
+
+  const [shareDrawer, setShareDrawer] = useState({ bottom: false });
+  const toggleShareDrawer = (anchor, open) => () => {
+    setShareDrawer({ [anchor]: open });
+  };
+
   return (
     <>
       <PhoneTopBar />
@@ -24,8 +36,18 @@ function ReferralPage() {
             <div className={styles.referralCodeCopyBtn}>Copy</div>
           </div>
           <div className={styles.actionBtnsFrame}>
-            <button className={styles.share}>Share</button>
-            <button className={styles.invite}>Invite from Contact</button>
+            <button
+              className={styles.share}
+              onClick={toggleShareDrawer("bottom", true)}
+            >
+              Share
+            </button>
+            <button
+              className={styles.invite}
+              onClick={toggleInviteDrawer("bottom", true)}
+            >
+              Invite from Contact
+            </button>
           </div>
           <div className={styles.referralHistory}>
             <div className={styles.referralHistoryHeader}>Referral History</div>
@@ -37,6 +59,47 @@ function ReferralPage() {
         </div>
       </div>
       <NavBar />
+
+      {/* DRAWERS */}
+
+      {/* INVITE */}
+      <Drawer
+        anchor="bottom"
+        open={inviteDrawer["bottom"]}
+        onClose={toggleInviteDrawer("bottom", false)}
+        BackdropProps={{ invisible: true }}
+      >
+        <div className={styles.inviteDrawer}>
+          <div className={styles.inviteDrawerHeaderFrame}>
+            <div className={styles.inviteDrawerHeader}>Invite a Friend!</div>
+            <img
+              src="/custom_icons/SearchBar.png"
+              className={styles.searchBar}
+            />
+          </div>
+        </div>
+        <NavBar />
+      </Drawer>
+
+      {/* SHARE */}
+
+      <Drawer
+        anchor="bottom"
+        open={shareDrawer["bottom"]}
+        onClose={toggleShareDrawer("bottom", false)}
+        BackdropProps={{ invisible: true }}
+      >
+        <div className={styles.inviteDrawer}>
+          <div className={styles.inviteDrawerHeaderFrame}>
+            <div className={styles.inviteDrawerHeader}>Refer a friend</div>
+            <img
+              src="/custom_icons/SearchBar.png"
+              className={styles.searchBar}
+            />
+          </div>
+        </div>
+        <NavBar />
+      </Drawer>
     </>
   );
 }
