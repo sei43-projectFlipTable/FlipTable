@@ -4,7 +4,6 @@
   align-items: center;
   padding-top: px;
   gap: 30px;
-  /* position: absolute; */
   height: 30px;
   left: 0px;
   right: 0px;
@@ -324,4 +323,19 @@
   align-self: stretch;
   flex-grow: 0;
   width: 350px;
+}
+
+.inviteDrawerText {
+  width: 350px;
+  height: 60px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #1f1f1f;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
 }

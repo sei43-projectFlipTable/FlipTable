@@ -68,6 +68,7 @@ function ReferralPage() {
         open={inviteDrawer["bottom"]}
         onClose={toggleInviteDrawer("bottom", false)}
         BackdropProps={{ invisible: true }}
+        PaperProps={{ elevation: 0, style: { backgroundColor: "transparent" } }}
       >
         <div className={styles.inviteDrawer}>
           <div className={styles.inviteDrawerHeaderFrame}>
@@ -88,14 +89,15 @@ function ReferralPage() {
         open={shareDrawer["bottom"]}
         onClose={toggleShareDrawer("bottom", false)}
         BackdropProps={{ invisible: true }}
+        PaperProps={{ elevation: 0, style: { backgroundColor: "transparent" } }}
       >
         <div className={styles.inviteDrawer}>
           <div className={styles.inviteDrawerHeaderFrame}>
             <div className={styles.inviteDrawerHeader}>Refer a friend</div>
-            <img
-              src="/custom_icons/SearchBar.png"
-              className={styles.searchBar}
-            />
+            <div className={styles.inviteDrawerText}>
+              Join me on FlipTable! Here is 500 points to get you started
+              working at your favourite cafe! Terms an..
+            </div>
           </div>
         </div>
         <NavBar />

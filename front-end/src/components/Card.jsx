@@ -22,17 +22,6 @@ const Card = (props) => {
           <div className={styles.cardTitle}>{props.name}</div>
           <div className={styles.cardCaption}>{props.address}</div>
           <div className={styles.cardRating}>
-            {/* <Rating
-            name="half-rating-read"
-            defaultValue={
-              props.reviewRating.ratingTotal /
-              props.reviewRating.reviewCount /
-              2
-            }
-            precision={0.5}
-            sx={{ color: "#264343", fontSize: 19 }}
-            readOnly
-          /> */}
             <StyledRating
               name="customized-color"
               defaultValue={

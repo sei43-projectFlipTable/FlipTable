@@ -1,14 +1,3 @@
-/* .fliptable {
-  margin: 0;
-  left: 0;
-  font-family: "RocaOne-Rg";
-  color: #264343;
-  font-size: 35px;
-  letter-spacing: -2.5px;
-  text-align: center;
-  justify-content: center;
-  width: 100%;
-} */
 .pointsTracker {
   display: flex;
   flex-direction: row;
@@ -16,8 +5,6 @@
   align-items: center;
   padding: 0px;
   gap: 25px;
-
-  /* position: absolute; */
   width: 430px;
   height: 98px;
   left: 0px;
@@ -30,12 +17,8 @@
   align-items: center;
   padding: 0px;
   gap: 5px;
-
   width: 130px;
   height: 98px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -45,22 +28,13 @@
 .points {
   width: 130px;
   height: 20px;
-
-  /* FlipTable Text Styles/14 sp • Secondary Button Bold */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 21px;
   text-align: center;
-
-  /* ◇ Light/FlipTable Colours/Tretiary Color */
-
   color: #839788;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -69,9 +43,6 @@
 .pointsDisplay {
   width: 49px;
   height: 29px;
-
-  /* FlipTable Text Styles/20 sp • H6 Headline */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
@@ -81,13 +52,7 @@
   align-items: center;
   text-align: center;
   letter-spacing: 0.15px;
-
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   color: #264343;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   flex-grow: 0;
@@ -99,12 +64,8 @@
   align-items: center;
   padding: 22px 0px 0px;
   gap: 10px;
-
   width: 18px;
   height: 98px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
@@ -113,21 +74,12 @@
 .equal {
   width: 18px;
   height: 66px;
-
-  /* 24 sp • H5 Headline */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 36px;
-
-  /* ◇ Light/FlipTable Colours/Tretiary Color */
-
   color: #839788;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 1;
@@ -138,12 +90,8 @@
   align-items: center;
   padding: 0px;
   gap: 5px;
-
   width: 130px;
   height: 98px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 2;
   align-self: stretch;
@@ -152,9 +100,6 @@
 .cash {
   width: 130px;
   height: 20px;
-
-  /* FlipTable Text Styles/14 sp • Secondary Button Bold */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
@@ -163,13 +108,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-
-  /* ◇ Light/FlipTable Colours/Tretiary Color */
-
   color: #839788;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -178,9 +117,6 @@
 .cashDisplay {
   width: 130px;
   height: 29px;
-
-  /* FlipTable Text Styles/20 sp • H6 Headline */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
@@ -190,13 +126,7 @@
   align-items: center;
   text-align: center;
   letter-spacing: 0.15px;
-
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   color: #264343;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
@@ -207,15 +137,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 17px;
-  /* isolation: isolate; */
-
-  /* position: absolute; */
+  padding: 0px;
   height: auto;
   left: 0px;
   right: 0px;
   top: 200px;
-  /* overflow-y: scroll; */
   border-radius: 0px 0px 0px 0px;
   background-color: #ededed;
 }
@@ -226,12 +152,8 @@
   align-items: center;
   padding: 0px 30px;
   gap: 8px;
-
   width: 430px;
   height: 174px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -243,12 +165,8 @@
   flex-direction: row;
   align-items: flex-start;
   padding: 0px 10px;
-
   width: 370px;
   height: 40px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -259,12 +177,8 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 0px 10px;
-
   width: 325px;
   height: 40px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -273,9 +187,6 @@
 .referralHeaderText {
   width: 305px;
   height: 40px;
-
-  /* 20 sp • H6 Headline */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
@@ -285,13 +196,7 @@
   align-items: center;
   text-align: center;
   letter-spacing: 0.15px;
-
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   color: #264343;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -303,12 +208,8 @@
   justify-content: center;
   align-items: center;
   padding: 0px;
-
   width: 25px;
   height: 40px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
@@ -317,9 +218,6 @@
 .referralGiftIcon {
   width: 25px;
   height: 25px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -330,17 +228,10 @@
   align-items: center;
   padding: 15px 10px;
   gap: 15px;
-
   width: 370px;
   height: 126px;
-
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   background: #264343;
   border-radius: 10px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
@@ -352,12 +243,8 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 0px 5px;
-
   width: 350px;
   height: 41px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -366,9 +253,6 @@
 .referralBodyDescription {
   width: 340px;
   height: 41px;
-
-  /* 16 sp • Body */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -377,13 +261,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-
-  /* ◇ Light/FlipTable Colours/Light */
-
   color: #ffffff;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   align-self: stretch;
@@ -396,21 +274,12 @@
   align-items: center;
   padding: 10px;
   gap: 10px;
-
   width: 120px;
   height: 40px;
-
-  /* ◇ Light/FlipTable Colours/Secondary Color */
-
   background: #e88252;
-  /* 2dp | Button */
-
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.16), 0px 2px 4px rgba(0, 0, 0, 0.12),
     0px 1px 8px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   flex-grow: 0;
@@ -418,26 +287,15 @@
 .referralButton {
   width: 96px;
   height: 30px;
-
-  /* FlipTable Text Styles/20 sp • Primary Button */
-
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
-  /* identical to box height */
-
   display: flex;
   align-items: center;
   text-align: center;
-
-  /* ◇ Light/FlipTable Colours/Light */
-
   color: #ffffff;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 0;
