@@ -18,6 +18,7 @@ async function putReview(req, res) {
       review: req.body.review,
       ...(req.body.image && { image: req.body.image }),
       cafe: req.params.cafeId,
+      tags: req.body.tags,
     });
 
     const targetCafe = await CafesModel.findById(req.params.cafeId);

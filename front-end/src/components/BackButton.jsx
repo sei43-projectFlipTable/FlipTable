@@ -3,7 +3,7 @@ import styles from "./css/BackButton.module.css";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import { useNavigate } from "react-router";
 
-function BackButton() {
+function BackButton(props) {
   const navigate = useNavigate();
 
   function goBack() {
@@ -11,7 +11,10 @@ function BackButton() {
   }
 
   return (
-    <div className={styles.backbutton} onClick={goBack}>
+    <div
+      className={`${styles.backbutton} ${props.positionStyle}`}
+      onClick={goBack}
+    >
       <ArrowBackIosNewOutlinedIcon
         fontSize="small"
         sx={{ color: "#FFFFFF", pr: "3px" }}

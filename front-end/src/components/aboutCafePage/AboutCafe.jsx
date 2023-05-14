@@ -10,40 +10,42 @@ import WbIridescentOutlinedIcon from "@mui/icons-material/WbIridescentOutlined";
 import { Rating } from "@mui/material";
 import styles from "../css/AboutCafe.module.css";
 import { handleNewline } from "../../helpers/common";
+import { amenities } from "../../helpers/amenities";
 
 function AboutCafe(props) {
-  const amenities = {
+  const amenitiesComponents = {
     wifi: (
       <div className={styles.tagset} key="amenity1">
         <WifiIcon sx={{ color: "#264343" }} />
-        <div>Wi-Fi</div>
+        <div>{amenities["wifi"]}</div>
       </div>
     ),
     power: (
       <div className={styles.tagset} key="amenity2">
         <PowerOutlinedIcon sx={{ color: "#264343" }} />
-        <div>Power Socket</div>
+        <div>{amenities["power"]}</div>
       </div>
     ),
     aircon: (
       <div className={styles.tagset} key="amenity3">
         <img className={styles.aircon} src="/custom_icons/airconicon.png" />
-        <div>Air Conditioning</div>
+        <div>{amenities["aircon"]}</div>
       </div>
     ),
     workspace: (
       <div className={styles.tagset} key="amenity4">
         <DeskIcon sx={{ color: "#264343" }} />
-        <div>Dedicated Workspace</div>
+        <div>{amenities["workspace"]}</div>
       </div>
     ),
     lighting: (
       <div className={styles.tagset} key="amenity5">
         <WbIridescentOutlinedIcon sx={{ color: "#264343" }} />
-        <div>Good Lighting</div>
+        <div>{amenities["lighting"]}</div>
       </div>
     ),
   };
+
   function generate2tags(strArr) {
     if (!strArr || strArr.length === 0) {
       return;
@@ -51,22 +53,28 @@ function AboutCafe(props) {
     const tagArr = [];
     const first2tags = strArr.slice(0, 2);
     for (const tag of first2tags) {
-      tagArr.push(amenities[tag]);
+      tagArr.push(amenitiesComponents[tag]);
     }
     return tagArr;
   }
 
   return (
     <div className={styles.container}>
-      <h5>{props.cafeData.name}</h5>
+      <h5 className={styles.header}>{props.cafeData.name}</h5>
       <div className={styles.infoGridTop}>
         <div>
           <PlaceOutlinedIcon sx={{ color: "#E88252" }} />
         </div>
         <div>{handleNewline(props.cafeData.address)}</div>
-        <div>
-          <OpenInNewOutlinedIcon />
-        </div>
+        {props.cafeData.coordinates && (
+          <a
+            href={`https://maps.google.com?q=${props.cafeData.coordinates[0]},${props.cafeData.coordinates[1]}`}
+            target="_blank"
+            className={styles.gmaplink}
+          >
+            <OpenInNewOutlinedIcon />
+          </a>
+        )}
       </div>
 
       <div className={styles.infoGridBot}>
