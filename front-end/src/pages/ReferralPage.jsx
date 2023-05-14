@@ -57,8 +57,18 @@ function ReferralPage() {
           <div className={styles.referralHistory}>
             <div className={styles.referralHistoryHeader}>Referral History</div>
             <div className={styles.referralStatsFrame}>
-              <div className={styles.referralCodesUsed}>1</div>
-              <div className={styles.referralPointsEarned}>500</div>
+              <div className={styles.referralUsageFrame}>
+                <div>1</div>
+                <div className={styles.referralsUsedText}>
+                  Friend(s) have used your referral code
+                </div>
+              </div>
+              <div className={styles.referralPointsEarnedFrame}>
+                <div>500</div>
+                <div className={styles.referralsUsedText}>
+                  Points earned through referrals
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -99,7 +109,7 @@ function ReferralPage() {
         <div className={styles.inviteDrawer}>
           <div className={styles.inviteDrawerHeaderFrame}>
             <div className={styles.inviteDrawerHeader}>Refer a friend</div>
-            <div className={styles.inviteDrawerText}>
+            <div className={styles.shareDrawerText}>
               Join me on FlipTable! Here is 500 points to get you started
               working at your favourite cafe! Terms an..
             </div>
