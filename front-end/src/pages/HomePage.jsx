@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import NavBar from "../components/NavBar";
+import PointsAndCashValue from "../components/PointsAndCashValue";
 import CardsDisplay from "../components/CardsDisplay";
 import { fetchData } from "../helpers/common";
+import AppHeader from "../components/AppHeader";
+import styles from "./css/HomePage.module.css";
+import ReferralBox from "../components/ReferralBox";
 
 function HomePage() {
   const [cafes, setCafes] = useState([]);
-  const getCafes = async () => {
-    const { ok, data } = await fetchData("/api/cafes/");
+  const [coords, setCoords] = useState([
+    1.3240558643021323, 103.64688938000863,
+  ]); //default to west of Singaore
 
-    if (ok) {
-      setCafes(data);
-    } else {
-      console.log(data);
-    }
-  };
-
-  useEffect(() => {
-    getCafes();
-  }, []);
+  //get user location and set it to coords
 
   //calculating distance between coordinates
   const earthRadius = 6371;
@@ -37,10 +33,44 @@ function HomePage() {
     const convertedD = Math.round(d * 100000) / 100; //meters
     return convertedD;
   };
+
+  const getCafes = async () => {
+    const { ok, data } = await fetchData("/api/cafes/");
+    //sort before setting data
+    if (ok) {
+      navigator.geolocation.getCurrentPosition((info) => {
+        let lat = info.coords.latitude;
+        let long = info.coords.longitude;
+        setCoords([lat, long]);
+      });
+
+      data.sort((a, b) => {
+        return (
+          haversine(coords[0], a.coordinates[0], coords[1], a.coordinates[1]) -
+          haversine(coords[0], b.coordinates[0], coords[1], b.coordinates[1])
+        );
+      });
+      setCafes(data);
+    } else {
+      console.log(data);
+    }
+  };
+
+  useEffect(() => {
+    getCafes();
+  }, [coords]);
+
   return (
     <>
       <PhoneTopBar />
-      <CardsDisplay cafes={cafes} />
+      <AppHeader />
+      <PointsAndCashValue />
+      <div className={styles.emptyDiv}></div>
+      <div className={styles.scrollable}>
+        <ReferralBox />
+        <div className={styles.nearMeTitle}>Cafes Near Me</div>
+        <CardsDisplay cafes={cafes} />
+      </div>
       <NavBar />
     </>
   );
