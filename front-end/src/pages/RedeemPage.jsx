@@ -1,13 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Button, Modal, IconButton, Dialog } from "@mui/material";
+import { Box, Button, Modal, IconButton, Dialog, Card } from "@mui/material";
 import NavBar from "../components/NavBar";
 import styles from "./css/RedeemPage.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { QrScanner } from "@yudiel/react-qr-scanner";
-import { QrReader } from "react-qr-reader";
 
 function RedeemPage() {
   const redeemAmtRef = useRef();
@@ -15,6 +14,7 @@ function RedeemPage() {
   const [showRedeem, setShowRedeem] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
+  const [redeem, setRedeem] = useState(false);
 
   const handleRedeemClose = (e, r) => {
     if (r == "backdropClick") return;
@@ -87,6 +87,7 @@ function RedeemPage() {
                 type="number"
                 minLength={1}
                 ref={redeemAmtRef}
+                placeholder={redeem}
               ></input>
               <Button
                 variant="contained"
@@ -108,36 +109,38 @@ function RedeemPage() {
           ) : (
             <>
               <p>You have redeemed</p>
-              <div>${redeemAmtRef.current.value}</div>
+              <div>$ {redeemAmtRef.current.value}</div>
             </>
           )}
         </Box>
       </Modal>
 
       {/* help pop up */}
-      <Dialog
-        hideBackdrop
-        open={popUpHelp}
-        onClose={handleHelpClose}
-        fullScreen
-        sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute" }}
-      >
-        <IconButton
-          sx={{
-            bgcolor: "#264343",
-            position: "absolute",
-            right: "18px",
-            top: "15px",
-            zIndex: 1,
-          }}
-          size="small"
-          onClick={handleHelpClose}
+      {popUpHelp && (
+        <Box
+          // hideBackdrop
+          // open={popUpHelp}
+          onClose={handleHelpClose}
+          // fullScreen
+          sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute", zIndex: 9 }}
         >
-          <CloseIcon sx={{ color: "white" }} />
-        </IconButton>
-        {/* to re-do into own css after mvp done */}
-        <img className={styles.helpPopUp} src="\rewards.png"></img>
-      </Dialog>
+          <IconButton
+            sx={{
+              bgcolor: "#264343",
+              position: "absolute",
+              right: "18px",
+              top: "15px",
+              zIndex: 1,
+            }}
+            size="small"
+            onClick={handleHelpClose}
+          >
+            <CloseIcon sx={{ color: "white" }} />
+          </IconButton>
+          {/* to re-do into own css after mvp done */}
+          <img className={styles.helpPopUp} src="\rewards.png"></img>
+        </Box>
+      )}
 
       <PhoneTopBar />
       <AppHeader />
@@ -156,9 +159,9 @@ function RedeemPage() {
               videoId="scanner"
               scanDelay={500}
               // onDecode={(result) => console.log(result)}
-              onResult={() => {
+              onDecode={(result) => {
                 setShowRedeem(true);
-                scannerRef.video.pause();
+                setRedeem(result);
               }}
               onError={(error) => console.log(error?.message)}
             />
