@@ -2,10 +2,23 @@
   width: 350px;
 }
 
+.header {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  color: #264343;
+}
+
 .infoGridTop {
   display: flex;
   column-gap: 10px;
   margin: 15px auto;
+}
+
+.gmaplink {
+  color: #264343;
 }
 
 .infoGridBot {
@@ -17,7 +30,7 @@
 .description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   margin: 15px auto;
   overflow: hidden;
   text-overflow: ellipsis;
