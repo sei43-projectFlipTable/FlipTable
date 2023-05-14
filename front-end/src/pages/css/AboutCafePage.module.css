@@ -21,6 +21,11 @@
   padding: 38px 40px 0px;
 }
 
+.aboutNavBar {
+  display: flex;
+  margin-bottom: 25px;
+}
+
 .tab {
   font-family: "Poppins", sans-serif;
   font-style: normal;
@@ -28,4 +33,13 @@
   font-size: 14px;
   line-height: 21px;
   width: 115px;
+  color: #264343;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.activeTab {
+  color: #e88252;
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }

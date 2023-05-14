@@ -47,16 +47,25 @@ function AboutCafePage() {
       <div className={styles.blocker} />
       <div className={styles.curvedTop}>
         <div className={styles.content}>
-          <div>
-            <button className={`btn ${styles.tab}`} onClick={() => setPage(0)}>
+          <div className={styles.aboutNavBar}>
+            <div
+              className={`${styles.tab} ${page === 0 ? styles.activeTab : ""}`}
+              onClick={() => setPage(0)}
+            >
               About
-            </button>
-            <button className={`btn ${styles.tab}`} onClick={() => setPage(1)}>
+            </div>
+            <div
+              className={`${styles.tab} ${page === 1 ? styles.activeTab : ""}`}
+              onClick={() => setPage(1)}
+            >
               Menu
-            </button>
-            <button className={`btn ${styles.tab}`} onClick={() => setPage(2)}>
+            </div>
+            <div
+              className={`${styles.tab} ${page === 2 ? styles.activeTab : ""}`}
+              onClick={() => setPage(2)}
+            >
               Reviews
-            </button>
+            </div>
           </div>
           {aboutPages[page]}
         </div>
