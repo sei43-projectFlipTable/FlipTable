@@ -20,17 +20,16 @@ async function putMenu(req, res) {
     });
 
     if (targetName) {
-      return res
-        .status(400)
-        .json({
-          status: "error",
-          message: "an item with this name already exists",
-        });
+      return res.status(400).json({
+        status: "error",
+        message: "an item with this name already exists",
+      });
     }
 
     await MenuModel.create({
       name: req.body.name,
-      price: req.body.price,
+      price:
+        req.body.price.charAt(0) != "$" ? "$" + req.body.price : req.body.price,
       ...(req.body.image && { image: req.body.image }),
       cafe: req.params.cafeId,
     });

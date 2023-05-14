@@ -9,6 +9,7 @@ function CardsDisplay(props) {
         return (
           <Card
             key={cafe._id}
+            id={cafe._id}
             image={cafe.image}
             name={cafe.name}
             address={cafe.address}

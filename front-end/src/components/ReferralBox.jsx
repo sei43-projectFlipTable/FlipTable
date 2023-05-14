@@ -15,9 +15,11 @@ function ReferralBox() {
               </div>
             </div>
             <div className={styles.referralGiftSpace}>
-              <div className={styles.referralGiftIcon}>
-                <img src="/giftbox.png" alt="giftbox" />
-              </div>
+              <img
+                src="/giftbox.png"
+                alt="giftbox"
+                className={styles.referralGiftIcon}
+              />
             </div>
           </div>
 

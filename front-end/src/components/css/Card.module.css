@@ -13,6 +13,10 @@
   border-radius: 8px;
 }
 
+.cardLink {
+  text-decoration: none;
+}
+
 .cardImg {
   width: 160px;
   height: 160px;
