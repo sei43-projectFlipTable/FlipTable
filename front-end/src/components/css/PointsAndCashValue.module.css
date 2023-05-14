@@ -49,13 +49,16 @@
   font-size: 20px;
   line-height: 30px;
   display: flex;
-  align-items: center;
   text-align: center;
   letter-spacing: 0.15px;
   color: #264343;
   flex: none;
   order: 1;
   flex-grow: 0;
+  justify-content: space-evenly;
+  justify-items: center;
+  align-content: space-evenly;
+  align-items: center;
 }
 
 .equalBox {
@@ -106,13 +109,16 @@
   font-size: 14px;
   line-height: 21px;
   display: flex;
-  align-items: center;
   text-align: center;
   color: #839788;
   flex: none;
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  justify-content: space-evenly;
+  justify-items: center;
+  align-content: space-evenly;
+  align-items: center;
 }
 .cashDisplay {
   width: 130px;
@@ -123,7 +129,6 @@
   font-size: 20px;
   line-height: 30px;
   display: flex;
-  align-items: center;
   text-align: center;
   letter-spacing: 0.15px;
   color: #264343;
@@ -131,6 +136,10 @@
   order: 1;
   align-self: stretch;
   flex-grow: 0;
+  justify-content: space-evenly;
+  justify-items: center;
+  align-content: space-evenly;
+  align-items: center;
 }
 
 .homePageScroll {
