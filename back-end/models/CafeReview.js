@@ -6,6 +6,10 @@ const CafeReviewSchema = mongoose.Schema(
     review: { type: String, required: true },
     image: { type: String, default: "" },
     cafe: { type: mongoose.Schema.Types.ObjectId, ref: "Cafes" },
+    tags: {
+      type: [String],
+      enum: ["wifi", "power", "aircon", "workspace", "lighting"],
+    },
   },
   { collection: "cafereview" }
 );
