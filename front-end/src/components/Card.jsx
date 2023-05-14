@@ -30,8 +30,8 @@ const Card = (props) => {
                 2
               }
               precision={0.5}
-              icon={<StarRoundedIcon />}
-              emptyIcon={<StarOutlineRoundedIcon />}
+              icon={<StarRoundedIcon sx={{ fontSize: 20 }} />}
+              emptyIcon={<StarOutlineRoundedIcon sx={{ fontSize: 20 }} />}
               readOnly
             />
           </div>
