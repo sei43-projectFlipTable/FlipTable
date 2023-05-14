@@ -35,15 +35,10 @@ function HomePage() {
   };
 
   const getCafes = async () => {
+    console.log("getting");
     const { ok, data } = await fetchData("/api/cafes/");
     //sort before setting data
     if (ok) {
-      navigator.geolocation.getCurrentPosition((info) => {
-        let lat = info.coords.latitude;
-        let long = info.coords.longitude;
-        setCoords([lat, long]);
-      });
-
       data.sort((a, b) => {
         return (
           haversine(coords[0], a.coordinates[0], coords[1], a.coordinates[1]) -
@@ -55,6 +50,14 @@ function HomePage() {
       console.log(data);
     }
   };
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((info) => {
+      let lat = info.coords.latitude;
+      let long = info.coords.longitude;
+      setCoords([lat, long]);
+    });
+  }, []);
 
   useEffect(() => {
     getCafes();
