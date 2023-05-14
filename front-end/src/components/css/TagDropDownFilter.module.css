@@ -1,0 +1,26 @@
+.tagContainer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 5px;
+  max-height: 75px;
+  overflow: hidden;
+}
+
+.tagSelector {
+  appearance: none;
+  background: #ededed;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  width: 340px;
+  padding: 10px 12px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #264343;
+  margin-bottom: 25px;
+}

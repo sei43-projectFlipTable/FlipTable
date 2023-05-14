@@ -1,12 +1,4 @@
-.tagContainer {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 10px;
-  row-gap: 5px;
-}
-
 .reviewContainer {
-  position: absolute;
   overflow: scroll;
   max-height: 320px;
   max-width: 350px;
