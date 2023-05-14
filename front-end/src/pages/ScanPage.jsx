@@ -13,7 +13,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Webcam from "react-webcam";
 
 function ScanPage() {
-  const collectAmtRef = useRef();
+  const collectAmtRef = useRef(null);
   const webcamRef = useRef(null);
   const [img, setImg] = useState(null);
   const location = useLocation();
@@ -33,7 +33,6 @@ function ScanPage() {
       setShowCollection(false);
       setAmountSubmitted(false);
       setImg(null);
-      collectAmtRef.current.value = "";
     }
   };
 
@@ -105,7 +104,9 @@ function ScanPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAmountSubmitted(true);
+    if (collectAmtRef.current.value == "") {
+      alert("cannot submit empty field");
+    } else setAmountSubmitted(true);
   };
 
   const handleHelp = () => {
@@ -196,7 +197,6 @@ function ScanPage() {
                 required
                 type="number"
                 minLength={1}
-                step={0.01}
                 ref={collectAmtRef}
               ></input>
               <Button
@@ -220,7 +220,7 @@ function ScanPage() {
             <>
               <p>You have collected</p>
               <div>
-                ${collectAmtRef.current.value} ({Math.floor(collectAmtRef.current.value * 10)}{" "}
+                $ {collectAmtRef.current.value} ({Math.floor(collectAmtRef.current.value * 10)}{" "}
                 points)
               </div>
               <div>Your receipt will be verified within 24hrs</div>
@@ -235,7 +235,6 @@ function ScanPage() {
         onClose={handleHelpClose}
         fullScreen
         sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute" }}
-        // TransitionComponent={Transition}
       >
         <IconButton
           sx={{
