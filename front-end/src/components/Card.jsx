@@ -15,7 +15,7 @@ const Card = (props) => {
   });
 
   return (
-    <Link to={`/about/${props.id}`}>
+    <Link to={`/about/${props.id}`} className={styles.cardLink}>
       <div className={styles.mainCard}>
         <img src={props.image} className={styles.cardImg} />
         <div className={styles.cardInfo}>
