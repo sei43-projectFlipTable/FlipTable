@@ -2,12 +2,15 @@ const mongoose = require("mongoose");
 
 const UsersSchema = new mongoose.Schema(
   {
+    name: { type: String, require: true },
     email: { type: String, require: true },
-    //   hash: { type: String, require: true },
+    hash: { type: String, require: true },
+    role: { type: String },
     savedPlaces: { type: [String] },
-    points: { type: Number },
+    points: { type: Number, default: 0 },
     referredCount: { type: Number },
-    referralCode: { type: String },
+    //returns a random string of 8 characters
+    referralCode: { type: String, default: Math.random().toString(36).substring(2, 9) },
     wasReferred: { type: Boolean },
   },
   { collection: "users" }

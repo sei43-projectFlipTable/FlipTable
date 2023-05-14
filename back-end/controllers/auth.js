@@ -3,6 +3,28 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
+const register = async (req, res) => {
+  try {
+    const auth = await AuthModel.findOne({ email: req.body.email });
+    if (auth) {
+      return res.status(400).json({ status: "error", msg: "duplicate email" });
+    }
+
+    const hash = await bcrypt.hash(req.body.password, 12);
+
+    await AuthModel.create({
+      email: req.body.email,
+      hash,
+      role: req.body.role || "user",
+    });
+
+    res.json({ status: "ok", msg: "user registered" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "registration failed" });
+  }
+};
+
 const login = async (req, res) => {
   try {
     const auth = await AuthModel.findOne({ email: req.body.email });
@@ -32,3 +54,5 @@ const login = async (req, res) => {
     a;
   }
 };
+
+module.exports = { register, login };
