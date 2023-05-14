@@ -7,6 +7,7 @@ import AboutCafe from "../components/aboutCafePage/AboutCafe";
 import AboutCafeMenu from "../components/aboutCafePage/AboutCafeMenu";
 import AboutCafeReview from "../components/aboutCafePage/AboutCafeReview";
 import NavBar from "../components/NavBar";
+import BackButton from "../components/BackButton";
 
 // CafeId in params
 function AboutCafePage() {
@@ -75,6 +76,7 @@ function AboutCafePage() {
   return (
     <>
       <PhoneTopBar />
+      <BackButton positionStyle={styles.backbuttonpos} />
       <img className={styles.cafeImage} src={cafeData.image} />
       <div className={styles.blocker} />
       <div className={styles.curvedTop}>
