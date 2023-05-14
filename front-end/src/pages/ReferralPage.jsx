@@ -30,6 +30,9 @@ function ReferralPage() {
             <div className={styles.referHeader}>
               Refer a friend, get 500 points
             </div>
+            <div className={styles.giftIconFrame}>
+              <img src="/giftbox.png" style={{ height: 25, width: 25 }} />
+            </div>
           </div>
           <div className={styles.referralCodeFrame}>
             <div className={styles.referralCode}>FT313301N1</div>
@@ -39,12 +42,14 @@ function ReferralPage() {
             <button
               className={styles.share}
               onClick={toggleShareDrawer("bottom", true)}
+              style={{ border: "none" }}
             >
               Share
             </button>
             <button
               className={styles.invite}
               onClick={toggleInviteDrawer("bottom", true)}
+              style={{ border: "none" }}
             >
               Invite from Contact
             </button>
