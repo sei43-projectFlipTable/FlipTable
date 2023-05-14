@@ -15,9 +15,13 @@
 }
 
 .description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
   margin: 15px auto;
-  overflow: scroll;
-  max-height: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 100px;
 }
 
 .tagset {
