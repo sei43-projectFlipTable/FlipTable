@@ -4,7 +4,7 @@ import styles from "../css/ReviewCard.module.css";
 
 function ReviewCard(props) {
   const ratingGrades = [
-    "Not good",
+    "Very Poor",
     "Very Poor",
     "Poor",
     "Good",
