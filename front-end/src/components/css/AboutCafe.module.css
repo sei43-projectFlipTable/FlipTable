@@ -2,13 +2,34 @@
   width: 350px;
 }
 
-.address,
-.description {
+.infoGridTop {
+  display: flex;
+  column-gap: 10px;
   margin: 15px auto;
 }
 
-.pricetime {
+.infoGridBot {
+  display: grid;
+  grid-template-columns: 20px 50px 10px 20px 210px;
+  column-gap: 10px;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  margin: 15px auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 100px;
+}
+
+.tagset {
   display: flex;
-  flex-direction: row;
-  gap: 30px;
+  column-gap: 5px;
+}
+
+.primaryTags {
+  display: flex;
+  column-gap: 20px;
 }

@@ -29,3 +29,30 @@ export async function fetchData(endpoint, method, body) {
   }
   return returnValue;
 }
+
+export function handleNewline(paragraph) {
+  if (!paragraph) {
+    return;
+  }
+  const strArr = paragraph.split("\n");
+  return strArr.map((item, idx) => {
+    if (idx === 0) {
+      return <span key={idx}>{item}</span>;
+    } else {
+      return (
+        <span key={idx}>
+          <br />
+          <>{item}</>
+        </span>
+      );
+    }
+  });
+}
+
+export function calculateRating(ratingObj) {
+  if (ratingObj.reviewCount == 0) {
+    return 0;
+  } else {
+    return ratingObj.ratingTotal / ratingObj.reviewCount / 2;
+  }
+}
