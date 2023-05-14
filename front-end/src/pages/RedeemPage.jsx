@@ -7,9 +7,11 @@ import NavBar from "../components/NavBar";
 import styles from "./css/RedeemPage.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { QrScanner } from "@yudiel/react-qr-scanner";
+import { QrReader } from "react-qr-reader";
 
 function RedeemPage() {
   const redeemAmtRef = useRef();
+  const scannerRef = useRef();
   const [showRedeem, setShowRedeem] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
@@ -148,14 +150,20 @@ function RedeemPage() {
 
         {/* QR scannner */}
 
-        <div className={styles.cameraView}>
-          <QrScanner
-            scanDelay={1000}
-            onDecode={(result) => console.log(result)}
-            // onDecode={() => setShowRedeem(true)}
-            onError={(error) => console.log(error?.message)}
-          />
-        </div>
+        {!showRedeem && (
+          <div className={styles.cameraView} ref={scannerRef}>
+            <QrScanner
+              videoId="scanner"
+              scanDelay={500}
+              // onDecode={(result) => console.log(result)}
+              onResult={() => {
+                setShowRedeem(true);
+                scannerRef.video.pause();
+              }}
+              onError={(error) => console.log(error?.message)}
+            />
+          </div>
+        )}
       </div>
 
       <NavBar />
