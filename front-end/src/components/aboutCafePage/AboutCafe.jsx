@@ -58,7 +58,7 @@ function AboutCafe(props) {
 
   return (
     <div className={styles.container}>
-      <h5>{props.cafeData.name}</h5>
+      <h5 className={styles.header}>{props.cafeData.name}</h5>
       <div className={styles.infoGridTop}>
         <div>
           <PlaceOutlinedIcon sx={{ color: "#E88252" }} />
