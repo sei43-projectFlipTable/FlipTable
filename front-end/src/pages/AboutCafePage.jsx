@@ -13,12 +13,14 @@ function AboutCafePage() {
   const { cafeId } = useParams();
   // 0 - About, 1 - Menu, 2 - Reviews
   const [cafeData, setCafeData] = useState([]);
+  const [cafeMenu, setCafeMenu] = useState([]);
+  const [cafeReviews, setCafeReviews] = useState([]);
   const [page, setPage] = useState(0);
   const [rating, setRating] = useState(0);
   const aboutPages = [
     <AboutCafe cafeId={cafeId} cafeData={cafeData} rating={rating} />,
-    <AboutCafeMenu cafeId={cafeId} />,
-    <AboutCafeReview cafeId={cafeId} />,
+    <AboutCafeMenu cafeId={cafeId} cafeMenu={cafeMenu} />,
+    <AboutCafeReview cafeId={cafeId} cafeReviews={cafeReviews} />,
   ];
 
   async function postCafe() {
@@ -36,8 +38,38 @@ function AboutCafePage() {
     }
   }
 
+  async function postMenu() {
+    try {
+      const { ok, data } = await fetchData("/api/menu/" + cafeId, "POST");
+      if (ok) {
+        setCafeMenu(data);
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("Error getting cafe menu");
+    }
+  }
+
+  async function postReviews() {
+    try {
+      const { ok, data } = await fetchData("/api/review/" + cafeId, "POST");
+      if (ok) {
+        setCafeReviews(data);
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("Error getting cafe reviews");
+    }
+  }
+
   useEffect(() => {
     postCafe();
+    postMenu();
+    postReviews();
   }, []);
 
   return (
