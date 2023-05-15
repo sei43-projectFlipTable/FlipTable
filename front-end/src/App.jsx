@@ -21,7 +21,6 @@ function App() {
         <Route path="/redeem" element={<RedeemPage />} />
         <Route path="/referral" element={<ReferralPage />} />
         <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/explore/results" element={<ExploreResultsPage />} />
         <Route path="/about/:cafeId" element={<AboutCafePage />} />
         <Route path="/saved" element={<SavedCafesPage />} />
         <Route path="/profile" element={<ProfilePage />} />
