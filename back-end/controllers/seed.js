@@ -143,7 +143,7 @@ async function seedReviews(req, res) {
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image:
           "https://www.sussex.ac.uk/wcm/assets/media/271/content/74901.950x631.jpg",
-        tags: ["wifi", "power"],
+        tags: ["wifi", "power", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
@@ -155,7 +155,7 @@ async function seedReviews(req, res) {
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image:
           "https://media.femalemag.com.sg/public/2022/01/cafe-east-coast-commune-1.jpg",
-        tags: ["power"],
+        tags: ["power", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
@@ -165,14 +165,14 @@ async function seedReviews(req, res) {
         rating: Math.round(Math.random() * 10),
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image: "https://media.timeout.com/images/105944239/750/562/image.jpg",
-        tags: ["wifi", "power"],
+        tags: ["wifi", "power", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image:
           "https://upload.wikimedia.org/wikipedia/commons/a/a3/R%C3%B6e_g%C3%A5rd_caf%C3%A9_2.jpg",
-        tags: ["wifi", "lighting"],
+        tags: ["wifi", "lighting", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
@@ -183,7 +183,7 @@ async function seedReviews(req, res) {
         rating: Math.round(Math.random() * 10),
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image: "https://media.timeout.com/images/105909866/750/422/image.jpg",
-        tags: ["aircon", "lighting"],
+        tags: ["aircon", "lighting", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
