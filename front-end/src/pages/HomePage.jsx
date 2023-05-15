@@ -35,19 +35,27 @@ function HomePage() {
   };
 
   const getCafes = async () => {
-    console.log("getting");
-    const { ok, data } = await fetchData("/api/cafes/");
-    //sort before setting data
-    if (ok) {
-      data.sort((a, b) => {
-        return (
-          haversine(coords[0], a.coordinates[0], coords[1], a.coordinates[1]) -
-          haversine(coords[0], b.coordinates[0], coords[1], b.coordinates[1])
-        );
-      });
-      setCafes(data);
-    } else {
-      console.log(data);
+    try {
+      const { ok, data } = await fetchData("/api/cafes/");
+      //sort before setting data
+      if (ok) {
+        data.sort((a, b) => {
+          return (
+            haversine(
+              coords[0],
+              a.coordinates[0],
+              coords[1],
+              a.coordinates[1]
+            ) -
+            haversine(coords[0], b.coordinates[0], coords[1], b.coordinates[1])
+          );
+        });
+        setCafes(data);
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      alert("Error getting cafes");
     }
   };
 
