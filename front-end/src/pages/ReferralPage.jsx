@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import NavBar from "../components/NavBar";
@@ -8,8 +8,10 @@ import { Drawer, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import InviteCard from "../components/InviteCard";
 import BackButton from "../components/BackButton";
+import UserContext from "../context/user";
 
 function ReferralPage() {
+  const userCtx = useContext(UserContext);
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
   const toggleInviteDrawer = (anchor, open) => () => {
     setInviteDrawer({ [anchor]: open });
@@ -25,7 +27,7 @@ function ReferralPage() {
     const { ok, data } = await fetchData("/users/");
     //filter out only users with wasReferred:false
     const onlyNotReferredUsers = data.filter((user) => {
-      return user.wasReferred === false;
+      return user.wasReferred === false && user.email !== userCtx.payload.email;
     });
     if (ok) {
       setUsers(onlyNotReferredUsers);
