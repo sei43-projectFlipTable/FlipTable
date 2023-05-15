@@ -12,7 +12,9 @@ import UserContext from "../context/user";
 function HomePage() {
   const userCtx = useContext(UserContext);
   const [cafes, setCafes] = useState([]);
-  const [coords, setCoords] = useState([1.3240558643021323, 103.64688938000863]); //default to west of Singaore
+  const [coords, setCoords] = useState([
+    1.3240558643021323, 103.64688938000863,
+  ]); //default to west of Singaore
 
   //get user location and set it to coords
 

@@ -28,16 +28,18 @@ const login = async (req, res) => {
   try {
     const auth = await UserModel.findOne({ email: req.body.email });
     if (!auth) {
-      return res
-        .status(400)
-        .json({ status: "error", msg: "cannot find email or password incorrect" });
+      return res.status(400).json({
+        status: "error",
+        msg: "cannot find email or password incorrect",
+      });
     }
 
     const result = await bcrypt.compare(req.body.password, auth.hash);
     if (!result) {
-      return res
-        .status(401)
-        .json({ status: "error", msg: "cannot find email or password incorrect" });
+      return res.status(401).json({
+        status: "error",
+        msg: "cannot find email or password incorrect",
+      });
     }
 
     const payload = {

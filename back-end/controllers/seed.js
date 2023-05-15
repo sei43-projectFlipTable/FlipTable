@@ -45,7 +45,8 @@ async function seedCafes(req, res) {
         openingHours: "10am - 5pm daily\nClosed on mondays",
         description:
           "Delicious specialty coffee and all-day brunch classics. Tucked away on the ground floor of a nondescript residential building between Serangoon and Kovan.",
-        tags: ["wifi", "power"],
+        tags:
+          i % 3 === 0 ? ["wifi", "power"] : i % 5 === 0 ? ["wifi"] : ["power"],
         coordinates: [coordinatesArray[i][0], coordinatesArray[i][1]],
       });
     }
@@ -143,7 +144,7 @@ async function seedReviews(req, res) {
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image:
           "https://www.sussex.ac.uk/wcm/assets/media/271/content/74901.950x631.jpg",
-        tags: ["wifi", "power"],
+        tags: ["wifi", "power", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
@@ -155,7 +156,7 @@ async function seedReviews(req, res) {
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image:
           "https://media.femalemag.com.sg/public/2022/01/cafe-east-coast-commune-1.jpg",
-        tags: ["power"],
+        tags: ["power", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
@@ -165,14 +166,14 @@ async function seedReviews(req, res) {
         rating: Math.round(Math.random() * 10),
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image: "https://media.timeout.com/images/105944239/750/562/image.jpg",
-        tags: ["wifi", "power"],
+        tags: ["wifi", "power", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image:
           "https://upload.wikimedia.org/wikipedia/commons/a/a3/R%C3%B6e_g%C3%A5rd_caf%C3%A9_2.jpg",
-        tags: ["wifi", "lighting"],
+        tags: ["wifi", "lighting", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),
@@ -183,7 +184,7 @@ async function seedReviews(req, res) {
         rating: Math.round(Math.random() * 10),
         review: reviews[Math.ceil(Math.random() * 10) - 1],
         image: "https://media.timeout.com/images/105909866/750/422/image.jpg",
-        tags: ["aircon", "lighting"],
+        tags: ["aircon", "lighting", "withmedia"],
       },
       {
         rating: Math.round(Math.random() * 10),

@@ -28,12 +28,12 @@
 }
 
 .description {
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 5; */
   margin: 15px auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: scroll;
+  /* text-overflow: ellipsis; */
   max-height: 100px;
 }
 

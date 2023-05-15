@@ -1,0 +1,27 @@
+.blocker {
+  height: 23px;
+}
+
+.dropdownContainer {
+  margin: 0 30px;
+}
+
+.dropdownWidth {
+  width: 370px;
+}
+
+.pageHeader {
+  margin-top: 40px;
+  margin-left: 25px;
+  margin-bottom: 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #264343;
+}
+
+.higherHeader {
+  margin-top: 30px;
+}
