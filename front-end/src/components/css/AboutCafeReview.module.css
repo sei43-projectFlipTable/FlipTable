@@ -23,3 +23,7 @@
   border-radius: 30px;
   padding: 3px 4px;
 }
+
+.dropdownWidth {
+  width: 340px;
+}
