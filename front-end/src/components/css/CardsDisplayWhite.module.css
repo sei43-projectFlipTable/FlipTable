@@ -2,13 +2,9 @@
   position: absolute;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  padding: 0px 25px 65px 25px;
-  gap: 8px 20px;
+  padding: 4px 25px 70px;
+  gap: 14px 20px;
   width: 430px;
-  height: 500px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+  max-height: 650px;
   overflow: scroll;
 }
