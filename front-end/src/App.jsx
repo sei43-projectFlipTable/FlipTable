@@ -14,10 +14,11 @@ import UserContext from "./context/user";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
+  const [payload, setPayload] = useState({});
 
   return (
     <>
-      <UserContext.Provider value={{ accessToken, setAccessToken }}>
+      <UserContext.Provider value={{ accessToken, setAccessToken, payload, setPayload }}>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />

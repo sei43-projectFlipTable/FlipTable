@@ -40,7 +40,16 @@ const login = async (req, res) => {
         .json({ status: "error", msg: "cannot find email or password incorrect" });
     }
 
-    const payload = { email: auth.email, role: auth.role };
+    const payload = {
+      name: auth.name,
+      email: auth.email,
+      role: auth.role,
+      savedPlaces: auth.savedPlaces,
+      points: auth.points,
+      referredCount: auth.referredCount,
+      referralCode: auth.referralCode,
+      wasReferred: auth.wasReferred,
+    };
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
       jwtid: uuidv4(),
