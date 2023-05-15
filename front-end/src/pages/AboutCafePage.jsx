@@ -26,7 +26,11 @@ function AboutCafePage() {
 
   async function postCafe() {
     try {
-      const { ok, data } = await fetchData("/api/cafes/" + cafeId, "POST");
+      const { ok, data } = await fetchData(
+        "/api/cafes/" + cafeId,
+        undefined,
+        "POST"
+      );
       if (ok) {
         setCafeData(data);
         setRating(calculateRating(data.reviewRating));
@@ -41,7 +45,11 @@ function AboutCafePage() {
 
   async function postMenu() {
     try {
-      const { ok, data } = await fetchData("/api/menu/" + cafeId, "POST");
+      const { ok, data } = await fetchData(
+        "/api/menu/" + cafeId,
+        undefined,
+        "POST"
+      );
       if (ok) {
         setCafeMenu(data);
       } else {
@@ -55,7 +63,11 @@ function AboutCafePage() {
 
   async function postReviews() {
     try {
-      const { ok, data } = await fetchData("/api/review/" + cafeId, "POST");
+      const { ok, data } = await fetchData(
+        "/api/review/" + cafeId,
+        undefined,
+        "POST"
+      );
       if (ok) {
         setCafeReviews(data);
       } else {
