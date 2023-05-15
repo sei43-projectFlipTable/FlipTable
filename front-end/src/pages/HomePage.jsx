@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import NavBar from "../components/NavBar";
 import PointsAndCashValue from "../components/PointsAndCashValue";
@@ -7,12 +7,12 @@ import { fetchData } from "../helpers/common";
 import AppHeader from "../components/AppHeader";
 import styles from "./css/HomePage.module.css";
 import ReferralBox from "../components/ReferralBox";
+import UserContext from "../context/user";
 
 function HomePage() {
+  const userCtx = useContext(UserContext);
   const [cafes, setCafes] = useState([]);
-  const [coords, setCoords] = useState([
-    1.3240558643021323, 103.64688938000863,
-  ]); //default to west of Singaore
+  const [coords, setCoords] = useState([1.3240558643021323, 103.64688938000863]); //default to west of Singaore
 
   //get user location and set it to coords
 
@@ -36,7 +36,7 @@ function HomePage() {
 
   const getCafes = async () => {
     console.log("getting");
-    const { ok, data } = await fetchData("/api/cafes/");
+    const { ok, data } = await fetchData("/api/cafes/", userCtx.accessToken);
     //sort before setting data
     if (ok) {
       data.sort((a, b) => {
