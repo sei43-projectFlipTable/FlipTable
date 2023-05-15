@@ -1,6 +1,7 @@
 .cafeImage {
   position: fixed;
-  max-width: 430px;
+  width: 430px;
+  height: 330px;
   z-index: -1;
 }
 
