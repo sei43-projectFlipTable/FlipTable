@@ -19,7 +19,7 @@ const UsersSchema = new mongoose.Schema(
       default: Math.random().toString(36).substring(2, 12).toLocaleUpperCase(),
       immutable: true,
     },
-    wasReferred: { type: Boolean },
+    wasReferred: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now, immutable: true },
   },
   { collection: "users" }

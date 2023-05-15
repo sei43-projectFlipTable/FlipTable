@@ -29,16 +29,18 @@ const login = async (req, res) => {
   try {
     const auth = await UserModel.findOne({ email: req.body.email });
     if (!auth) {
-      return res
-        .status(400)
-        .json({ status: "error", msg: "cannot find email or password incorrect" });
+      return res.status(400).json({
+        status: "error",
+        msg: "cannot find email or password incorrect",
+      });
     }
 
     const result = await bcrypt.compare(req.body.password, auth.hash);
     if (!result) {
-      return res
-        .status(401)
-        .json({ status: "error", msg: "cannot find email or password incorrect" });
+      return res.status(401).json({
+        status: "error",
+        msg: "cannot find email or password incorrect",
+      });
     }
 
     const payload = { email: auth.email, role: auth.role };
@@ -59,4 +61,14 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+async function getUsers(req, res) {
+  try {
+    const allUsers = await UserModel.find();
+    res.json(allUsers);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error getting users" });
+  }
+}
+
+module.exports = { register, login, getUsers };
