@@ -59,7 +59,9 @@ function ReferralPage() {
             </div>
           </div>
           <div className={styles.referralCodeFrame}>
-            <div className={styles.referralCode}>FT313301N1</div>
+            <div className={styles.referralCode}>
+              {userCtx.payload.referralCode}
+            </div>
             <div className={styles.referralCodeCopyBtn}>Copy</div>
           </div>
           <div className={styles.actionBtnsFrame}>
