@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import styles from "./css/AboutCafePage.module.css";
 import { calculateRating, fetchData } from "../helpers/common";
@@ -8,9 +8,12 @@ import AboutCafeMenu from "../components/aboutCafePage/AboutCafeMenu";
 import AboutCafeReview from "../components/aboutCafePage/AboutCafeReview";
 import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
+import UserContext from "../context/user";
 
 // CafeId in params
 function AboutCafePage() {
+  const userCtx = useContext(UserContext);
+
   const { cafeId } = useParams();
   // 0 - About, 1 - Menu, 2 - Reviews
   const [cafeData, setCafeData] = useState([]);
@@ -26,11 +29,7 @@ function AboutCafePage() {
 
   async function postCafe() {
     try {
-      const { ok, data } = await fetchData(
-        "/api/cafes/" + cafeId,
-        undefined,
-        "POST"
-      );
+      const { ok, data } = await fetchData("/api/cafes/" + cafeId, userCtx.accessToken, "POST");
       if (ok) {
         setCafeData(data);
         setRating(calculateRating(data.reviewRating));
@@ -45,11 +44,7 @@ function AboutCafePage() {
 
   async function postMenu() {
     try {
-      const { ok, data } = await fetchData(
-        "/api/menu/" + cafeId,
-        undefined,
-        "POST"
-      );
+      const { ok, data } = await fetchData("/api/menu/" + cafeId, userCtx.accessToken, "POST");
       if (ok) {
         setCafeMenu(data);
       } else {
@@ -63,11 +58,7 @@ function AboutCafePage() {
 
   async function postReviews() {
     try {
-      const { ok, data } = await fetchData(
-        "/api/review/" + cafeId,
-        undefined,
-        "POST"
-      );
+      const { ok, data } = await fetchData("/api/review/" + cafeId, userCtx.accessToken, "POST");
       if (ok) {
         setCafeReviews(data);
       } else {
