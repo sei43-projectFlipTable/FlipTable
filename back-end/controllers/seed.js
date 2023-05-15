@@ -45,7 +45,8 @@ async function seedCafes(req, res) {
         openingHours: "10am - 5pm daily\nClosed on mondays",
         description:
           "Delicious specialty coffee and all-day brunch classics. Tucked away on the ground floor of a nondescript residential building between Serangoon and Kovan.",
-        tags: ["wifi", "power"],
+        tags:
+          i % 3 === 0 ? ["wifi", "power"] : i % 5 === 0 ? ["wifi"] : ["power"],
         coordinates: [coordinatesArray[i][0], coordinatesArray[i][1]],
       });
     }
