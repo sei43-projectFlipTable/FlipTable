@@ -12,6 +12,7 @@ function FilteredDisplay(props) {
             id={item._id}
             name={item.name}
             address={item.address}
+            image={item.image}
             reviewRating={item.reviewRating}
           />
         );
