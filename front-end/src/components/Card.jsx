@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const Card = (props) => {
   const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
-      fontSize: 19,
       color: "#264343",
     },
   });
@@ -22,17 +21,6 @@ const Card = (props) => {
           <div className={styles.cardTitle}>{props.name}</div>
           <div className={styles.cardCaption}>{props.address}</div>
           <div className={styles.cardRating}>
-            {/* <Rating
-            name="half-rating-read"
-            defaultValue={
-              props.reviewRating.ratingTotal /
-              props.reviewRating.reviewCount /
-              2
-            }
-            precision={0.5}
-            sx={{ color: "#264343", fontSize: 19 }}
-            readOnly
-          /> */}
             <StyledRating
               name="customized-color"
               defaultValue={
@@ -41,8 +29,8 @@ const Card = (props) => {
                 2
               }
               precision={0.5}
-              icon={<StarRoundedIcon />}
-              emptyIcon={<StarOutlineRoundedIcon />}
+              icon={<StarRoundedIcon sx={{ fontSize: 20 }} />}
+              emptyIcon={<StarOutlineRoundedIcon sx={{ fontSize: 20 }} />}
               readOnly
             />
           </div>

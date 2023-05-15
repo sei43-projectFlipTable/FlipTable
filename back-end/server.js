@@ -8,6 +8,7 @@ const cafe = require("./routers/cafes");
 const cafeMenu = require("./routers/cafemenuitem");
 const reviews = require("./routers/cafereview");
 const seed = require("./routers/seed");
+const auth = require("./routers/auth");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/seed", seed);
 app.use("/api", cafe);
 app.use("/api/menu", cafeMenu);
 app.use("/api/review", reviews);
+app.use("/", auth);
 
 const PORT = process.env.PORT || 5001;
 
