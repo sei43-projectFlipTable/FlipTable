@@ -1,8 +1,9 @@
-export async function fetchData(endpoint, method, body) {
+export async function fetchData(endpoint, token, method, body) {
   const res = await fetch(import.meta.env.VITE_SERVER + endpoint, {
     method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     body: JSON.stringify(body),
   });
