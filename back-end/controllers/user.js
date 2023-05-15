@@ -9,7 +9,6 @@ const register = async (req, res) => {
     if (auth) {
       return res.status(400).json({ status: "error", msg: "duplicate email" });
     }
-    console.log("req is ", req.body);
     const hash = await bcrypt.hash(req.body.password, 12);
 
     await UserModel.create({
@@ -43,7 +42,16 @@ const login = async (req, res) => {
       });
     }
 
-    const payload = { email: auth.email, role: auth.role };
+    const payload = {
+      name: auth.name,
+      email: auth.email,
+      role: auth.role,
+      savedPlaces: auth.savedPlaces,
+      points: auth.points,
+      referredCount: auth.referredCount,
+      referralCode: auth.referralCode,
+      wasReferred: auth.wasReferred,
+    };
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
       jwtid: uuidv4(),
