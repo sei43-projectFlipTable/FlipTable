@@ -1,3 +1,9 @@
+.ratingContainer {
+  display: flex;
+  max-height: 105px;
+  column-gap: 20px;
+}
+
 .ratingRow {
   display: flex;
   max-width: 245px;
@@ -15,4 +21,17 @@
   font-size: 20px;
   line-height: 30px;
   letter-spacing: 0.15px;
+}
+
+.ratingDescription {
+  max-width: 245px;
+  max-height: 75px;
+  overflow: scroll;
+}
+
+.ratingImage {
+  width: 85px;
+  height: 85px;
+  border-radius: 8px;
+  justify-content: end;
 }
