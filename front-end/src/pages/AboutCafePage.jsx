@@ -9,6 +9,8 @@ import AboutCafeReview from "../components/aboutCafePage/AboutCafeReview";
 import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
 import UserContext from "../context/user";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 // CafeId in params
 function AboutCafePage() {
@@ -20,6 +22,9 @@ function AboutCafePage() {
   const [cafeReviews, setCafeReviews] = useState([]);
   const [page, setPage] = useState(0);
   const [rating, setRating] = useState(0);
+  const [favourited, setFavourited] = useState(
+    userCtx.payload.savedCafes?.includes(cafeId)
+  );
   const aboutPages = [
     <AboutCafe cafeId={cafeId} cafeData={cafeData} rating={rating} />,
     <AboutCafeMenu cafeId={cafeId} cafeMenu={cafeMenu} />,
@@ -81,6 +86,14 @@ function AboutCafePage() {
     }
   }
 
+  function handleFavourite() {
+    setFavourited(true);
+  }
+
+  function handleUnfavourite() {
+    setFavourited(false);
+  }
+
   useEffect(() => {
     postCafe();
     postMenu();
@@ -91,6 +104,20 @@ function AboutCafePage() {
     <>
       <PhoneTopBar />
       <BackButton positionStyle={styles.backbuttonpos} />
+      {favourited ? (
+        <div className={styles.favouriteButton} onClick={handleUnfavourite}>
+          <FavoriteIcon sx={{ color: "#1B4444" }} />
+        </div>
+      ) : (
+        <>
+          <div className={styles.favouriteButtonBg}>
+            <FavoriteIcon sx={{ color: "#ffffff" }} />
+          </div>
+          <div className={styles.favouriteButton} onClick={handleFavourite}>
+            <FavoriteBorderIcon sx={{ color: "#1B4444" }} />
+          </div>
+        </>
+      )}
       <img className={styles.cafeImage} src={cafeData.image} />
       <div className={styles.blocker} />
       <div className={styles.curvedTop}>

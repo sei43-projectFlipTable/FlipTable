@@ -44,7 +44,6 @@ function LoginPage() {
         userCtx.setAccessToken(data.access);
         const decoded = jwtDecode(data.access);
         userCtx.setPayload(decoded);
-        console.log(decoded);
         navigate("/home");
         alert("login successful");
       } else {

@@ -94,7 +94,9 @@ function AboutCafe(props) {
         <div>
           <AccessTimeOutlinedIcon sx={{ color: "#E88252" }} />
         </div>
-        <div>{handleNewline(props.cafeData.openingHours)}</div>
+        <div className={styles.openingHours}>
+          {handleNewline(props.cafeData.openingHours)}
+        </div>
       </div>
       <div className={styles.description}>{props.cafeData.description}</div>
       <hr />
