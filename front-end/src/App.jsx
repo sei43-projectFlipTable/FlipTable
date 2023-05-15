@@ -6,7 +6,6 @@ import ScanPage from "./pages/ScanPage";
 import RedeemPage from "./pages/RedeemPage";
 import ReferralPage from "./pages/ReferralPage";
 import ExplorePage from "./pages/ExplorePage";
-import ExploreResultsPage from "./pages/ExploreResultsPage";
 import AboutCafePage from "./pages/AboutCafePage";
 import SavedCafesPage from "./pages/SavedCafesPage";
 import ProfilePage from "./pages/ProfilePage";
