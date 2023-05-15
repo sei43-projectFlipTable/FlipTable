@@ -5,6 +5,10 @@
   bottom: 75px;
 }
 
+.reviewContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .addTag {
   display: inline-block;
   align-self: center;

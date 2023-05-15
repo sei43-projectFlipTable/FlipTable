@@ -20,7 +20,7 @@ function ReviewCard(props) {
     "Excellent",
   ];
   return (
-    <div>
+    <div className={styles.ratingContainer}>
       <div>
         <div className={styles.ratingRow}>
           <h6 className={styles.ratingHeader}>
@@ -35,8 +35,11 @@ function ReviewCard(props) {
             readOnly
           />
         </div>
-        <div>{props.children}</div>
+        <div className={styles.ratingDescription}>{props.children}</div>
       </div>
+      {props.image != "" && (
+        <img src={props.image} className={styles.ratingImage} />
+      )}
     </div>
   );
 }
