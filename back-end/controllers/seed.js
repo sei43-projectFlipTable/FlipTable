@@ -35,7 +35,7 @@ async function seedCafes(req, res) {
         name: "The Zen Garden Café",
         address: "Choa Chu Kang Street 51 #01-24",
         image:
-          "https://lh5.googleusercontent.com/p/AF1QipN0peWRgYtxRizAUVjSEvduiz1iOxUYgJrMJVZw=w497-h240-k-no",
+          "https://lh5.googleusercontent.com/p/AF1QipPMPDCAt7reAQV40wmGUFXyh25hyGdu0vb3fzua=w408-h408-k-no",
         openingHours: "9.30am - 9.15pm daily\nClosed on weekends",
         description:
           "Discover tranquility in this serene café adorned with lush greenery and soothing music. Enjoy organic teas, healthy smoothies, and vegetarian-friendly dishes that nourish both body and soul.",
@@ -43,14 +43,14 @@ async function seedCafes(req, res) {
         coordinates: [1.3922266215830152, 103.74309460938115],
       },
       {
-        name: "Café Caramel",
+        name: "MADLYGOOD",
         address: "2 Jurong East Central 1, #01-03 JCube",
         image:
-          "https://lh5.googleusercontent.com/p/AF1QipN0peWRgYtxRizAUVjSEvduiz1iOxUYgJrMJVZw=w497-h240-k-no",
+          "https://lh5.googleusercontent.com/p/AF1QipM_TfJdDeByBEHOKEohHeNdiRathtY_G_ckXZwk=w408-h276-k-no",
         openingHours:
           "10am - 10pm weekdays\n11am - 10pm weekends\nClosed on Mondays and Tuesdays",
         description:
-          "Breathe in the ocean breeze as you sip your favorite brew at Café Caramel. This coastal-inspired café offers a refreshing escape from the everyday hustle. The soothing colors and nautical accents create a beachside ambiance that complements our signature cold brews and tropical-inspired pastries. With its relaxed atmosphere and panoramic views, The Coastal Bean is the perfect spot to unwind and enjoy a taste of coastal living.",
+          "Breathe in the ocean breeze as you sip your favorite brew at MADLYGOOD. This coastal-inspired café offers a refreshing escape from the everyday hustle. The soothing colors and nautical accents create a beachside ambiance that complements our signature cold brews and tropical-inspired pastries. With its relaxed atmosphere and panoramic views, The Coastal Bean is the perfect spot to unwind and enjoy a taste of coastal living.",
         tags: ["lighting", "aircon"],
         coordinates: [1.3334652208574296, 103.7404416382165],
       },
@@ -122,7 +122,7 @@ async function seedCafes(req, res) {
       },
     ];
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < cafeItems.length; i++) {
       const newCafe = cafeItems[i];
       newCafe.priceRating = i % 3 === 0 ? 3 : i % 3;
       newCafe.reviewRating = { ratingTotal: i + 1, reviewCount: (i % 2) + 1 };
