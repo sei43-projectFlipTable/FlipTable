@@ -1,0 +1,21 @@
+.reviewContainer {
+  overflow: scroll;
+  max-height: 320px;
+  max-width: 350px;
+  bottom: 75px;
+}
+
+.addTag {
+  display: inline-block;
+  align-self: center;
+  justify-items: center;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  color: #264343;
+  border: 2px solid #264343;
+  border-radius: 30px;
+  padding: 3px 4px;
+}

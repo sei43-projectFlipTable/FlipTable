@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import NavBar from "../components/NavBar";
+import PointsAndCashValue from "../components/PointsAndCashValue";
 import CardsDisplay from "../components/CardsDisplay";
 import { fetchData } from "../helpers/common";
+import AppHeader from "../components/AppHeader";
+import styles from "./css/HomePage.module.css";
+import ReferralBox from "../components/ReferralBox";
 
 function HomePage() {
   const [cafes, setCafes] = useState([]);
@@ -29,17 +33,12 @@ function HomePage() {
     const convertedD = Math.round(d * 100000) / 100; //meters
     return convertedD;
   };
-  
+
   const getCafes = async () => {
+    console.log("getting");
     const { ok, data } = await fetchData("/api/cafes/");
     //sort before setting data
     if (ok) {
-      navigator.geolocation.getCurrentPosition((info) => {
-        let lat = info.coords.latitude;
-        let long = info.coords.longitude;
-        setCoords([lat, long]);
-      });
-
       data.sort((a, b) => {
         return (
           haversine(coords[0], a.coordinates[0], coords[1], a.coordinates[1]) -
@@ -53,14 +52,28 @@ function HomePage() {
   };
 
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition((info) => {
+      let lat = info.coords.latitude;
+      let long = info.coords.longitude;
+      setCoords([lat, long]);
+    });
+  }, []);
+
+  useEffect(() => {
     getCafes();
   }, [coords]);
-
 
   return (
     <>
       <PhoneTopBar />
-      <CardsDisplay cafes={cafes} />
+      <AppHeader />
+      <PointsAndCashValue />
+      <div className={styles.emptyDiv}></div>
+      <div className={styles.scrollable}>
+        <ReferralBox />
+        <div className={styles.nearMeTitle}>Cafes Near Me</div>
+        <CardsDisplay cafes={cafes} />
+      </div>
       <NavBar />
     </>
   );

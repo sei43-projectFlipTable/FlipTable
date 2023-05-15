@@ -13,6 +13,7 @@
   background: #264343;
   border-radius: 6px 6px 0px 0px;
   width: 430px;
+  z-index: 10;
 }
 
 .iconFrame {
@@ -28,6 +29,24 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+}
+
+.emptyFrame {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 15px;
+  width: 66px;
+  height: 66px;
+  background: #264343;
+  border-radius: 100px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  z-index: -1;
+  left: 182px;
 }
 
 .iconLabel {
@@ -53,14 +72,19 @@
   padding: 3px 15px;
   width: 66px;
   height: 66px;
-  background: #264343;
   border-radius: 100px;
   flex: none;
   order: 1;
   flex-grow: 0;
 }
+
 .active {
   text-decoration: "none";
   background: #839788;
   border-radius: 6px;
+}
+
+.activeScan {
+  background: #839788;
+  border-radius: 100px;
 }

@@ -61,6 +61,7 @@ function NavBar() {
           <div className={styles.iconLabel}>Profile</div>
         </div>
       </NavLink>
+      <div className={styles.emptyFrame}></div>
     </div>
   );
 }

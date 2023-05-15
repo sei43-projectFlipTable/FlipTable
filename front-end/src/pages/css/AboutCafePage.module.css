@@ -1,20 +1,22 @@
-.cafeImage > img {
+.cafeImage {
   position: fixed;
   max-width: 430px;
   z-index: -1;
 }
 
-.blocker,
-.curvedTop,
-.content {
-  width: 430px;
+.backbuttonpos {
+  left: 25px;
+  top: 70px;
 }
 
 .blocker {
-  height: 322px;
+  height: 100vh;
+  width: 430px;
+  height: 280px;
 }
 
 .curvedTop {
+  width: 430px;
   border-radius: 30px 30px 0px 0px;
   background-color: #ffffff;
   height: 600px;
@@ -24,6 +26,11 @@
   padding: 38px 40px 0px;
 }
 
+.aboutNavBar {
+  display: flex;
+  margin-bottom: 25px;
+}
+
 .tab {
   font-family: "Poppins", sans-serif;
   font-style: normal;
@@ -31,4 +38,13 @@
   font-size: 14px;
   line-height: 21px;
   width: 115px;
+  color: #264343;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.activeTab {
+  color: #e88252;
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }
