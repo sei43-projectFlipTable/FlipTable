@@ -7,6 +7,7 @@ const collectionImg = require("./routers/collectionImg");
 const cafe = require("./routers/cafes");
 const cafeMenu = require("./routers/cafemenuitem");
 const reviews = require("./routers/cafereview");
+const auth = require("./routers/auth");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/scan", collectionImg);
 app.use("/api", cafe);
 app.use("/api/menu", cafeMenu);
 app.use("/api/review", reviews);
+app.use("/", auth);
 
 const PORT = process.env.PORT || 5001;
 
