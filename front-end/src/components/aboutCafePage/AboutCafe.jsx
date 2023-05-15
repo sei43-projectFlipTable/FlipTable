@@ -99,13 +99,6 @@ function AboutCafe(props) {
       <div className={styles.description}>{props.cafeData.description}</div>
       <hr />
       <h5 className={styles.ratingHeader}>Remote-Working Rating</h5>
-      {/* <Rating
-        name="remote-working-rating"
-        value={props.rating}
-        precision={0.5}
-        sx={{ color: "#E88252", width: "125px", marginTop: "17px" }}
-        readOnly
-      /> */}
       <StyledRating
         name="remote-working-rating"
         defaultValue={props.rating}

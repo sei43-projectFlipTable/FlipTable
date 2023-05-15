@@ -26,14 +26,6 @@ function ReviewCard(props) {
           <h6 className={styles.ratingHeader}>
             {ratingGrades[Math.round(props.rating / 2)]}
           </h6>
-          {/* <Rating
-            name="review-rating"
-            value={props.rating / 2}
-            precision={0.5}
-            sx={{ color: "#264343", width: "106px" }}
-            size="small"
-            readOnly
-          /> */}
           <StyledRating
             name="customized-color"
             defaultValue={props.rating / 2}
