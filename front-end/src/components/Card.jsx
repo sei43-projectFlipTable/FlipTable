@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const Card = (props) => {
   const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
-      fontSize: 19,
       color: "#264343",
     },
   });

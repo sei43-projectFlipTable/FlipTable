@@ -11,8 +11,16 @@ import { Rating } from "@mui/material";
 import styles from "../css/AboutCafe.module.css";
 import { handleNewline } from "../../helpers/common";
 import { amenities } from "../../helpers/amenities";
+import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import { styled } from "@mui/material/styles";
 
 function AboutCafe(props) {
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: "#E88252",
+    },
+  });
   const amenitiesComponents = {
     wifi: (
       <div className={styles.tagset} key="amenity1">
@@ -90,12 +98,21 @@ function AboutCafe(props) {
       </div>
       <div className={styles.description}>{props.cafeData.description}</div>
       <hr />
-      <h5>Remote-Working Rating</h5>
-      <Rating
+      <h5 className={styles.ratingHeader}>Remote-Working Rating</h5>
+      {/* <Rating
         name="remote-working-rating"
         value={props.rating}
         precision={0.5}
         sx={{ color: "#E88252", width: "125px", marginTop: "17px" }}
+        readOnly
+      /> */}
+      <StyledRating
+        name="remote-working-rating"
+        defaultValue={props.rating}
+        precision={0.5}
+        sx={{ width: "145px" }}
+        icon={<StarRoundedIcon sx={{ fontSize: 40 }} />}
+        emptyIcon={<StarOutlineRoundedIcon sx={{ fontSize: 40 }} />}
         readOnly
       />
       <div className={styles.primaryTags}>
