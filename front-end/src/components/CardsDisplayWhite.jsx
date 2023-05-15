@@ -5,7 +5,7 @@ import Card from "./Card";
 function CardsDisplayWhite(props) {
   return (
     <div className={styles.display}>
-      {props.cafes.map((cafe) => {
+      {props.cafeData.map((cafe) => {
         return (
           <Card
             key={cafe._id}

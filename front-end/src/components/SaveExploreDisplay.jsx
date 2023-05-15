@@ -24,13 +24,9 @@ function SaveExploreDisplay(props) {
   }, [props.cafeData]);
 
   function selectReviews(cafeArr) {
-    if (selectedTag != "") {
-      return cafeArr.filter((item) => {
-        return item.tags.includes(selectedTag);
-      });
-    } else {
-      return cafeArr;
-    }
+    return cafeArr.filter((item) => {
+      return item.tags.includes(selectedTag);
+    });
   }
 
   function handleSelect(value) {
@@ -61,8 +57,8 @@ function SaveExploreDisplay(props) {
       >
         {filtered ? "Results" : props.children}
       </h6>
-      {!filtered && <CardsDisplayWhite cafes={props.cafeData} />}
-      {filtered && <FilteredDisplay cafes={selectReviews(props.cafeData)} />}
+      {!filtered && <CardsDisplayWhite cafeData={props.cafeData} />}
+      {filtered && <FilteredDisplay cafeData={selectReviews(props.cafeData)} />}
     </>
   );
 }
