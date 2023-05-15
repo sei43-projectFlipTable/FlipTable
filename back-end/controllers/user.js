@@ -28,16 +28,18 @@ const login = async (req, res) => {
   try {
     const auth = await UserModel.findOne({ email: req.body.email });
     if (!auth) {
-      return res
-        .status(400)
-        .json({ status: "error", msg: "cannot find email or password incorrect" });
+      return res.status(400).json({
+        status: "error",
+        msg: "cannot find email or password incorrect",
+      });
     }
 
     const result = await bcrypt.compare(req.body.password, auth.hash);
     if (!result) {
-      return res
-        .status(401)
-        .json({ status: "error", msg: "cannot find email or password incorrect" });
+      return res.status(401).json({
+        status: "error",
+        msg: "cannot find email or password incorrect",
+      });
     }
 
     const payload = {
@@ -67,4 +69,37 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+async function seedUsers(req, res) {
+  try {
+    await UserModel.deleteMany();
+    await UserModel.create([
+      {
+        name: "Mary",
+        email: "Mary@email.com",
+        hash: "1234",
+        role: "",
+        savedPlace: "",
+        points: 495,
+        referredCount: 10,
+        referralCode: "",
+        wasReferred: true,
+      },
+    ]);
+    res.json({ status: "ok", message: "cafes seeded" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error seeding users" });
+  }
+}
+
+async function getUser(req, res) {
+  try {
+    const getUsers = await UserModel.find();
+    res.json(getUsers);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error getting points" });
+  }
+}
+
+module.exports = { register, login, seedUsers, getUser };
