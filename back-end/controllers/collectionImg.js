@@ -1,5 +1,4 @@
 const CollectionImg = require("../models/CollectionImg");
-// const fs = require("fs");
 
 const saveImg = async (req, res) => {
   try {
