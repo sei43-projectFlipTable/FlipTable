@@ -126,6 +126,8 @@ async function seedCafes(req, res) {
       const newCafe = cafeItems[i];
       newCafe.priceRating = i % 3 === 0 ? 3 : i % 3;
       newCafe.reviewRating = { ratingTotal: i + 1, reviewCount: (i % 2) + 1 };
+
+      await CafesModel.create(newCafe);
     }
     res.json({ status: "ok", message: "cafes seeded" });
   } catch (error) {
