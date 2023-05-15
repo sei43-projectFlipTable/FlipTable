@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./css/PointsAndCashValue.module.css";
+import { Link } from "react-router-dom";
 
 function ReferralBox() {
   return (
@@ -15,11 +16,7 @@ function ReferralBox() {
               </div>
             </div>
             <div className={styles.referralGiftSpace}>
-              <img
-                src="/giftbox.png"
-                alt="giftbox"
-                className={styles.referralGiftIcon}
-              />
+              <img src="/giftbox.png" style={{ height: 25, width: 25 }} />
             </div>
           </div>
 
@@ -30,9 +27,11 @@ function ReferralBox() {
                 FlipTable!
               </div>
             </div>
-            <div className={styles.referralButtonSpace}>
-              <div className={styles.referralButton}>Earn Now</div>
-            </div>
+            <Link to="/referral" style={{ textDecoration: "none" }}>
+              <div className={styles.referralButtonSpace}>
+                <div className={styles.referralButton}>Earn Now</div>
+              </div>
+            </Link>
           </div>
         </div>
 
