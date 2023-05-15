@@ -9,7 +9,6 @@ const register = async (req, res) => {
     if (auth) {
       return res.status(400).json({ status: "error", msg: "duplicate email" });
     }
-    console.log("req is ", req.body);
     const hash = await bcrypt.hash(req.body.password, 12);
 
     await UserModel.create({
