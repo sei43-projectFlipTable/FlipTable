@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const UsersSchema = new mongoose.Schema(
   {
-    name: { type: String, require: true },
+    name: { type: String },
     email: { type: String, require: true },
     hash: { type: String, require: true },
-    role: { type: String },
+    role: { type: String, default: "user" },
     savedPlaces: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Cafes",
@@ -16,9 +16,11 @@ const UsersSchema = new mongoose.Schema(
     //returns a random string of 8 characters
     referralCode: {
       type: String,
-      default: Math.random().toString(36).substring(2, 9),
+      default: Math.random().toString(36).substring(2, 12).toLocaleUpperCase(),
+      immutable: true,
     },
-    wasReferred: { type: Boolean },
+    wasReferred: { type: Boolean, default: false },
+    created_at: { type: Date, default: Date.now, immutable: true },
   },
   { collection: "users" }
 );

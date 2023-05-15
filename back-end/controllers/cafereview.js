@@ -13,13 +13,22 @@ async function getReviews(req, res) {
 
 async function putReview(req, res) {
   try {
-    await ReviewModel.create({
-      rating: req.body.rating,
-      review: req.body.review,
-      ...(req.body.image && { image: req.body.image }),
-      cafe: req.params.cafeId,
-      tags: req.body.tags,
-    });
+    if (req.body.image) {
+      await ReviewModel.create({
+        rating: req.body.rating,
+        review: req.body.review,
+        image: req.body.image,
+        cafe: req.params.cafeId,
+        tags: [...req.body.tags, "withmedia"],
+      });
+    } else {
+      await ReviewModel.create({
+        rating: req.body.rating,
+        review: req.body.review,
+        cafe: req.params.cafeId,
+        tags: [...req.body.tags],
+      });
+    }
 
     const targetCafe = await CafesModel.findById(req.params.cafeId);
     targetCafe.reviewRating.reviewCount += 1;
