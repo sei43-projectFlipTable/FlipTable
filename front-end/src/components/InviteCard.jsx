@@ -47,11 +47,11 @@ function InviteCard(props) {
       console.log(error.message);
     }
   };
-
+  const splitEmail = props.email.split("@");
   return (
     <div className={styles.nameTextFrame}>
       <div className={styles.profilePic}></div>
-      <div className={styles.nameText}>{props.email}</div>
+      <div className={styles.nameText}>{splitEmail[0]}</div>
       <button
         className={styles.inviteBtn}
         style={{ border: "none" }}
