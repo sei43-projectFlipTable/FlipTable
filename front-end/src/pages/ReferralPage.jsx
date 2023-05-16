@@ -27,7 +27,7 @@ function ReferralPage() {
 
   //fetch users
   const getUsers = async () => {
-    const { ok, data } = await fetchData("/users/");
+    const { ok, data } = await fetchData("/users");
     //filter out only users with wasReferred:false
     const onlyNotReferredUsers = data.filter((user) => {
       return user.wasReferred === false && user.email !== userCtx.payload.email;
@@ -40,8 +40,10 @@ function ReferralPage() {
   };
   //run fetch on mount
   useEffect(() => {
-    getUsers();
-  }, []);
+    if (userCtx.accessToken != "") {
+      getUsers();
+    }
+  }, [userCtx.accessToken]);
 
   //states for copy button
   const [buttonText, setButtonText] = useState("Copy");
@@ -117,13 +119,13 @@ function ReferralPage() {
             <div className={styles.referralHistoryHeader}>Referral History</div>
             <div className={styles.referralStatsFrame}>
               <div className={styles.referralUsageFrame}>
-                <div>1</div>
+                <div>{userCtx.payload.referredCount}</div>
                 <div className={styles.referralsUsedText}>
                   Friend(s) have used your referral code
                 </div>
               </div>
               <div className={styles.referralPointsEarnedFrame}>
-                <div>500</div>
+                <div>{userCtx.payload.referredCount * 500}</div>
                 <div className={styles.referralsUsedText}>
                   Points earned through referrals
                 </div>
@@ -170,6 +172,7 @@ function ReferralPage() {
                     id={user._id}
                     email={user.email}
                     referredCount={user.referredCount}
+                    getUsers={getUsers}
                   />
                 );
               })}

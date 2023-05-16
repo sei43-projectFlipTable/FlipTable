@@ -37,7 +37,6 @@ function HomePage() {
   };
 
   const getCafes = async () => {
-    console.log("getting");
     const { ok, data } = await fetchData("/api/cafes/", userCtx.accessToken);
     //sort before setting data
     if (ok) {
@@ -54,15 +53,19 @@ function HomePage() {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((info) => {
-      let lat = info.coords.latitude;
-      let long = info.coords.longitude;
-      setCoords([lat, long]);
-    });
-  }, []);
+    if (userCtx.accessToken != "") {
+      navigator.geolocation.getCurrentPosition((info) => {
+        let lat = info.coords.latitude;
+        let long = info.coords.longitude;
+        setCoords([lat, long]);
+      });
+    }
+  }, [userCtx.accessToken]);
 
   useEffect(() => {
-    getCafes();
+    if (userCtx.accessToken != "") {
+      getCafes();
+    }
   }, [coords]);
 
   return (
