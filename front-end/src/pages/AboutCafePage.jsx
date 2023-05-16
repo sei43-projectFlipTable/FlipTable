@@ -116,7 +116,7 @@ function AboutCafePage() {
         userCtx.accessToken,
         "PATCH",
         {
-          email: userCtx.payload.email,
+          id: userCtx.payload.id,
           savedPlaces: newSavedPlaces,
         }
       );

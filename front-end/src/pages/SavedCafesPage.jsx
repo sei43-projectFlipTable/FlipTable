@@ -14,15 +14,15 @@ function SavedCafesPage() {
   async function getUserCafes() {
     try {
       const { ok, data } = await fetchData(
-        "/user",
+        "/user/cafes",
         userCtx.accessToken,
         "POST",
         {
-          email: userCtx.payload.email,
+          id: userCtx.payload.id,
         }
       );
       if (ok) {
-        setCafeData(data.savedPlaces);
+        setCafeData(data);
       } else {
         throw new Error(data);
       }
