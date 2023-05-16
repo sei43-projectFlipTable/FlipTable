@@ -8,7 +8,7 @@
   display: flex;
   grid-area: 1/2/2/5;
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 600;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -39,8 +39,17 @@
 
 .cameraView {
   grid-area: 3/1/6/6;
-
   margin-bottom: 30px;
+}
+
+.redeemPrompt {
+  display: flex;
+  flex-direction: column;
+  /* margin: 45px; */
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-weight: 600;
 }
 
 .redeemAmt {
@@ -55,10 +64,20 @@
   font-size: 16px;
   line-height: 24px;
   outline: none;
+  font-weight: 600;
 }
 
-.redeemAmt:invalid {
-  border: 3px solid red;
+.redeemHeader {
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.15px;
+  margin-bottom: 10px;
+}
+
+.redeemAmount {
+  font-size: 34px;
+  line-height: 51px;
+  color: #e88252;
 }
 
 .helpPopUp {
