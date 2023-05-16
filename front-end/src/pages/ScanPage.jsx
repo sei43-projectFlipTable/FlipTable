@@ -90,39 +90,49 @@ function ScanPage() {
     outline: 0,
   };
 
-  const saveImg = async (img) => {
-    const res = await fetch(import.meta.env.VITE_SERVER + "/scan/img", {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        receipt: img,
-      }),
-    });
+  // const saveImg = async (img) => {
+  //   const res = await fetch(import.meta.env.VITE_SERVER + "/scan/img", {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       receipt: img,
+  //     }),
+  //   });
 
-    if (res.status === 200) {
+  //   if (res.status === 200) {
+  //     alert("image saved");
+  //   } else alert("an error has occured");
+  // };
+  const saveImg = async (img) => {
+    const { ok, data } = await fetchData("/scan/img", userCtx.accessToken, "PUT", { receipt: img });
+
+    if (ok) {
       alert("image saved");
     } else alert("an error has occured");
   };
 
-  const updatePoints = async (value) => {
+  const collectPoints = async (value) => {
     try {
-      const totalpoints = userCtx.payload.points + value * 10;
+      const userPoints = await fetchData("/user", userCtx.accessToken, "POST", {
+        id: userCtx.payload.id,
+      });
+
+      totalPoints = userPoints.points + value * 10;
+
       const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        email: userCtx.payload.email,
-        points: totalpoints,
+        id: userCtx.payload.id,
+        points: totalPoints,
       });
 
       if (ok) {
         alert("points updated");
-        const updatedPoints = { ...userCtx.payload, points: data.points };
-        userCtx.setPayload(updatedPoints);
       } else {
         throw new Error(data);
       }
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -131,7 +141,7 @@ function ScanPage() {
     if (!amount) {
       alert("cannot submit empty field");
     } else {
-      updatePoints(amount);
+      collectPoints(amount);
       setAmountSubmitted(true);
     }
   };

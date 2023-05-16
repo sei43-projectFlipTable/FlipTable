@@ -99,42 +99,17 @@ async function getUsers(req, res) {
   }
 }
 
-async function seedUsers(req, res) {
-  try {
-    await UserModel.deleteMany();
-    await UserModel.create([
-      {
-        name: "Mary",
-        email: "Mary@email.com",
-        hash: "1234",
-        role: "",
-        savedPlace: "",
-        points: 495,
-        referredCount: 10,
-        referralCode: "",
-        wasReferred: true,
-      },
-    ]);
-    res.json({ status: "ok", message: "cafes seeded" });
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", message: "error seeding users" });
-  }
-}
-
 const patchUser = async (req, res) => {
   try {
     const updateInfo = {};
     if (req.body.name) updateInfo.name = req.body.name;
     if (req.body.savedPlaces) updateInfo.savedPlaces = req.body.savedPlaces;
     if (req.body.points) updateInfo.points = req.body.points;
-    if (req.body.referredCount)
-      updateInfo.referredCount = req.body.referredCount;
+    if (req.body.referredCount) updateInfo.referredCount = req.body.referredCount;
     if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
 
     await UserModel.findByIdAndUpdate(req.body.id, updateInfo);
 
-    // res.json({ status: "ok", msg: "user updated" });
     res.json(updateInfo);
   } catch (error) {
     console.log(error.message);
@@ -155,18 +130,14 @@ const postUser = async (req, res) => {
 
 async function postSavedCafes(req, res) {
   try {
-    const targetUserCafes = await UserModel.findById(req.body.id).select(
-      "savedPlaces"
-    );
+    const targetUserCafes = await UserModel.findById(req.body.id).select("savedPlaces");
     const cafeArray = await CafesModel.find({
       _id: { $in: targetUserCafes.savedPlaces },
     });
     res.json(cafeArray);
   } catch (error) {
     console.error(error.message);
-    res
-      .status(400)
-      .json({ status: "error", message: "error getting saved places" });
+    res.status(400).json({ status: "error", message: "error getting saved places" });
   }
 }
 
@@ -174,7 +145,6 @@ module.exports = {
   register,
   login,
   refresh,
-  seedUsers,
   getUsers,
   patchUser,
   postUser,
