@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import NavBar from "../components/NavBar";
 import styles from "./css/ReferralPage.module.css";
-
-import { Drawer, Box, Typography } from "@mui/material";
+import { fetchData } from "../helpers/common";
+import { Drawer, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import InviteCard from "../components/InviteCard";
+import BackButton from "../components/BackButton";
+import UserContext from "../context/user";
 
 function ReferralPage() {
+  const userCtx = useContext(UserContext);
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
   const toggleInviteDrawer = (anchor, open) => () => {
     setInviteDrawer({ [anchor]: open });
@@ -17,8 +22,27 @@ function ReferralPage() {
     setShareDrawer({ [anchor]: open });
   };
 
+  const [users, setUsers] = useState([]);
+  const getUsers = async () => {
+    const { ok, data } = await fetchData("/users/");
+    //filter out only users with wasReferred:false
+    const onlyNotReferredUsers = data.filter((user) => {
+      return user.wasReferred === false && user.email !== userCtx.payload.email;
+    });
+    if (ok) {
+      setUsers(onlyNotReferredUsers);
+    } else {
+      console.log(data);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <>
+      <BackButton positionStyle={styles.backbuttonpos} />
       <PhoneTopBar />
       <AppHeader />
       <div className={styles.referralHeaderFrame}>
@@ -35,7 +59,9 @@ function ReferralPage() {
             </div>
           </div>
           <div className={styles.referralCodeFrame}>
-            <div className={styles.referralCode}>FT313301N1</div>
+            <div className={styles.referralCode}>
+              {userCtx.payload.referralCode}
+            </div>
             <div className={styles.referralCodeCopyBtn}>Copy</div>
           </div>
           <div className={styles.actionBtnsFrame}>
@@ -85,6 +111,17 @@ function ReferralPage() {
         BackdropProps={{ invisible: true }}
         PaperProps={{ elevation: 0, style: { backgroundColor: "transparent" } }}
       >
+        <IconButton
+          sx={{
+            bgcolor: "#264343",
+            position: "absolute",
+            right: "30px",
+            top: "30px",
+          }}
+          onClick={toggleInviteDrawer("bottom", false)}
+        >
+          <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+        </IconButton>
         <div className={styles.inviteDrawer}>
           <div className={styles.inviteDrawerHeaderFrame}>
             <div className={styles.inviteDrawerHeader}>Invite a Friend!</div>
@@ -92,6 +129,11 @@ function ReferralPage() {
               src="/custom_icons/SearchBar.png"
               className={styles.searchBar}
             />
+            <div className={styles.friendsList}>
+              {users.map((user) => {
+                return <InviteCard key={user._id} email={user.email} />;
+              })}
+            </div>
           </div>
         </div>
         <NavBar />
@@ -106,15 +148,26 @@ function ReferralPage() {
         BackdropProps={{ invisible: true }}
         PaperProps={{ elevation: 0, style: { backgroundColor: "transparent" } }}
       >
+        <IconButton
+          sx={{
+            bgcolor: "#264343",
+            position: "absolute",
+            right: "30px",
+            top: "30px",
+          }}
+          onClick={toggleShareDrawer("bottom", false)}
+        >
+          <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+        </IconButton>
         <div className={styles.inviteDrawer}>
-          <div className={styles.inviteDrawerHeaderFrame}>
-            <div className={styles.inviteDrawerHeader}>Refer a friend</div>
-            <div className={styles.shareDrawerText}>
-              Join me on FlipTable! Here is 500 points to get you started
-              working at your favourite cafe! Terms an..
-            </div>
+          <div className={styles.inviteDrawerHeader}>Refer a friend</div>
+          <div className={styles.shareDrawerText}>
+            Join me on FlipTable! Here is 500 points to get you started working
+            at your favourite cafe! Terms an..
           </div>
+          <img className={styles.shareBox} src="/share.png/" />
         </div>
+
         <NavBar />
       </Drawer>
     </>

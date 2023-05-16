@@ -96,6 +96,16 @@ const refresh = async (req, res) => {
   }
 };
 
+async function getUsers(req, res) {
+  try {
+    const allUsers = await UserModel.find();
+    res.json(allUsers);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error getting users" });
+  }
+}
+
 async function seedUsers(req, res) {
   try {
     await UserModel.deleteMany();
@@ -119,16 +129,6 @@ async function seedUsers(req, res) {
   }
 }
 
-async function getUser(req, res) {
-  try {
-    const getUsers = await UserModel.find();
-    res.json(getUsers);
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", message: "error getting points" });
-  }
-}
-
 const collectPoints = async (req, res) => {
   try {
     const updatePoints = {};
@@ -143,4 +143,11 @@ const collectPoints = async (req, res) => {
   }
 };
 
-module.exports = { register, login, refresh, seedUsers, getUser, collectPoints };
+module.exports = {
+  register,
+  login,
+  refresh,
+  seedUsers,
+  getUser,
+  collectPoints,
+};
