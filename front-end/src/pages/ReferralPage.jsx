@@ -11,18 +11,21 @@ import BackButton from "../components/BackButton";
 import UserContext from "../context/user";
 
 function ReferralPage() {
+  //user context to fetch payload
   const userCtx = useContext(UserContext);
+  const [users, setUsers] = useState([]);
+
+  //toggling for invite and share drawers
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
   const toggleInviteDrawer = (anchor, open) => () => {
     setInviteDrawer({ [anchor]: open });
   };
-
   const [shareDrawer, setShareDrawer] = useState({ bottom: false });
   const toggleShareDrawer = (anchor, open) => () => {
     setShareDrawer({ [anchor]: open });
   };
 
-  const [users, setUsers] = useState([]);
+  //fetch users
   const getUsers = async () => {
     const { ok, data } = await fetchData("/users/");
     //filter out only users with wasReferred:false
@@ -35,10 +38,34 @@ function ReferralPage() {
       console.log(data);
     }
   };
-
+  //run fetch on mount
   useEffect(() => {
     getUsers();
   }, []);
+
+  //states for copy button
+  const [buttonText, setButtonText] = useState("Copy");
+  const [buttonStyle, setButtonStyle] = useState({ border: 0 });
+  const borderStyle = {
+    border: "none",
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(userCtx.payload.referralCode);
+      setButtonText("Copied");
+      setButtonStyle({
+        backgroundColor: "#FFFFFF",
+        color: "#E88252",
+        border: "none",
+        ...borderStyle,
+      });
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
+  };
+  //adding referred users
+  const updateReferredUsers = async () => {};
 
   return (
     <>
@@ -62,7 +89,15 @@ function ReferralPage() {
             <div className={styles.referralCode}>
               {userCtx.payload.referralCode}
             </div>
-            <div className={styles.referralCodeCopyBtn}>Copy</div>
+            <button
+              className={styles.referralCodeCopyBtn}
+              onClick={() => {
+                handleCopy();
+              }}
+              style={{ ...buttonStyle }}
+            >
+              {buttonText}
+            </button>
           </div>
           <div className={styles.actionBtnsFrame}>
             <button
@@ -131,7 +166,14 @@ function ReferralPage() {
             />
             <div className={styles.friendsList}>
               {users.map((user) => {
-                return <InviteCard key={user._id} email={user.email} />;
+                return (
+                  <InviteCard
+                    key={user._id}
+                    id={user._id}
+                    email={user.email}
+                    referredCount={user.referredCount}
+                  />
+                );
               })}
             </div>
           </div>
