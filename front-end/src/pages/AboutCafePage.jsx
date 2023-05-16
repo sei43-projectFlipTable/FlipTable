@@ -39,7 +39,7 @@ function AboutCafePage() {
         userCtx.accessToken,
         "POST",
         {
-          email: userCtx.payload.email,
+          id: userCtx.payload.id,
         }
       );
       if (ok) {
