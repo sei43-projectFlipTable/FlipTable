@@ -130,17 +130,22 @@ async function seedUsers(req, res) {
   }
 }
 
-const collectPoints = async (req, res) => {
+const patchUser = async (req, res) => {
   try {
-    const updatePoints = {};
-    updatePoints.points = req.body.points;
-    console.log("updatePoints is ", req.body.points);
-    await UserModel.findOneAndUpdate(req.body.email, updatePoints);
+    const updateInfo = {};
+    if (req.body.name) updateInfo.name = req.body.name;
+    if (req.body.savedPlaces) updateInfo.savedPlaces = req.body.savedPlaces;
+    if (req.body.points) updateInfo.points = req.body.points;
+    if (req.body.referredCount) updateInfo.referredCount = req.body.referredCount;
+    if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
 
-    res.json({ status: "ok", msg: "points updated" });
+    await UserModel.findOneAndUpdate(req.body.email, updateInfo);
+
+    // res.json({ status: "ok", msg: "user updated" });
+    res.json(updateInfo);
   } catch (error) {
     console.log(error.message);
-    res.json({ status: "error", msg: "error updating points" });
+    res.json({ status: "error", msg: "error updating user" });
   }
 };
 
@@ -150,5 +155,5 @@ module.exports = {
   refresh,
   seedUsers,
   getUsers,
-  collectPoints,
+  patchUser,
 };
