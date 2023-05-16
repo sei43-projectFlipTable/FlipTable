@@ -17,10 +17,13 @@ function AboutCafePage() {
   const userCtx = useContext(UserContext);
   const { cafeId } = useParams();
   // 0 - About, 1 - Menu, 2 - Reviews
-  const [cafeData, setCafeData] = useState([]);
+  const [page, setPage] = useState(0);
+
+  // UserData: id and Saved Places
+  const [userData, setUserData] = useState({});
+  const [cafeData, setCafeData] = useState({});
   const [cafeMenu, setCafeMenu] = useState([]);
   const [cafeReviews, setCafeReviews] = useState([]);
-  const [page, setPage] = useState(0);
   const [rating, setRating] = useState(0);
   const [favourited, setFavourited] = useState(
     userCtx.payload.savedCafes?.includes(cafeId)
@@ -30,6 +33,24 @@ function AboutCafePage() {
     <AboutCafeMenu cafeId={cafeId} cafeMenu={cafeMenu} />,
     <AboutCafeReview cafeId={cafeId} cafeReviews={cafeReviews} />,
   ];
+
+  async function postUser() {
+    try {
+      const { ok, data } = await fetchData(
+        "/user" + cafeId,
+        userCtx.accessToken,
+        "POST"
+      );
+      if (ok) {
+        setUserData(data);
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("Error getting user info");
+    }
+  }
 
   async function postCafe() {
     try {
@@ -95,6 +116,7 @@ function AboutCafePage() {
   }
 
   useEffect(() => {
+    postUser();
     postCafe();
     postMenu();
     postReviews();

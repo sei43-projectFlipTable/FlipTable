@@ -135,7 +135,8 @@ const patchUser = async (req, res) => {
     if (req.body.name) updateInfo.name = req.body.name;
     if (req.body.savedPlaces) updateInfo.savedPlaces = req.body.savedPlaces;
     if (req.body.points) updateInfo.points = req.body.points;
-    if (req.body.referredCount) updateInfo.referredCount = req.body.referredCount;
+    if (req.body.referredCount)
+      updateInfo.referredCount = req.body.referredCount;
     if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
 
     await UserModel.findOneAndUpdate(req.body.email, updateInfo);
@@ -148,6 +149,19 @@ const patchUser = async (req, res) => {
   }
 };
 
+const postUser = async (req, res) => {
+  try {
+    const targetUser = await UserModel.findOne({
+      email: req.body.email,
+    }).select("savedPlaces");
+
+    res.json(targetUser);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: "error getting user" });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -155,4 +169,5 @@ module.exports = {
   seedUsers,
   getUsers,
   patchUser,
+  postUser,
 };
