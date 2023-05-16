@@ -18,24 +18,30 @@ function App() {
   const [payload, setPayload] = useState({});
   const navigate = useNavigate();
 
+  // Call refresh endpoint to refresh access token, if refresh not expired
   async function refreshAccessToken() {
-    try {
-      const { ok, data } = await fetchData("/refresh", undefined, "POST", {
-        refresh: localStorage.getItem("flipRefresh"),
-      });
-      if (ok) {
-        // setAccessToken(data.access);
-        localStorage.setItem("flipAccess", data.access);
-        const decoded = jwtDecode(data.access);
-        // setPayload(decoded);
-        // navigate("/home");
-        // alert("Resuming old session");
-        return { access: data.access, decoded };
-      } else {
-        throw new Error(data);
+    const refreshTkn = localStorage.getItem("flipRefresh");
+    if (!refreshTkn) {
+      return { decoded: "error" };
+    }
+    const chkDecoded = jwtDecode(refreshTkn);
+    if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() < 0) {
+      return { decoded: "error" };
+    } else {
+      try {
+        const { ok, data } = await fetchData("/refresh", undefined, "POST", {
+          refresh: refreshTkn,
+        });
+        if (ok) {
+          localStorage.setItem("flipAccess", data.access);
+          const decoded = jwtDecode(data.access);
+          return { access: data.access, decoded };
+        } else {
+          throw new Error(data);
+        }
+      } catch (error) {
+        alert(error.message);
       }
-    } catch (error) {
-      alert(error.message);
     }
   }
 
@@ -43,17 +49,19 @@ function App() {
     //check expiry
     const accessTkn = localStorage.getItem("flipAccess");
     const chkDecoded = jwtDecode(accessTkn);
-    if (new Date(chkDecoded.exp) - new Date() < 0) {
+    if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() < 0) {
       // Get new access token
       const { access, decoded } = await refreshAccessToken();
+      if (decoded === "error") {
+        navigate("/");
+        return;
+      }
       setAccessToken(access);
       setPayload(decoded);
-      return access;
     } else {
       // Reuse existing access token
       setAccessToken(accessTkn);
       setPayload(chkDecoded);
-      return accessTkn;
     }
   }
 
@@ -69,12 +77,14 @@ function App() {
           setAccessToken,
           payload,
           setPayload,
-          refreshAccessToken,
           getAccessToken,
         }}
       >
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={<LoginPage getAccessToken={getAccessToken} />}
+          />
           <Route path="/home" element={<HomePage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/redeem" element={<RedeemPage />} />

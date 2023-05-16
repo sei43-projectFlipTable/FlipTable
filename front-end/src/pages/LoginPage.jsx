@@ -59,7 +59,14 @@ function LoginPage() {
   useEffect(() => {
     const refreshToken = localStorage.getItem("flipRefresh");
     if (refreshToken) {
-      userCtx.refreshAccessToken();
+      const chkDecoded = jwtDecode(refreshToken);
+      if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() > 0) {
+        userCtx.getAccessToken();
+        navigate("/home");
+        alert("Resuming old session...");
+      } else {
+        localStorage.removeItem("flipRefresh");
+      }
     }
   }, []);
 
