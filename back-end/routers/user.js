@@ -10,6 +10,7 @@ const {
   refresh,
   patchUser,
   postUser,
+  postSavedCafes,
 } = require("../controllers/user");
 
 const router = express.Router();
@@ -21,7 +22,8 @@ router.post("/refresh", refresh);
 
 router.get("/seed", seedUsers);
 router.get("/user", getUsers);
-router.patch("/user", patchUser);
-router.post("/user", postUser);
+router.patch("/user", auth, patchUser);
+router.post("/user", auth, postUser);
+router.post("/user/cafes", auth, postSavedCafes);
 
 module.exports = router;
