@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import HelpIcon from "@mui/icons-material/Help";
@@ -7,14 +7,18 @@ import NavBar from "../components/NavBar";
 import styles from "./css/RedeemPage.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { QrScanner } from "@yudiel/react-qr-scanner";
+import UserContext from "../context/user";
+import { fetchData } from "../helpers/common";
 
 function RedeemPage() {
+  const userCtx = useContext(UserContext);
   const redeemAmtRef = useRef();
   const scannerRef = useRef();
   const [showRedeem, setShowRedeem] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
   const [redeem, setRedeem] = useState(false);
+  const [amount, setAmount] = useState();
 
   const handleRedeemClose = (e, r) => {
     if (r == "backdropClick") return;
@@ -46,15 +50,39 @@ function RedeemPage() {
     outline: 0,
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (redeemAmtRef.current.value == "") {
-      alert("cannot submit empty field");
-    } else setAmountSubmitted(true);
+  const redeemPoints = async (value) => {
+    try {
+      const totalpoints = userCtx.payload.points - value * 10;
+      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
+        email: userCtx.payload.email,
+        points: totalpoints,
+      });
+
+      if (ok) {
+        alert("points updated");
+        console.log(data.points);
+        const updatedPoints = { ...userCtx.payload, points: data.points };
+        userCtx.setPayload(updatedPoints);
+      } else {
+        throw error;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleHelp = () => {
     setPopUpHelp(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!amount) {
+      alert("cannot submit empty field");
+    } else {
+      redeemPoints(amount);
+      setAmountSubmitted(true);
+    }
   };
 
   return (
@@ -88,6 +116,7 @@ function RedeemPage() {
                 minLength={1}
                 ref={redeemAmtRef}
                 placeholder={redeem}
+                onChange={(e) => setAmount(e.target.value)}
               ></input>
               <Button
                 variant="contained"
@@ -109,7 +138,7 @@ function RedeemPage() {
           ) : (
             <>
               <p>You have redeemed</p>
-              <div>$ {redeemAmtRef.current.value}</div>
+              <div>$ {amount}</div>
             </>
           )}
         </Box>
@@ -118,10 +147,7 @@ function RedeemPage() {
       {/* help pop up */}
       {popUpHelp && (
         <Box
-          // hideBackdrop
-          // open={popUpHelp}
           onClose={handleHelpClose}
-          // fullScreen
           sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute", zIndex: 9 }}
         >
           <IconButton
@@ -158,7 +184,6 @@ function RedeemPage() {
             <QrScanner
               videoId="scanner"
               scanDelay={500}
-              // onDecode={(result) => console.log(result)}
               onDecode={(result) => {
                 setShowRedeem(true);
                 setRedeem(result);
