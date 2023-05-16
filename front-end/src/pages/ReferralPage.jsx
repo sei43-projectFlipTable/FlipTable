@@ -64,8 +64,6 @@ function ReferralPage() {
       console.error("Failed to copy:", error);
     }
   };
-  //adding referred users
-  const updateReferredUsers = async () => {};
 
   return (
     <>
