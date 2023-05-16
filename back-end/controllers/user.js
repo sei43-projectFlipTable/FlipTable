@@ -148,6 +148,6 @@ module.exports = {
   login,
   refresh,
   seedUsers,
-  getUser,
+  getUsers,
   collectPoints,
 };

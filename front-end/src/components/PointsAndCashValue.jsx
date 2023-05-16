@@ -3,7 +3,6 @@ import styles from "./css/PointsAndCashValue.module.css";
 import UserContext from "../context/user";
 
 const PointsAndCashValue = () => {
-  // const apiUrl = "http://localhost:5001";
   const userCtx = useContext(UserContext);
   // const [userData, setUserData] = useState([]);
 
@@ -32,9 +31,7 @@ const PointsAndCashValue = () => {
         </div>
         <div className={styles.cashBox}>
           <div className={styles.cash}>Cash Value</div>
-          <div className={styles.cashDisplay}>
-            {`$${userCtx.payload.points / 100}`}
-          </div>
+          <div className={styles.cashDisplay}>{`$${userCtx.payload.points / 100}`}</div>
         </div>
       </div>
     </>
