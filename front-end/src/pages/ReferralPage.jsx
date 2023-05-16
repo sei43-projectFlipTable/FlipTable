@@ -11,9 +11,31 @@ import BackButton from "../components/BackButton";
 import UserContext from "../context/user";
 
 function ReferralPage() {
-  //user context to fetch payload
   const userCtx = useContext(UserContext);
   const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  //get data of user that is logged in
+  const getUserData = async (req, res) => {
+    const { ok, data } = await fetchData(
+      "/user/",
+      userCtx.accessToken,
+      "POST",
+      {
+        id: userCtx.payload.id,
+      }
+    );
+
+    if (ok) {
+      setUserData(data);
+    } else {
+      console.log(data);
+    }
+  };
+  //run once on mount
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   //toggling for invite and share drawers
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
@@ -27,7 +49,7 @@ function ReferralPage() {
 
   //fetch users
   const getUsers = async () => {
-    const { ok, data } = await fetchData("/users");
+    const { ok, data } = await fetchData("/user");
     //filter out only users with wasReferred:false
     const onlyNotReferredUsers = data.filter((user) => {
       return user.wasReferred === false && user.email !== userCtx.payload.email;
@@ -119,13 +141,13 @@ function ReferralPage() {
             <div className={styles.referralHistoryHeader}>Referral History</div>
             <div className={styles.referralStatsFrame}>
               <div className={styles.referralUsageFrame}>
-                <div>{userCtx.payload.referredCount}</div>
+                <div>{userData.referredCount}</div>
                 <div className={styles.referralsUsedText}>
                   Friend(s) have used your referral code
                 </div>
               </div>
               <div className={styles.referralPointsEarnedFrame}>
-                <div>{userCtx.payload.referredCount * 500}</div>
+                <div>{userData.referredCount * 500}</div>
                 <div className={styles.referralsUsedText}>
                   Points earned through referrals
                 </div>
@@ -173,6 +195,8 @@ function ReferralPage() {
                     email={user.email}
                     referredCount={user.referredCount}
                     getUsers={getUsers}
+                    getUserData={getUserData}
+                    userData={userData}
                   />
                 );
               })}

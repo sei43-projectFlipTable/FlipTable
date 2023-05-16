@@ -26,7 +26,7 @@ const PointsAndCashValue = () => {
 
   useEffect(() => {
     getUserData();
-  });
+  }, []);
 
   return (
     <>

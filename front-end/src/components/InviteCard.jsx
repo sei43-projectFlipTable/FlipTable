@@ -10,9 +10,9 @@ function InviteCard(props) {
     console.log(props.email);
     console.log(userCtx.payload.email);
     try {
-      let usersReferred = userCtx.payload.referredCount;
+      let usersReferred = props.userData.referredCount;
       usersReferred = usersReferred + 1;
-      let userPoints = userCtx.payload.points;
+      let userPoints = props.userData.points;
       userPoints = userPoints + usersReferred * 500;
 
       const { ok, data } = await fetchData(
@@ -20,7 +20,7 @@ function InviteCard(props) {
         userCtx.accessToken,
         "PATCH",
         {
-          email: userCtx.payload.email,
+          id: userCtx.payload.id,
           referredCount: usersReferred,
           points: userPoints,
         }
@@ -31,20 +31,15 @@ function InviteCard(props) {
         userCtx.accessToken,
         "PATCH",
         {
-          email: props.email,
+          id: props.id,
           wasReferred: true,
         }
       );
 
       if (ok && ok2) {
         alert("referral updated");
-        const updatedReferredCount = {
-          ...userCtx.payload,
-          referredCount: usersReferred,
-          points: userPoints,
-        };
-        userCtx.setPayload(updatedReferredCount);
         props.getUsers();
+        props.getUserData();
       } else {
         console.log(data, data2);
       }
