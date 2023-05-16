@@ -116,11 +116,13 @@ function AboutCafePage() {
   }
 
   useEffect(() => {
-    postUser();
-    postCafe();
-    postMenu();
-    postReviews();
-  }, []);
+    if (userCtx.accessToken != "") {
+      postUser();
+      postCafe();
+      postMenu();
+      postReviews();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>

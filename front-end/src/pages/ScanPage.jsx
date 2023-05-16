@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useContext } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useContext,
+  useEffect,
+} from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
@@ -20,7 +26,9 @@ function ScanPage() {
   const webcamRef = useRef(null);
   const [amount, setAmount] = useState();
   const [img, setImg] = useState(null);
-  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
+  const [showModal, setShowModal] = useState(
+    location.state?.promptScanCollect || false
+  );
   const [showCollection, setShowCollection] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
@@ -109,10 +117,15 @@ function ScanPage() {
   const updatePoints = async (value) => {
     try {
       const totalpoints = userCtx.payload.points + value * 10;
-      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        email: userCtx.payload.email,
-        points: totalpoints,
-      });
+      const { ok, data } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "PATCH",
+        {
+          email: userCtx.payload.email,
+          points: totalpoints,
+        }
+      );
 
       if (ok) {
         alert("points updated");
@@ -210,7 +223,12 @@ function ScanPage() {
       >
         <Box sx={collectionStyle}>
           <IconButton
-            sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}
+            sx={{
+              bgcolor: "#839788",
+              position: "absolute",
+              right: "12px",
+              top: "15px",
+            }}
             onClick={handleCollectionClose}
           >
             <CloseIcon sx={{ color: "white", fontWeight: 600 }} />
@@ -261,7 +279,12 @@ function ScanPage() {
         open={popUpHelp}
         onClose={handleHelpClose}
         fullScreen
-        sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute" }}
+        sx={{
+          height: "90%",
+          top: "44px",
+          borderRadius: "8px",
+          position: "absolute",
+        }}
       >
         <IconButton
           sx={{
@@ -291,7 +314,9 @@ function ScanPage() {
             <div className={styles.helpicon}>
               <HelpIcon onClick={handleHelp} />
             </div>
-            <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+            <div className={styles.instructions}>
+              Scan your receipt purchase to collect points!
+            </div>
 
             {/* conditional formatting to toggle webcam and screenshot */}
             {img === null ? (

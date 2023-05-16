@@ -25,8 +25,10 @@ function SavedCafesPage() {
   }
 
   useEffect(() => {
-    getUserCafes();
-  }, []);
+    if (userCtx.accessToken != "") {
+      getUserCafes();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>
