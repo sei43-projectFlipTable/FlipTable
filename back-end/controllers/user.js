@@ -69,6 +69,32 @@ const login = async (req, res) => {
   }
 };
 
+const refresh = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+    console.log(decoded);
+    const payload = {
+      name: decoded.name,
+      email: decoded.email,
+      role: decoded.role,
+      savedPlaces: decoded.savedPlaces,
+      points: decoded.points,
+      referredCount: decoded.referredCount,
+      referralCode: decoded.referralCode,
+      wasReferred: decoded.wasReferred,
+    };
+
+    const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: uuidv4(),
+    });
+
+    res.json({ access });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ status: "error", msg: "unable to refresh token" });
+  }
+};
 
 async function getUsers(req, res) {
   try {
@@ -79,8 +105,6 @@ async function getUsers(req, res) {
     res.status(400).json({ status: "error", message: "error getting users" });
   }
 }
-
-
 
 async function seedUsers(req, res) {
   try {
@@ -105,7 +129,25 @@ async function seedUsers(req, res) {
   }
 }
 
+const collectPoints = async (req, res) => {
+  try {
+    const updatePoints = {};
+    updatePoints.points = req.body.points;
+    console.log("updatePoints is ", req.body.points);
+    await UserModel.findOneAndUpdate(req.body.email, updatePoints);
 
+    res.json({ status: "ok", msg: "points updated" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: "error updating points" });
+  }
+};
 
-module.exports = { register, login, seedUsers, getUsers };
-
+module.exports = {
+  register,
+  login,
+  refresh,
+  seedUsers,
+  getUser,
+  collectPoints,
+};
