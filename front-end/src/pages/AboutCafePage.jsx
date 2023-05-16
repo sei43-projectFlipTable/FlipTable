@@ -95,10 +95,12 @@ function AboutCafePage() {
   }
 
   useEffect(() => {
-    postCafe();
-    postMenu();
-    postReviews();
-  }, []);
+    if (userCtx.accessToken != "") {
+      postCafe();
+      postMenu();
+      postReviews();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>

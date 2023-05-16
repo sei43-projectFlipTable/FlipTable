@@ -25,8 +25,10 @@ function ExplorePage() {
   }
 
   useEffect(() => {
-    getCafes();
-  }, []);
+    if (userCtx.accessToken != "") {
+      getCafes();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>

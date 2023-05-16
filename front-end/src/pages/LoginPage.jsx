@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import styles from "./css/LoginPage.module.css";
@@ -41,6 +41,8 @@ function LoginPage() {
       });
 
       if (ok) {
+        localStorage.setItem("flipAccess", data.access);
+        localStorage.setItem("flipRefresh", data.refresh);
         userCtx.setAccessToken(data.access);
         const decoded = jwtDecode(data.access);
         userCtx.setPayload(decoded);
@@ -53,6 +55,13 @@ function LoginPage() {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    const refreshToken = localStorage.getItem("flipRefresh");
+    if (refreshToken) {
+      userCtx.refreshAccessToken();
+    }
+  }, []);
 
   return (
     <>
