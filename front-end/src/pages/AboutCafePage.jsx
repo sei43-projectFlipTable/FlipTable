@@ -25,9 +25,7 @@ function AboutCafePage() {
   const [cafeMenu, setCafeMenu] = useState([]);
   const [cafeReviews, setCafeReviews] = useState([]);
   const [rating, setRating] = useState(0);
-  const [favourited, setFavourited] = useState(
-    userCtx.payload.savedCafes?.includes(cafeId)
-  );
+  const [favourited, setFavourited] = useState(false);
   const aboutPages = [
     <AboutCafe cafeId={cafeId} cafeData={cafeData} rating={rating} />,
     <AboutCafeMenu cafeId={cafeId} cafeMenu={cafeMenu} />,
@@ -37,11 +35,15 @@ function AboutCafePage() {
   async function postUser() {
     try {
       const { ok, data } = await fetchData(
-        "/user" + cafeId,
+        "/user",
         userCtx.accessToken,
-        "POST"
+        "POST",
+        {
+          email: userCtx.payload.email,
+        }
       );
       if (ok) {
+        setFavourited(data.savedPlaces.includes(cafeId));
         setUserData(data);
       } else {
         throw new Error(data);
@@ -107,12 +109,49 @@ function AboutCafePage() {
     }
   }
 
-  function handleFavourite() {
-    setFavourited(true);
+  async function patchSavedPlaces(newSavedPlaces) {
+    try {
+      const { ok, data } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "PATCH",
+        {
+          email: userCtx.payload.email,
+          savedPlaces: newSavedPlaces,
+        }
+      );
+      if (ok) {
+        postUser();
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("Error saving place");
+    }
   }
 
-  function handleUnfavourite() {
-    setFavourited(false);
+  async function handleFavourite() {
+    if (!userData.savedPlaces.includes(cafeId)) {
+      const newSavedPlaces = [...userData.savedPlaces, cafeId];
+      await patchSavedPlaces(newSavedPlaces);
+    } else {
+      setFavourited(true);
+    }
+  }
+
+  async function handleUnfavourite() {
+    if (userData.savedPlaces.includes(cafeId)) {
+      const newSavedPlaces = [];
+      for (const cafeItem of userData.savedPlaces) {
+        if (cafeItem != cafeId) {
+          newSavedPlaces.push(cafeItem);
+        }
+      }
+      await patchSavedPlaces(newSavedPlaces);
+    } else {
+      setFavourited(false);
+    }
   }
 
   useEffect(() => {

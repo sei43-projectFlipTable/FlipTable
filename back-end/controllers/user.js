@@ -73,7 +73,6 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
-    console.log(decoded);
     const payload = {
       name: decoded.name,
       email: decoded.email,
