@@ -10,17 +10,25 @@ function SavedCafesPage() {
   const userCtx = useContext(UserContext);
   const [cafeData, setCafeData] = useState([]);
 
-  // GET all user cafes
+  // POST user saved cafes
   async function getUserCafes() {
     try {
-      const { ok, data } = await fetchData("/api/cafes", userCtx.accessToken);
+      const { ok, data } = await fetchData(
+        "/user/cafes",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
       if (ok) {
         setCafeData(data);
       } else {
         throw new Error(data);
       }
     } catch (error) {
-      alert("Error getting cafes");
+      console.error(error.message);
+      alert("Error getting user info");
     }
   }
 
