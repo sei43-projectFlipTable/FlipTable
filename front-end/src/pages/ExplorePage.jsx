@@ -12,6 +12,7 @@ function ExplorePage() {
 
   // GET all cafes
   async function getCafes() {
+    console.log(userCtx.accessToken);
     try {
       const { ok, data } = await fetchData("/api/cafes", userCtx.accessToken);
       if (ok) {
@@ -25,8 +26,10 @@ function ExplorePage() {
   }
 
   useEffect(() => {
-    getCafes();
-  }, []);
+    if (userCtx.accessToken != "") {
+      getCafes();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>

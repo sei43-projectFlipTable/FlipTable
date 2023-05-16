@@ -37,9 +37,10 @@ function ReferralPage() {
   };
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
+    if (userCtx.accessToken != "") {
+      getUsers();
+    }
+  }, [userCtx.accessToken]);
   return (
     <>
       <BackButton positionStyle={styles.backbuttonpos} />
