@@ -7,8 +7,6 @@ function InviteCard(props) {
   //adding referred users
   const userCtx = useContext(UserContext);
   const updateReferredUsers = async () => {
-    console.log(props.email);
-    console.log(userCtx.payload.email);
     try {
       let usersReferred = props.userData.referredCount;
       usersReferred = usersReferred + 1;
