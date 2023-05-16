@@ -139,7 +139,7 @@ const patchUser = async (req, res) => {
       updateInfo.referredCount = req.body.referredCount;
     if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
 
-    await UserModel.findOneAndUpdate(req.body.email, updateInfo);
+    await UserModel.findOneAndUpdate({ email: req.body.email }, updateInfo);
 
     // res.json({ status: "ok", msg: "user updated" });
     res.json(updateInfo);
@@ -153,7 +153,7 @@ const postUser = async (req, res) => {
   try {
     const targetUser = await UserModel.findOne({
       email: req.body.email,
-    }).select("savedPlaces");
+    }).select("-hash");
 
     res.json(targetUser);
   } catch (error) {
