@@ -136,10 +136,11 @@ const patchUser = async (req, res) => {
     if (req.body.name) updateInfo.name = req.body.name;
     if (req.body.savedPlaces) updateInfo.savedPlaces = req.body.savedPlaces;
     if (req.body.points) updateInfo.points = req.body.points;
-    if (req.body.referredCount) updateInfo.referredCount = req.body.referredCount;
+    if (req.body.referredCount)
+      updateInfo.referredCount = req.body.referredCount;
     if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
 
-    await UserModel.findOneAndUpdate(req.body.email, updateInfo);
+    await UserModel.findOneAndUpdate({ email: req.body.email }, updateInfo);
 
     // res.json({ status: "ok", msg: "user updated" });
     res.json(updateInfo);
