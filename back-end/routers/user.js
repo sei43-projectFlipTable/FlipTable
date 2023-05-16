@@ -20,7 +20,7 @@ router.post("/login", login);
 router.post("/refresh", refresh);
 
 router.get("/seed", seedUsers);
-router.get("/users", getUsers);
+router.get("/user", getUsers);
 router.patch("/user", patchUser);
 router.post("/user", postUser);
 
