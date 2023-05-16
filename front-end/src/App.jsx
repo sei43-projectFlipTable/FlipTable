@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
@@ -10,14 +10,44 @@ import AboutCafePage from "./pages/AboutCafePage";
 import SavedCafesPage from "./pages/SavedCafesPage";
 import ProfilePage from "./pages/ProfilePage";
 import UserContext from "./context/user";
+import jwtDecode from "jwt-decode";
+import { fetchData } from "./helpers/common";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [payload, setPayload] = useState({});
+  const navigate = useNavigate();
+
+  async function refreshAccessToken() {
+    try {
+      const { ok, data } = await fetchData("/refresh", undefined, "POST", {
+        refresh: localStorage.getItem("flipRefresh"),
+      });
+      if (ok) {
+        setAccessToken(data.access);
+        const decoded = jwtDecode(data.access);
+        setPayload(decoded);
+        navigate("/home");
+        alert("Resuming old session");
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
   return (
     <>
-      <UserContext.Provider value={{ accessToken, setAccessToken, payload, setPayload }}>
+      <UserContext.Provider
+        value={{
+          accessToken,
+          setAccessToken,
+          payload,
+          setPayload,
+          refreshAccessToken,
+        }}
+      >
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
