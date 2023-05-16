@@ -41,9 +41,10 @@ function LoginPage() {
       });
 
       if (ok) {
+        localStorage.setItem("flipAccess", data.access);
+        localStorage.setItem("flipRefresh", data.refresh);
         userCtx.setAccessToken(data.access);
         const decoded = jwtDecode(data.access);
-        localStorage.setItem("flipRefresh", data.refresh);
         userCtx.setPayload(decoded);
         navigate("/home");
         alert("login successful");

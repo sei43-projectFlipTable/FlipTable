@@ -43,9 +43,10 @@ const login = async (req, res) => {
     }
 
     const payload = {
-      name: auth.name,
+      id: auth._id,
       email: auth.email,
       role: auth.role,
+      name: auth.name,
       savedPlaces: auth.savedPlaces,
       points: auth.points,
       referredCount: auth.referredCount,

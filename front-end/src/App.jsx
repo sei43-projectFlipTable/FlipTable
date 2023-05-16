@@ -24,7 +24,8 @@ function App() {
         refresh: localStorage.getItem("flipRefresh"),
       });
       if (ok) {
-        setAccessToken(data.access);
+        // setAccessToken(data.access);
+        localStorage.setItem("flipAccess", data.access);
         const decoded = jwtDecode(data.access);
         setPayload(decoded);
         navigate("/home");
@@ -37,6 +38,14 @@ function App() {
     }
   }
 
+  function getAccessToken() {
+    //check expiry
+    const accessTkn = localStorage.getItem("flipAccess");
+    const decoded = jwtDecode(accessTkn);
+    setPayload(decoded);
+    return accessTkn;
+  }
+
   return (
     <>
       <UserContext.Provider
@@ -46,6 +55,7 @@ function App() {
           payload,
           setPayload,
           refreshAccessToken,
+          getAccessToken,
         }}
       >
         <Routes>
