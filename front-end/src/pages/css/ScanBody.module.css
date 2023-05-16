@@ -8,7 +8,7 @@
   display: flex;
   grid-area: 1/2/2/5;
   font-size: 34px;
-  font-weight: 900;
+  font-weight: 600;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -79,15 +79,37 @@
   color: #264343;
   margin-bottom: 16px;
   font-size: 16px;
+  font-weight: 600;
   line-height: 24px;
   outline: none;
-}
-
-.collectAmt:invalid {
-  border: 3px solid red;
 }
 
 .helpPopUp {
   width: 100%;
   border-radius: 8px;
+}
+
+.collectPrompt > p {
+  margin-bottom: 16px;
+}
+
+.collectResult {
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+
+.collectResult > .result {
+  font-size: 34px;
+  color: #e88252;
+  letter-spacing: 0.25px;
+  font-size: 34px;
+  line-height: 51px;
+}
+
+.collectResult > .ack {
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 0px;
 }
