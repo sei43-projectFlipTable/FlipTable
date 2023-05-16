@@ -47,7 +47,7 @@ function LoginPage() {
         navigate("/home");
         alert("login successful");
       } else {
-        alert("login unsuccessful, try again");
+        alert("login un successful, try again");
       }
     } catch (error) {
       console.log(error.message);
