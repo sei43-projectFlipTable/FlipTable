@@ -36,6 +36,7 @@ function ScanPage() {
       setShowCollection(false);
       setAmountSubmitted(false);
       setImg(null);
+      setAmount();
     }
   };
 
@@ -108,14 +109,14 @@ function ScanPage() {
   const updatePoints = async (value) => {
     try {
       const totalpoints = userCtx.payload.points + value * 10;
-      const { ok, data } = await fetchData("/scan/collect", userCtx.accessToken, "PATCH", {
+      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
         email: userCtx.payload.email,
         points: totalpoints,
       });
 
       if (ok) {
         alert("points updated");
-        const updatedPoints = { ...userCtx.payload, points: totalpoints };
+        const updatedPoints = { ...userCtx.payload, points: data.points };
         userCtx.setPayload(updatedPoints);
       } else {
         throw error;
@@ -127,7 +128,7 @@ function ScanPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (amount == "") {
+    if (!amount) {
       alert("cannot submit empty field");
     } else {
       updatePoints(amount);
@@ -247,8 +248,7 @@ function ScanPage() {
             <>
               <p>You have collected</p>
               <div>
-                $ {amount} ({Math.floor(amount * 10)}
-                points)
+                $ {amount} ({Math.floor(amount * 10)} points)
               </div>
               <div>Your receipt will be verified within 24hrs</div>
             </>

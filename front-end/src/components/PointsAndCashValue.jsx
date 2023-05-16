@@ -1,24 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import styles from "./css/PointsAndCashValue.module.css";
 import UserContext from "../context/user";
 
 const PointsAndCashValue = () => {
   const userCtx = useContext(UserContext);
-  // const [userData, setUserData] = useState([]);
 
-  // const getPoints = async () => {
-  //   const response = await fetch(`${apiUrl}/`);
-  //   const data = await response.json();
-  //   setUserData(data);
-  // };
-
-  // const getPoints = () => {
-  //   const points = userCtx.payload;
-  //   setUserData(points);
-  // };
-
-  // useEffect(() => {
-  //   getPoints();
   return (
     <>
       <div className={styles.pointsTracker}>
@@ -31,7 +17,9 @@ const PointsAndCashValue = () => {
         </div>
         <div className={styles.cashBox}>
           <div className={styles.cash}>Cash Value</div>
-          <div className={styles.cashDisplay}>{`$${userCtx.payload.points / 100}`}</div>
+          <div className={styles.cashDisplay}>{`$${(userCtx.payload.points / 100).toFixed(
+            2
+          )}`}</div>
         </div>
       </div>
     </>
