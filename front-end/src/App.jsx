@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
@@ -27,9 +27,10 @@ function App() {
         // setAccessToken(data.access);
         localStorage.setItem("flipAccess", data.access);
         const decoded = jwtDecode(data.access);
-        setPayload(decoded);
-        navigate("/home");
-        alert("Resuming old session");
+        // setPayload(decoded);
+        // navigate("/home");
+        // alert("Resuming old session");
+        return { access: data.access, decoded };
       } else {
         throw new Error(data);
       }
@@ -38,13 +39,27 @@ function App() {
     }
   }
 
-  function getAccessToken() {
+  async function getAccessToken() {
     //check expiry
     const accessTkn = localStorage.getItem("flipAccess");
-    const decoded = jwtDecode(accessTkn);
-    setPayload(decoded);
-    return accessTkn;
+    const chkDecoded = jwtDecode(accessTkn);
+    if (new Date(chkDecoded.exp) - new Date() < 0) {
+      // Get new access token
+      const { access, decoded } = await refreshAccessToken();
+      setAccessToken(access);
+      setPayload(decoded);
+      return access;
+    } else {
+      // Reuse existing access token
+      setAccessToken(accessTkn);
+      setPayload(chkDecoded);
+      return accessTkn;
+    }
   }
+
+  useEffect(() => {
+    getAccessToken();
+  }, []);
 
   return (
     <>
