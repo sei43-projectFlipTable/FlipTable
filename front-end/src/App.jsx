@@ -17,7 +17,9 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{ accessToken, setAccessToken, payload, setPayload }}>
+      <UserContext.Provider
+        value={{ accessToken, setAccessToken, payload, setPayload }}
+      >
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />

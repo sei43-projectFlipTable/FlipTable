@@ -9,11 +9,12 @@ import AboutCafeReview from "../components/aboutCafePage/AboutCafeReview";
 import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
 import UserContext from "../context/user";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 // CafeId in params
 function AboutCafePage() {
   const userCtx = useContext(UserContext);
-
   const { cafeId } = useParams();
   // 0 - About, 1 - Menu, 2 - Reviews
   const [cafeData, setCafeData] = useState([]);
@@ -21,6 +22,9 @@ function AboutCafePage() {
   const [cafeReviews, setCafeReviews] = useState([]);
   const [page, setPage] = useState(0);
   const [rating, setRating] = useState(0);
+  const [favourited, setFavourited] = useState(
+    userCtx.payload.savedCafes?.includes(cafeId)
+  );
   const aboutPages = [
     <AboutCafe cafeId={cafeId} cafeData={cafeData} rating={rating} />,
     <AboutCafeMenu cafeId={cafeId} cafeMenu={cafeMenu} />,
@@ -29,7 +33,11 @@ function AboutCafePage() {
 
   async function postCafe() {
     try {
-      const { ok, data } = await fetchData("/api/cafes/" + cafeId, userCtx.accessToken, "POST");
+      const { ok, data } = await fetchData(
+        "/api/cafes/" + cafeId,
+        userCtx.accessToken,
+        "POST"
+      );
       if (ok) {
         setCafeData(data);
         setRating(calculateRating(data.reviewRating));
@@ -44,7 +52,11 @@ function AboutCafePage() {
 
   async function postMenu() {
     try {
-      const { ok, data } = await fetchData("/api/menu/" + cafeId, userCtx.accessToken, "POST");
+      const { ok, data } = await fetchData(
+        "/api/menu/" + cafeId,
+        userCtx.accessToken,
+        "POST"
+      );
       if (ok) {
         setCafeMenu(data);
       } else {
@@ -58,7 +70,11 @@ function AboutCafePage() {
 
   async function postReviews() {
     try {
-      const { ok, data } = await fetchData("/api/review/" + cafeId, userCtx.accessToken, "POST");
+      const { ok, data } = await fetchData(
+        "/api/review/" + cafeId,
+        userCtx.accessToken,
+        "POST"
+      );
       if (ok) {
         setCafeReviews(data);
       } else {
@@ -68,6 +84,14 @@ function AboutCafePage() {
       console.error(error.message);
       alert("Error getting cafe reviews");
     }
+  }
+
+  function handleFavourite() {
+    setFavourited(true);
+  }
+
+  function handleUnfavourite() {
+    setFavourited(false);
   }
 
   useEffect(() => {
@@ -80,6 +104,20 @@ function AboutCafePage() {
     <>
       <PhoneTopBar />
       <BackButton positionStyle={styles.backbuttonpos} />
+      {favourited ? (
+        <div className={styles.favouriteButton} onClick={handleUnfavourite}>
+          <FavoriteIcon sx={{ color: "#1B4444" }} />
+        </div>
+      ) : (
+        <>
+          <div className={styles.favouriteButtonBg}>
+            <FavoriteIcon sx={{ color: "#ffffff" }} />
+          </div>
+          <div className={styles.favouriteButton} onClick={handleFavourite}>
+            <FavoriteBorderIcon sx={{ color: "#1B4444" }} />
+          </div>
+        </>
+      )}
       <img className={styles.cafeImage} src={cafeData.image} />
       <div className={styles.blocker} />
       <div className={styles.curvedTop}>

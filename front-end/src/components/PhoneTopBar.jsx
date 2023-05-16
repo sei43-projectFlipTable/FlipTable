@@ -11,7 +11,7 @@ function PhoneTopBar() {
   return (
     <div className={styles.container}>
       <div className={styles.phone_time}>{`${
-        time.getUTCHours() - time.getTimezoneOffset() / 60
+        (time.getUTCHours() - time.getTimezoneOffset() / 60) % 24
       }:${
         time.getUTCMinutes() < 10
           ? "0" + time.getUTCMinutes()
