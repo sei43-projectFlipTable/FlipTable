@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useContext,
-  useEffect,
-} from "react";
+import React, { useState, useRef, useCallback, useContext, useEffect } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
@@ -26,9 +20,7 @@ function ScanPage() {
   const webcamRef = useRef(null);
   const [amount, setAmount] = useState();
   const [img, setImg] = useState(null);
-  const [showModal, setShowModal] = useState(
-    location.state?.promptScanCollect || false
-  );
+  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
   const [showCollection, setShowCollection] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
@@ -117,22 +109,17 @@ function ScanPage() {
   const updatePoints = async (value) => {
     try {
       const totalpoints = userCtx.payload.points + value * 10;
-      const { ok, data } = await fetchData(
-        "/user",
-        userCtx.accessToken,
-        "PATCH",
-        {
-          email: userCtx.payload.email,
-          points: totalpoints,
-        }
-      );
+      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
+        email: userCtx.payload.email,
+        points: totalpoints,
+      });
 
       if (ok) {
         alert("points updated");
         const updatedPoints = { ...userCtx.payload, points: data.points };
         userCtx.setPayload(updatedPoints);
       } else {
-        throw error;
+        throw new Error(data);
       }
     } catch (error) {
       console.log(error.message);
@@ -226,16 +213,24 @@ function ScanPage() {
             sx={{
               bgcolor: "#839788",
               position: "absolute",
-              right: "12px",
-              top: "15px",
+              right: "15px",
+              top: "12px",
+              height: "40px",
+              width: "40px",
             }}
             onClick={handleCollectionClose}
           >
-            <CloseIcon sx={{ color: "white", fontWeight: 600 }} />
+            <CloseIcon
+              sx={{
+                height: "18px",
+                width: "18px",
+                color: "white",
+              }}
+            />
           </IconButton>
           {!amountSubmitted && (
             <>
-              <p>Receipt Total Amount</p>
+              <p style={{ marginBottom: "16px" }}>Receipt Total Amount</p>
               <input
                 id="collect-amount"
                 className={styles.collectAmt}
@@ -255,6 +250,7 @@ function ScanPage() {
                   fontSize: "20px",
                   fontFamily: "Poppins",
                   fontWeight: 700,
+                  p: 0,
                 }}
                 onClick={handleSubmit}
               >
@@ -263,13 +259,13 @@ function ScanPage() {
             </>
           )}
           {amountSubmitted && (
-            <>
-              <p>You have collected</p>
-              <div>
+            <div className={styles.collectResult}>
+              <div>You have collected</div>
+              <p className={styles.result}>
                 $ {amount} ({Math.floor(amount * 10)} points)
-              </div>
-              <div>Your receipt will be verified within 24hrs</div>
-            </>
+              </p>
+              <p className={styles.ack}>Your receipt will be verified within 24hrs</p>
+            </div>
           )}
         </Box>
       </Modal>
@@ -314,9 +310,7 @@ function ScanPage() {
             <div className={styles.helpicon}>
               <HelpIcon onClick={handleHelp} />
             </div>
-            <div className={styles.instructions}>
-              Scan your receipt purchase to collect points!
-            </div>
+            <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
 
             {/* conditional formatting to toggle webcam and screenshot */}
             {img === null ? (
