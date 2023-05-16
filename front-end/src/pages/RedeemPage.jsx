@@ -41,7 +41,6 @@ function RedeemPage() {
     left: "24px",
     borderRadius: "8px",
     bgcolor: "#264343",
-    p: "45px",
     fontSize: "20px",
     fontFamily: "Poppins",
     color: "#FFFFFF",
@@ -64,7 +63,7 @@ function RedeemPage() {
         const updatedPoints = { ...userCtx.payload, points: data.points };
         userCtx.setPayload(updatedPoints);
       } else {
-        throw error;
+        throw new Error(data);
       }
     } catch (error) {
       console.log(error.message);
@@ -100,14 +99,28 @@ function RedeemPage() {
       >
         <Box sx={redeemStyle}>
           <IconButton
-            sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}
+            sx={{
+              bgcolor: "#839788",
+              position: "absolute",
+              right: "15px",
+              top: "12px",
+              height: "40px",
+              width: "40px",
+            }}
             onClick={handleRedeemClose}
           >
-            <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+            <CloseIcon
+              sx={{
+                height: "18px",
+                width: "18px",
+                color: "white",
+                textAlign: "center",
+              }}
+            />
           </IconButton>
           {!amountSubmitted ? (
-            <>
-              <p>Cash Redemption Amount</p>
+            <div className={styles.redeemPrompt}>
+              <p style={{ marginBottom: "16px" }}>Cash Redemption Value</p>
               <input
                 id="collect-amount"
                 className={styles.redeemAmt}
@@ -134,12 +147,12 @@ function RedeemPage() {
               >
                 Confirm
               </Button>
-            </>
+            </div>
           ) : (
-            <>
-              <p>You have redeemed</p>
-              <div>$ {amount}</div>
-            </>
+            <div className={styles.redeemPrompt}>
+              <p className={styles.redeemHeader}>You have redeemed</p>
+              <div className={styles.redeemAmount}>${amount}</div>
+            </div>
           )}
         </Box>
       </Modal>

@@ -11,20 +11,23 @@ import BackButton from "../components/BackButton";
 import UserContext from "../context/user";
 
 function ReferralPage() {
+  //user context to fetch payload
   const userCtx = useContext(UserContext);
+  const [users, setUsers] = useState([]);
+
+  //toggling for invite and share drawers
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
   const toggleInviteDrawer = (anchor, open) => () => {
     setInviteDrawer({ [anchor]: open });
   };
-
   const [shareDrawer, setShareDrawer] = useState({ bottom: false });
   const toggleShareDrawer = (anchor, open) => () => {
     setShareDrawer({ [anchor]: open });
   };
 
-  const [users, setUsers] = useState([]);
+  //fetch users
   const getUsers = async () => {
-    const { ok, data } = await fetchData("/users/");
+    const { ok, data } = await fetchData("/users");
     //filter out only users with wasReferred:false
     const onlyNotReferredUsers = data.filter((user) => {
       return user.wasReferred === false && user.email !== userCtx.payload.email;
@@ -35,12 +38,35 @@ function ReferralPage() {
       console.log(data);
     }
   };
-
+  //run fetch on mount
   useEffect(() => {
     if (userCtx.accessToken != "") {
       getUsers();
     }
   }, [userCtx.accessToken]);
+
+  //states for copy button
+  const [buttonText, setButtonText] = useState("Copy");
+  const [buttonStyle, setButtonStyle] = useState({ border: 0 });
+  const borderStyle = {
+    border: "none",
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(userCtx.payload.referralCode);
+      setButtonText("Copied");
+      setButtonStyle({
+        backgroundColor: "#FFFFFF",
+        color: "#E88252",
+        border: "none",
+        ...borderStyle,
+      });
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
+  };
+
   return (
     <>
       <BackButton positionStyle={styles.backbuttonpos} />
@@ -63,7 +89,15 @@ function ReferralPage() {
             <div className={styles.referralCode}>
               {userCtx.payload.referralCode}
             </div>
-            <div className={styles.referralCodeCopyBtn}>Copy</div>
+            <button
+              className={styles.referralCodeCopyBtn}
+              onClick={() => {
+                handleCopy();
+              }}
+              style={{ ...buttonStyle }}
+            >
+              {buttonText}
+            </button>
           </div>
           <div className={styles.actionBtnsFrame}>
             <button
@@ -85,13 +119,13 @@ function ReferralPage() {
             <div className={styles.referralHistoryHeader}>Referral History</div>
             <div className={styles.referralStatsFrame}>
               <div className={styles.referralUsageFrame}>
-                <div>1</div>
+                <div>{userCtx.payload.referredCount}</div>
                 <div className={styles.referralsUsedText}>
                   Friend(s) have used your referral code
                 </div>
               </div>
               <div className={styles.referralPointsEarnedFrame}>
-                <div>500</div>
+                <div>{userCtx.payload.referredCount * 500}</div>
                 <div className={styles.referralsUsedText}>
                   Points earned through referrals
                 </div>
@@ -132,7 +166,15 @@ function ReferralPage() {
             />
             <div className={styles.friendsList}>
               {users.map((user) => {
-                return <InviteCard key={user._id} email={user.email} />;
+                return (
+                  <InviteCard
+                    key={user._id}
+                    id={user._id}
+                    email={user.email}
+                    referredCount={user.referredCount}
+                    getUsers={getUsers}
+                  />
+                );
               })}
             </div>
           </div>
