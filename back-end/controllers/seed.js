@@ -8,47 +8,126 @@ async function seedCafes(req, res) {
     await ReviewModel.deleteMany();
     await MenuModel.deleteMany();
 
-    const addressArray = [
-      "2 Bayfront Ave #01-73",
-      "53 Ang Mo Kio Ave 3 #01-44",
-      "2 Jurong East Central 1, #01-03 JCube",
-      "Choa Chu Kang Street 51 #01-24",
-      "10 Paya Lebar Road #B1-02, Paya Lebar Quarter",
-      "1 Jurong West Central 2, #B1-36A",
-      "10 Tampines Central 1, #01-59",
-      "681 Punggol Drive #01-30",
-      "23 Serangoon Central #B1-07, NEX Mall",
-      "2 Orchard Turn #B4-29 ION Orchard",
-    ];
-    const coordinatesArray = [
-      [1.2823274825909938, 103.8583201249735],
-      [1.3693341806526982, 103.84750378888087],
-      [1.3334652208574296, 103.7404416382165],
-      [1.3922266215830152, 103.74309460938115],
-      [1.3174067813824322, 103.89278708295022],
-      [1.3398935209351406, 103.70628859588717],
-      [1.3537584986277245, 103.94531076705172],
-      [1.4025384275449047, 103.91295249668512],
-      [1.3509550210698542, 103.87201426705182],
-      [1.300591476059284, 103.83987061720183],
-    ];
-
-    for (let i = 0; i < 9; i++) {
-      await CafesModel.create({
-        name: "Amber Ember " + i,
-        address: addressArray[i],
+    const cafeItems = [
+      {
+        name: "Da Paolo Gastronomia",
+        address: "2 Bayfront Ave #01-73",
         image:
-          "https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/char_456_ash_1.png",
-        website: "https://www.random.org",
-        priceRating: i % 3 === 0 ? 3 : i % 3,
-        reviewRating: { ratingTotal: i, reviewCount: (i % 3) + 1 },
+          "https://lh5.googleusercontent.com/p/AF1QipN0peWRgYtxRizAUVjSEvduiz1iOxUYgJrMJVZw=w497-h240-k-no",
+        openingHours: "8am - 10pm daily\nClosed on Tuesdays",
+        description:
+          "A cozy neighborhood spot offering artisanal coffees, freshly baked pastries, and a warm ambiance that invites you to unwind and savor every sip.",
+        tags: ["wifi", "power"],
+        coordinates: [1.2823274825909938, 103.8583201249735],
+      },
+      {
+        name: "LiHO TEA @ Ang Mo Kio HUB",
+        address: "53 Ang Mo Kio Ave 3 #01-44",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipMaKKkBKN-MiIg284cEZlQ2cg16oVz5XEUQqeb-=w408-h306-k-no",
+        openingHours: "11am - 10pm daily",
+        description:
+          "A vibrant café known for its bold espresso blends, friendly baristas, and an eclectic menu featuring hearty breakfast options and signature sandwiches. The perfect place to start your day.",
+        tags: ["lighting"],
+        coordinates: [1.3693341806526982, 103.84750378888087],
+      },
+      {
+        name: "The Zen Garden Café",
+        address: "Choa Chu Kang Street 51 #01-24",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipPMPDCAt7reAQV40wmGUFXyh25hyGdu0vb3fzua=w408-h408-k-no",
+        openingHours: "9.30am - 9.15pm daily\nClosed on weekends",
+        description:
+          "Discover tranquility in this serene café adorned with lush greenery and soothing music. Enjoy organic teas, healthy smoothies, and vegetarian-friendly dishes that nourish both body and soul.",
+        tags: ["wifi", "power"],
+        coordinates: [1.3922266215830152, 103.74309460938115],
+      },
+      {
+        name: "MADLYGOOD",
+        address: "2 Jurong East Central 1, #01-03 JCube",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipM_TfJdDeByBEHOKEohHeNdiRathtY_G_ckXZwk=w408-h276-k-no",
+        openingHours:
+          "10am - 10pm weekdays\n11am - 10pm weekends\nClosed on Mondays and Tuesdays",
+        description:
+          "Breathe in the ocean breeze as you sip your favorite brew at MADLYGOOD. This coastal-inspired café offers a refreshing escape from the everyday hustle. The soothing colors and nautical accents create a beachside ambiance that complements our signature cold brews and tropical-inspired pastries. With its relaxed atmosphere and panoramic views, The Coastal Bean is the perfect spot to unwind and enjoy a taste of coastal living.",
+        tags: ["lighting", "aircon"],
+        coordinates: [1.3334652208574296, 103.7404416382165],
+      },
+      {
+        name: "The Providore",
+        address: "10 Paya Lebar Road #B1-02, Paya Lebar Quarter",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipNbkOunYHV385SnJFprrgV9tqPekQljaa5U9ylr=w408-h317-k-no",
+        openingHours: "8am - 10.30pm weekdays\n9am - 10.30pm weekends",
+        description:
+          "A haven for coffee aficionados, this café boasts a carefully curated selection of single-origin beans and brewing methods. Immerse yourself in the world of specialty coffee and experience true craftsmanship.",
+        tags: [],
+        coordinates: [1.3174067813824322, 103.89278708295022],
+      },
+      {
+        name: "Brio",
+        address: "1 Jurong West Central 2, #B1-36A",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipNwfkuJ0no_4MI_W240awNbjE4ScOBgwHgcBGp6=w426-h240-k-no",
         openingHours: "10am - 5pm daily\nClosed on mondays",
         description:
-          "Delicious specialty coffee and all-day brunch classics. Tucked away on the ground floor of a nondescript residential building between Serangoon and Kovan.",
-        tags:
-          i % 3 === 0 ? ["wifi", "power"] : i % 5 === 0 ? ["wifi"] : ["power"],
-        coordinates: [coordinatesArray[i][0], coordinatesArray[i][1]],
-      });
+          "Step into a bohemian oasis where creativity and community come together. Sip on fair-trade coffee, admire local artwork on the walls, and engage in lively conversations with fellow free spirits.",
+        tags: ["aircon", "workspace", "lighting"],
+        coordinates: [1.3398935209351406, 103.70628859588717],
+      },
+      {
+        name: "Serene Brews",
+        address: "10 Tampines Central 1, #01-59",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipNEWPl20fXPHYhY9rCPBw7erT9_jQuBDKlw_26E=w408-h306-k-no",
+        openingHours: "11am - 10pm daily",
+        description:
+          "Seek serenity in a cup at Serene Brews, a tranquil oasis where peace and flavor harmoniously blend. Our dedication to ethically sourced beans and meticulous brewing techniques ensures each sip transports you to a state of serenity. The serene ambiance, adorned with gentle greenery and natural elements, enhances your experience, making it an ideal hideaway to escape the noise and reconnect with your inner calm.",
+        tags: ["workspace"],
+        coordinates: [1.3537584986277245, 103.94531076705172],
+      },
+      {
+        name: "Anna's",
+        address: "681 Punggol Drive #01-30",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipO0y3Bw8yTYi3wN_KTVlaA1Rr8Qtw-GRqasbjsQ=w408-h272-k-no",
+        openingHours: "8.30am - 9.30pm daily",
+        description:
+          "A book lover's paradise, this café invites you to curl up with a good read while sipping on aromatic coffees and nibbling on delectable treats. A haven of literary delights.",
+        tags: ["wifi", "power", "workspace"],
+        coordinates: [1.4025384275449047, 103.91295249668512],
+      },
+      {
+        name: "Ya Kun Kaya Toast",
+        address: "23 Serangoon Central #B1-07, NEX Mall",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipMadGA0NNS5YFG5W5s1PVlyHzNvKrEFCPDhbi_z=w408-h306-k-no",
+        openingHours: "10am - 8pm daily",
+        description:
+          "Treat your taste buds to a symphony of flavors at this elegant café, renowned for its exquisite pastries and delicate French-inspired desserts. Pair them with a perfectly brewed cup of coffee for a divine indulgence.",
+        tags: ["workspace"],
+        coordinates: [1.3509550210698542, 103.87201426705182],
+      },
+      {
+        name: "The Marmalade Pantry",
+        address: "2 Orchard Turn #B4-29 ION Orchard",
+        image:
+          "https://lh5.googleusercontent.com/p/AF1QipN0peWRgYtxRizAUVjSEvduiz1iOxUYgJrMJVZw=w497-h240-k-no",
+        openingHours: "10am - 10pm daily",
+        description:
+          "Start your day on a mellow note at the Marmalade Pantry, where the aroma of freshly roasted coffee greets you at the door. Our cozy and laid-back atmosphere invites you to enjoy slow mornings, accompanied by creamy lattes and buttery croissants. From the warm hues of the décor to the soft music playing in the background, every element is designed to set the tone for a relaxing and rejuvenating day.",
+        tags: ["wifi", "power"],
+        coordinates: [1.300591476059284, 103.83987061720183],
+      },
+    ];
+
+    for (let i = 0; i < cafeItems.length; i++) {
+      const newCafe = cafeItems[i];
+      newCafe.priceRating = i % 3 === 0 ? 3 : i % 3;
+      newCafe.reviewRating = { ratingTotal: i + 1, reviewCount: (i % 2) + 1 };
+
+      await CafesModel.create(newCafe);
     }
     res.json({ status: "ok", message: "cafes seeded" });
   } catch (error) {

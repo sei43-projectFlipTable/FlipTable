@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
@@ -11,12 +11,15 @@ import FlashAutoIcon from "@mui/icons-material/FlashAuto";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Webcam from "react-webcam";
+import { fetchData } from "../helpers/common";
+import UserContext from "../context/user";
 
 function ScanPage() {
-  const collectAmtRef = useRef(null);
-  const webcamRef = useRef(null);
-  const [img, setImg] = useState(null);
   const location = useLocation();
+  const userCtx = useContext(UserContext);
+  const webcamRef = useRef(null);
+  const [amount, setAmount] = useState();
+  const [img, setImg] = useState(null);
   const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
   const [showCollection, setShowCollection] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
@@ -102,11 +105,34 @@ function ScanPage() {
     } else alert("an error has occured");
   };
 
+  const updatePoints = async (value) => {
+    try {
+      const totalpoints = userCtx.payload.points + value * 10;
+      const { ok, data } = await fetchData("/scan/collect", userCtx.accessToken, "PATCH", {
+        email: userCtx.payload.email,
+        points: totalpoints,
+      });
+
+      if (ok) {
+        alert("points updated");
+        const updatedPoints = { ...userCtx.payload, points: totalpoints };
+        userCtx.setPayload(updatedPoints);
+      } else {
+        throw error;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (collectAmtRef.current.value == "") {
+    if (amount == "") {
       alert("cannot submit empty field");
-    } else setAmountSubmitted(true);
+    } else {
+      updatePoints(amount);
+      setAmountSubmitted(true);
+    }
   };
 
   const handleHelp = () => {
@@ -186,9 +212,9 @@ function ScanPage() {
             sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}
             onClick={handleCollectionClose}
           >
-            <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+            <CloseIcon sx={{ color: "white", fontWeight: 600 }} />
           </IconButton>
-          {!amountSubmitted ? (
+          {!amountSubmitted && (
             <>
               <p>Receipt Total Amount</p>
               <input
@@ -197,7 +223,7 @@ function ScanPage() {
                 required
                 type="number"
                 minLength={1}
-                ref={collectAmtRef}
+                onChange={(e) => setAmount(e.target.value)}
               ></input>
               <Button
                 variant="contained"
@@ -216,11 +242,12 @@ function ScanPage() {
                 Confirm
               </Button>
             </>
-          ) : (
+          )}
+          {amountSubmitted && (
             <>
               <p>You have collected</p>
               <div>
-                $ {collectAmtRef.current.value} ({Math.floor(collectAmtRef.current.value * 10)}{" "}
+                $ {amount} ({Math.floor(amount * 10)}
                 points)
               </div>
               <div>Your receipt will be verified within 24hrs</div>

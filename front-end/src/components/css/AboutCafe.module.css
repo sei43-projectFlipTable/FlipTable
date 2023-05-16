@@ -27,6 +27,11 @@
   column-gap: 10px;
 }
 
+.openingHours {
+  max-height: 80px;
+  overflow: scroll;
+}
+
 .description {
   /* display: -webkit-box;
   -webkit-box-orient: vertical;

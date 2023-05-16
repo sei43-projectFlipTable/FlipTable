@@ -45,7 +45,6 @@ function LoginPage() {
         const decoded = jwtDecode(data.access);
         localStorage.setItem("flipRefresh", data.refresh);
         userCtx.setPayload(decoded);
-
         navigate("/home");
         alert("login successful");
       } else {
