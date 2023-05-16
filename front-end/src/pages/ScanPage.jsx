@@ -36,6 +36,7 @@ function ScanPage() {
       setShowCollection(false);
       setAmountSubmitted(false);
       setImg(null);
+      setAmount();
     }
   };
 
