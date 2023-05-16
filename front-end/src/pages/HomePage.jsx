@@ -37,7 +37,6 @@ function HomePage() {
   };
 
   const getCafes = async () => {
-    console.log("getting");
     const { ok, data } = await fetchData("/api/cafes/", userCtx.accessToken);
     //sort before setting data
     if (ok) {
