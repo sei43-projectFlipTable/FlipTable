@@ -1,4 +1,5 @@
 const UserModel = require("../models/Users");
+const CafesModel = require("../models/Cafes");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
@@ -46,12 +47,6 @@ const login = async (req, res) => {
       id: auth._id,
       email: auth.email,
       role: auth.role,
-      name: auth.name,
-      savedPlaces: auth.savedPlaces,
-      points: auth.points,
-      referredCount: auth.referredCount,
-      referralCode: auth.referralCode,
-      wasReferred: auth.wasReferred,
     };
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
@@ -73,15 +68,11 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+    const user = await UserModel.findById(decoded.id);
     const payload = {
-      name: decoded.name,
-      email: decoded.email,
-      role: decoded.role,
-      savedPlaces: decoded.savedPlaces,
-      points: decoded.points,
-      referredCount: decoded.referredCount,
-      referralCode: decoded.referralCode,
-      wasReferred: decoded.wasReferred,
+      id: user.id,
+      email: user.email,
+      role: user.role,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -98,7 +89,7 @@ const refresh = async (req, res) => {
 
 async function getUsers(req, res) {
   try {
-    const allUsers = await UserModel.find();
+    const allUsers = await UserModel.find().select("-hash");
     res.json(allUsers);
   } catch (error) {
     console.error(error.message);
@@ -139,7 +130,7 @@ const patchUser = async (req, res) => {
       updateInfo.referredCount = req.body.referredCount;
     if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
 
-    await UserModel.findOneAndUpdate({ email: req.body.email }, updateInfo);
+    await UserModel.findByIdAndUpdate(req.body.id, updateInfo);
 
     // res.json({ status: "ok", msg: "user updated" });
     res.json(updateInfo);
@@ -151,9 +142,7 @@ const patchUser = async (req, res) => {
 
 const postUser = async (req, res) => {
   try {
-    const targetUser = await UserModel.findOne({
-      email: req.body.email,
-    }).select("-hash");
+    const targetUser = await UserModel.findById(req.body.id).select("-hash");
 
     res.json(targetUser);
   } catch (error) {
@@ -161,6 +150,23 @@ const postUser = async (req, res) => {
     res.json({ status: "error", msg: "error getting user" });
   }
 };
+
+async function postSavedCafes(req, res) {
+  try {
+    const targetUserCafes = await UserModel.findById(req.body.id).select(
+      "savedPlaces"
+    );
+    const cafeArray = await CafesModel.find({
+      _id: { $in: targetUserCafes.savedPlaces },
+    });
+    res.json(cafeArray);
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", message: "error getting saved places" });
+  }
+}
 
 module.exports = {
   register,
@@ -170,4 +176,5 @@ module.exports = {
   getUsers,
   patchUser,
   postUser,
+  postSavedCafes,
 };
