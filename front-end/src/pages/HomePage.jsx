@@ -63,7 +63,9 @@ function HomePage() {
   }, [userCtx.accessToken]);
 
   useEffect(() => {
-    getCafes();
+    if (userCtx.accessToken != "") {
+      getCafes();
+    }
   }, [coords]);
 
   return (
