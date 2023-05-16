@@ -47,6 +47,7 @@ const login = async (req, res) => {
       id: auth._id,
       email: auth.email,
       role: auth.role,
+      referralCode: auth.referralCode,
     };
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
@@ -73,6 +74,7 @@ const refresh = async (req, res) => {
       id: user.id,
       email: user.email,
       role: user.role,
+      referralCode: user.referralCode,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
