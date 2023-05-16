@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./css/AppHeader.module.css";
 
-function FlipTableHeader() {
+function AppHeader() {
   return <div className={styles.appHeader}>FlipTable</div>;
 }
 
-export default FlipTableHeader;
+export default AppHeader;

@@ -7,11 +7,13 @@ function TagDropDownFilter(props) {
   return (
     <div className={styles.tagContainer}>
       <select
-        className={styles.tagSelector}
+        className={`${styles.tagSelector} ${props.dropdownWidth}`}
         name="tag-select"
         id="tag-select"
         value={props.selectedTag}
-        onChange={props.handleChooseTag}
+        onChange={(event) => {
+          props.setSelectedTag(event.target.value);
+        }}
       >
         <option key="0" value="">
           Search
@@ -39,7 +41,7 @@ function TagDropDownFilter(props) {
           color: "#979797",
           position: "absolute",
           top: "9px",
-          right: "22px",
+          right: props.filterIconRightPos,
         }}
       />
     </div>

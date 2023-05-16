@@ -69,6 +69,7 @@ const login = async (req, res) => {
   }
 };
 
+
 async function getUsers(req, res) {
   try {
     const allUsers = await UserModel.find();
@@ -79,4 +80,32 @@ async function getUsers(req, res) {
   }
 }
 
-module.exports = { register, login, getUsers };
+
+
+async function seedUsers(req, res) {
+  try {
+    await UserModel.deleteMany();
+    await UserModel.create([
+      {
+        name: "Mary",
+        email: "Mary@email.com",
+        hash: "1234",
+        role: "",
+        savedPlace: "",
+        points: 495,
+        referredCount: 10,
+        referralCode: "",
+        wasReferred: true,
+      },
+    ]);
+    res.json({ status: "ok", message: "cafes seeded" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", message: "error seeding users" });
+  }
+}
+
+
+
+module.exports = { register, login, seedUsers, getUsers };
+

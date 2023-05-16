@@ -20,20 +20,12 @@ function ReviewCard(props) {
     "Excellent",
   ];
   return (
-    <div>
+    <div className={styles.ratingContainer}>
       <div>
         <div className={styles.ratingRow}>
           <h6 className={styles.ratingHeader}>
             {ratingGrades[Math.round(props.rating / 2)]}
           </h6>
-          {/* <Rating
-            name="review-rating"
-            value={props.rating / 2}
-            precision={0.5}
-            sx={{ color: "#264343", width: "106px" }}
-            size="small"
-            readOnly
-          /> */}
           <StyledRating
             name="customized-color"
             defaultValue={props.rating / 2}
@@ -43,8 +35,11 @@ function ReviewCard(props) {
             readOnly
           />
         </div>
-        <div>{props.children}</div>
+        <div className={styles.ratingDescription}>{props.children}</div>
       </div>
+      {props.image != "" && (
+        <img src={props.image} className={styles.ratingImage} />
+      )}
     </div>
   );
 }

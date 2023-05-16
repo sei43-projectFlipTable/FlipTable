@@ -8,7 +8,7 @@ const CafeReviewSchema = mongoose.Schema(
     cafe: { type: mongoose.Schema.Types.ObjectId, ref: "Cafes" },
     tags: {
       type: [String],
-      enum: ["wifi", "power", "aircon", "workspace", "lighting"],
+      enum: ["wifi", "power", "aircon", "workspace", "lighting", "withmedia"],
     },
   },
   { collection: "cafereview" }
