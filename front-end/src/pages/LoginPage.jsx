@@ -39,7 +39,7 @@ function LoginPage() {
         throw new Error(data);
       }
     } catch (error) {
-      alert("Registration Failed");
+      alert(error.message);
     }
   };
 
