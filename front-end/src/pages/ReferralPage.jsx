@@ -16,7 +16,7 @@ function ReferralPage() {
   const [userData, setUserData] = useState([]);
 
   //get data of user that is logged in
-  const getUserData = async (req, res) => {
+  const getUserData = async () => {
     const { ok, data } = await fetchData(
       "/user/",
       userCtx.accessToken,
@@ -46,7 +46,7 @@ function ReferralPage() {
 
   //fetch users
   const getUsers = async () => {
-    const { ok, data } = await fetchData("/user");
+    const { ok, data } = await fetchData("/user", userCtx.accessToken);
     //filter out only users with wasReferred:false
     if (ok) {
       const onlyNotReferredUsers = data.filter((user) => {
@@ -149,7 +149,7 @@ function ReferralPage() {
                 </div>
               </div>
               <div className={styles.referralPointsEarnedFrame}>
-                <div>{userData.referredCount * 500}</div>
+                <div>{(userData.referredCount || 0) * 500}</div>
                 <div className={styles.referralsUsedText}>
                   Points earned through referrals
                 </div>
