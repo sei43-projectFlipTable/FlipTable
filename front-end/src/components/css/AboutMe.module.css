@@ -99,8 +99,8 @@
   flex-grow: 0;
 }
 .referralButton {
-  /* display: flex;
-  flex-direction: row; */
+  /* display: flex; */
+  /* flex-direction: row; */
   width: 96px;
   height: 30px;
   font-family: "Poppins";
@@ -108,7 +108,7 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
-  display: flex;
+  justify-content: center;
   align-items: center;
   text-align: center;
   color: #ffffff;

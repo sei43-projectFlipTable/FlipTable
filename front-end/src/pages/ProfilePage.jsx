@@ -39,9 +39,12 @@ function ProfilePage() {
     <>
       <PhoneTopBar />
       <AppHeader />
-      <div className={styles.profilePicSpace}>
-        <img className={styles.profilePic} src="/catProfilePic.png" />
-        <div className={styles.username}>{userBio}</div>
+
+      <div className={styles.profileContainer}>
+        <div className={styles.profilePicSpace}>
+          <img className={styles.profilePic} src="/catProfilePic.png" />
+          <div className={styles.username}>{userBio}</div>
+        </div>
       </div>
       <div className={styles.emptyDiv}></div>
       <div className={styles.scrollable}>
