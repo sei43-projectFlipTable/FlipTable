@@ -66,18 +66,15 @@ function AboutCafeReview(props) {
       return "No reviews found";
     }
   }
-
-  function handleChooseTag(event) {
-    setSelectedTag(event.target.value);
-  }
-
   return (
     <div>
       <h5 className={styles2.header}>Reviews</h5>
       <TagDropDownFilter
         selectedTag={selectedTag}
-        handleChooseTag={handleChooseTag}
+        setSelectedTag={setSelectedTag}
         availableTags={availableTags}
+        dropdownWidth={styles.dropdownWidth}
+        filterIconRightPos="22px"
       />
       <div className={styles.reviewContainer}>
         {selectReviews(props.cafeReviews)}

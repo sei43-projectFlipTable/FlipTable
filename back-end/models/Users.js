@@ -12,7 +12,7 @@ const UsersSchema = new mongoose.Schema(
       default: [],
     },
     points: { type: Number, default: 0 },
-    referredCount: { type: Number },
+    referredCount: { type: Number, default: 0 },
     //returns a random string of 8 characters
     referralCode: {
       type: String,
@@ -21,6 +21,7 @@ const UsersSchema = new mongoose.Schema(
     },
     wasReferred: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now, immutable: true },
+    aboutMe: { type: String },
   },
   { collection: "users" }
 );

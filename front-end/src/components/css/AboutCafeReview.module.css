@@ -5,6 +5,10 @@
   bottom: 75px;
 }
 
+.reviewContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .addTag {
   display: inline-block;
   align-self: center;
@@ -18,4 +22,8 @@
   border: 2px solid #264343;
   border-radius: 30px;
   padding: 3px 4px;
+}
+
+.dropdownWidth {
+  width: 340px;
 }

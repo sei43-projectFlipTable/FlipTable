@@ -1,20 +1,24 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Button, Modal, IconButton, Dialog, Card } from "@mui/material";
+import { Box, Button, Modal, IconButton } from "@mui/material";
 import NavBar from "../components/NavBar";
 import styles from "./css/RedeemPage.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { QrScanner } from "@yudiel/react-qr-scanner";
+import UserContext from "../context/user";
+import { fetchData } from "../helpers/common";
 
 function RedeemPage() {
+  const userCtx = useContext(UserContext);
   const redeemAmtRef = useRef();
   const scannerRef = useRef();
   const [showRedeem, setShowRedeem] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
   const [redeem, setRedeem] = useState(false);
+  const [amount, setAmount] = useState();
 
   const handleRedeemClose = (e, r) => {
     if (r == "backdropClick") return;
@@ -37,7 +41,6 @@ function RedeemPage() {
     left: "24px",
     borderRadius: "8px",
     bgcolor: "#264343",
-    p: "45px",
     fontSize: "20px",
     fontFamily: "Poppins",
     color: "#FFFFFF",
@@ -46,15 +49,59 @@ function RedeemPage() {
     outline: 0,
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (redeemAmtRef.current.value == "") {
-      alert("cannot submit empty field");
-    } else setAmountSubmitted(true);
+  const redeemPoints = async (value) => {
+    try {
+      const { ok: userOk, data: userData } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
+
+      const totalPoints = userData.points - value * 10;
+
+      if (totalPoints >= 0) {
+        const { ok, data } = await fetchData(
+          "/user",
+          userCtx.accessToken,
+          "PATCH",
+          {
+            id: userCtx.payload.id,
+            points: totalPoints,
+          }
+        );
+
+        if (ok) {
+          return true;
+        } else {
+          throw new Error(data);
+        }
+      } else {
+        alert("Insufficient points");
+        return false;
+      }
+    } catch (error) {
+      alert("Error redeeming points");
+      return false;
+    }
   };
 
   const handleHelp = () => {
     setPopUpHelp(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!amount) {
+      alert("Please input Redeem Amount");
+    } else {
+      const success = await redeemPoints(amount);
+      if (success) {
+        setAmountSubmitted(true);
+      }
+    }
   };
 
   return (
@@ -72,22 +119,36 @@ function RedeemPage() {
       >
         <Box sx={redeemStyle}>
           <IconButton
-            sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}
+            sx={{
+              bgcolor: "#839788",
+              position: "absolute",
+              right: "15px",
+              top: "12px",
+              height: "40px",
+              width: "40px",
+            }}
             onClick={handleRedeemClose}
           >
-            <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+            <CloseIcon
+              sx={{
+                height: "18px",
+                width: "18px",
+                color: "white",
+                textAlign: "center",
+              }}
+            />
           </IconButton>
           {!amountSubmitted ? (
-            <>
-              <p>Cash Redemption Amount</p>
+            <div className={styles.redeemPrompt}>
+              <p style={{ marginBottom: "16px" }}>Cash Redemption Value</p>
               <input
                 id="collect-amount"
                 className={styles.redeemAmt}
                 required
                 type="number"
                 minLength={1}
-                ref={redeemAmtRef}
                 placeholder={redeem}
+                onChange={(e) => setAmount(e.target.value)}
               ></input>
               <Button
                 variant="contained"
@@ -105,12 +166,12 @@ function RedeemPage() {
               >
                 Confirm
               </Button>
-            </>
+            </div>
           ) : (
-            <>
-              <p>You have redeemed</p>
-              <div>$ {redeemAmtRef.current.value}</div>
-            </>
+            <div className={styles.redeemPrompt}>
+              <p className={styles.redeemHeader}>You have redeemed</p>
+              <div className={styles.redeemAmount}>${amount}</div>
+            </div>
           )}
         </Box>
       </Modal>
@@ -118,11 +179,14 @@ function RedeemPage() {
       {/* help pop up */}
       {popUpHelp && (
         <Box
-          // hideBackdrop
-          // open={popUpHelp}
           onClose={handleHelpClose}
-          // fullScreen
-          sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute", zIndex: 9 }}
+          sx={{
+            height: "90%",
+            top: "44px",
+            borderRadius: "8px",
+            position: "absolute",
+            zIndex: 9,
+          }}
         >
           <IconButton
             sx={{
@@ -149,7 +213,9 @@ function RedeemPage() {
         <div className={styles.helpicon}>
           <HelpIcon onClick={handleHelp} />
         </div>
-        <div className={styles.instructions}>Scan a FlipTable QR Code to redeem cash!</div>
+        <div className={styles.instructions}>
+          Scan a FlipTable QR Code to redeem cash!
+        </div>
 
         {/* QR scannner */}
 
@@ -157,10 +223,10 @@ function RedeemPage() {
           <div className={styles.cameraView} ref={scannerRef}>
             <QrScanner
               videoId="scanner"
-              scanDelay={500}
-              // onDecode={(result) => console.log(result)}
+              scanDelay={100}
               onDecode={(result) => {
                 setShowRedeem(true);
+                setAmount(result);
                 setRedeem(result);
               }}
               onError={(error) => console.log(error?.message)}

@@ -13,7 +13,7 @@ async function getReviews(req, res) {
 
 async function putReview(req, res) {
   try {
-    if (req.body.image) {
+    if (req.body.image != "") {
       await ReviewModel.create({
         rating: req.body.rating,
         review: req.body.review,

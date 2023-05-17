@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
@@ -11,13 +11,18 @@ import FlashAutoIcon from "@mui/icons-material/FlashAuto";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Webcam from "react-webcam";
+import { fetchData } from "../helpers/common";
+import UserContext from "../context/user";
 
 function ScanPage() {
-  const collectAmtRef = useRef(null);
-  const webcamRef = useRef(null);
-  const [img, setImg] = useState(null);
   const location = useLocation();
-  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
+  const userCtx = useContext(UserContext);
+  const webcamRef = useRef(null);
+  const [amount, setAmount] = useState();
+  const [img, setImg] = useState(null);
+  const [showModal, setShowModal] = useState(
+    location.state?.promptScanCollect || false
+  );
   const [showCollection, setShowCollection] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
@@ -33,6 +38,7 @@ function ScanPage() {
       setShowCollection(false);
       setAmountSubmitted(false);
       setImg(null);
+      setAmount();
     }
   };
 
@@ -87,26 +93,60 @@ function ScanPage() {
   };
 
   const saveImg = async (img) => {
-    const res = await fetch(import.meta.env.VITE_SERVER + "/scan/img", {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        receipt: img,
-      }),
-    });
+    const { ok, data } = await fetchData(
+      "/scan/img",
+      userCtx.accessToken,
+      "PUT",
+      { receipt: img }
+    );
 
-    if (res.status === 200) {
+    if (ok) {
       alert("image saved");
     } else alert("an error has occured");
   };
 
+  const collectPoints = async (value) => {
+    try {
+      const { ok: userOk, data: userData } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
+      console.log("user.points is ", userData.points);
+
+      const totalPoints = userData.points + value * 10;
+
+      const { ok, data } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "PATCH",
+        {
+          id: userCtx.payload.id,
+          points: totalPoints,
+        }
+      );
+
+      if (ok) {
+        alert("points updated");
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (collectAmtRef.current.value == "") {
+    if (!amount) {
       alert("cannot submit empty field");
-    } else setAmountSubmitted(true);
+    } else {
+      collectPoints(amount);
+      setAmountSubmitted(true);
+    }
   };
 
   const handleHelp = () => {
@@ -149,7 +189,7 @@ function ScanPage() {
             Collect Points
           </Button>
           <br />
-          <Link to="/redeem">
+          <Link to="/scan/redeem">
             <Button
               variant="contained"
               sx={{
@@ -183,21 +223,34 @@ function ScanPage() {
       >
         <Box sx={collectionStyle}>
           <IconButton
-            sx={{ bgcolor: "#839788", position: "absolute", right: "12px", top: "15px" }}
+            sx={{
+              bgcolor: "#839788",
+              position: "absolute",
+              right: "15px",
+              top: "12px",
+              height: "40px",
+              width: "40px",
+            }}
             onClick={handleCollectionClose}
           >
-            <CloseIcon sx={{ color: "white", fontWeight: 700 }} />
+            <CloseIcon
+              sx={{
+                height: "18px",
+                width: "18px",
+                color: "white",
+              }}
+            />
           </IconButton>
-          {!amountSubmitted ? (
+          {!amountSubmitted && (
             <>
-              <p>Receipt Total Amount</p>
+              <p style={{ marginBottom: "16px" }}>Receipt Total Amount</p>
               <input
                 id="collect-amount"
                 className={styles.collectAmt}
                 required
                 type="number"
                 minLength={1}
-                ref={collectAmtRef}
+                onChange={(e) => setAmount(e.target.value)}
               ></input>
               <Button
                 variant="contained"
@@ -210,21 +263,24 @@ function ScanPage() {
                   fontSize: "20px",
                   fontFamily: "Poppins",
                   fontWeight: 700,
+                  p: 0,
                 }}
                 onClick={handleSubmit}
               >
                 Confirm
               </Button>
             </>
-          ) : (
-            <>
-              <p>You have collected</p>
-              <div>
-                $ {collectAmtRef.current.value} ({Math.floor(collectAmtRef.current.value * 10)}{" "}
-                points)
-              </div>
-              <div>Your receipt will be verified within 24hrs</div>
-            </>
+          )}
+          {amountSubmitted && (
+            <div className={styles.collectResult}>
+              <div>You have collected</div>
+              <p className={styles.result}>
+                $ {amount} ({Math.floor(amount * 10)} points)
+              </p>
+              <p className={styles.ack}>
+                Your receipt will be verified within 24hrs
+              </p>
+            </div>
           )}
         </Box>
       </Modal>
@@ -234,7 +290,12 @@ function ScanPage() {
         open={popUpHelp}
         onClose={handleHelpClose}
         fullScreen
-        sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute" }}
+        sx={{
+          height: "90%",
+          top: "44px",
+          borderRadius: "8px",
+          position: "absolute",
+        }}
       >
         <IconButton
           sx={{
@@ -264,7 +325,9 @@ function ScanPage() {
             <div className={styles.helpicon}>
               <HelpIcon onClick={handleHelp} />
             </div>
-            <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+            <div className={styles.instructions}>
+              Scan your receipt purchase to collect points!
+            </div>
 
             {/* conditional formatting to toggle webcam and screenshot */}
             {img === null ? (
@@ -296,7 +359,7 @@ function ScanPage() {
         )}
       </div>
 
-      <NavBar />
+      <NavBar setShowModal={setShowModal} />
     </>
   );
 }

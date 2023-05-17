@@ -12,7 +12,7 @@ import UserContext from "../context/user";
 function HomePage() {
   const userCtx = useContext(UserContext);
   const [cafes, setCafes] = useState([]);
-  const [coords, setCoords] = useState([1.3240558643021323, 103.64688938000863]); //default to west of Singaore
+  const [coords, setCoords] = useState([1.3240558643021323, 103.64688938000863]); //default to west of Singapore
 
   //get user location and set it to coords
 
@@ -35,7 +35,6 @@ function HomePage() {
   };
 
   const getCafes = async () => {
-    console.log("getting");
     const { ok, data } = await fetchData("/api/cafes/", userCtx.accessToken);
     //sort before setting data
     if (ok) {
@@ -52,15 +51,19 @@ function HomePage() {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((info) => {
-      let lat = info.coords.latitude;
-      let long = info.coords.longitude;
-      setCoords([lat, long]);
-    });
-  }, []);
+    if (userCtx.accessToken != "") {
+      navigator.geolocation.getCurrentPosition((info) => {
+        let lat = info.coords.latitude;
+        let long = info.coords.longitude;
+        setCoords([lat, long]);
+      });
+    }
+  }, [userCtx.accessToken]);
 
   useEffect(() => {
-    getCafes();
+    if (userCtx.accessToken != "") {
+      getCafes();
+    }
   }, [coords]);
 
   return (

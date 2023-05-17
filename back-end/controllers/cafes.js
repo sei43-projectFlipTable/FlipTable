@@ -50,21 +50,8 @@ async function postCafes(req, res) {
   }
 }
 
-async function getAverageRating(req, res) {
-  try {
-    const targetCafe = await CafesModel.findById(req.params.cafeId);
-    let avgRating = 0;
-    if (targetCafe.reviewRating.reviewCount > 0) {
-      avgRating =
-        targetCafe.reviewRating.ratingTotal /
-        targetCafe.reviewRating.reviewCount /
-        2;
-    }
-    res.json(avgRating);
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ status: "error", message: "error getting rating" });
-  }
-}
-
-module.exports = { getCafes, putCafes, postCafes, getAverageRating };
+module.exports = {
+  getCafes,
+  putCafes,
+  postCafes,
+};

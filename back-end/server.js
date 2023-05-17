@@ -3,12 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/db");
-const collectionImg = require("./routers/collectionImg");
+const collection = require("./routers/collection");
 const cafe = require("./routers/cafes");
 const cafeMenu = require("./routers/cafemenuitem");
 const reviews = require("./routers/cafereview");
 const seed = require("./routers/seed");
-const auth = require("./routers/auth");
+const user = require("./routers/user");
 
 const app = express();
 
@@ -18,12 +18,12 @@ app.use(express.urlencoded({ extended: false }));
 
 connectDB();
 
-app.use("/scan", collectionImg);
+app.use("/scan", collection);
 app.use("/seed", seed);
 app.use("/api", cafe);
 app.use("/api/menu", cafeMenu);
 app.use("/api/review", reviews);
-app.use("/", auth);
+app.use("/", user);
 
 const PORT = process.env.PORT || 5001;
 

@@ -94,18 +94,13 @@ function AboutCafe(props) {
         <div>
           <AccessTimeOutlinedIcon sx={{ color: "#E88252" }} />
         </div>
-        <div>{handleNewline(props.cafeData.openingHours)}</div>
+        <div className={styles.openingHours}>
+          {handleNewline(props.cafeData.openingHours)}
+        </div>
       </div>
       <div className={styles.description}>{props.cafeData.description}</div>
       <hr />
       <h5 className={styles.ratingHeader}>Remote-Working Rating</h5>
-      {/* <Rating
-        name="remote-working-rating"
-        value={props.rating}
-        precision={0.5}
-        sx={{ color: "#E88252", width: "125px", marginTop: "17px" }}
-        readOnly
-      /> */}
       <StyledRating
         name="remote-working-rating"
         defaultValue={props.rating}

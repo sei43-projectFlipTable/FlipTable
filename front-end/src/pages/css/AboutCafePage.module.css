@@ -1,12 +1,24 @@
 .cafeImage {
   position: fixed;
-  max-width: 430px;
+  width: 430px;
+  height: 330px;
   z-index: -1;
 }
 
 .backbuttonpos {
   left: 25px;
   top: 70px;
+}
+
+.favouriteButton,
+.favouriteButtonBg {
+  position: absolute;
+  left: 382px;
+  top: 74px;
+}
+
+.favouriteButton {
+  z-index: 2;
 }
 
 .blocker {
