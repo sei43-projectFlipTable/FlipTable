@@ -57,7 +57,9 @@ function SaveExploreDisplay(props) {
       >
         {filtered ? "Results" : props.children}
       </h6>
-      {props.cafeData.length === 0 && <div>No cafes to display...</div>}
+      {props.cafeData.length === 0 && (
+        <div className={styles.nodisplay}>No cafes to display...</div>
+      )}
       {!filtered && <CardsDisplayWhite cafeData={props.cafeData} />}
       {filtered && <FilteredDisplay cafeData={selectReviews(props.cafeData)} />}
     </>
