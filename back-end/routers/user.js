@@ -1,6 +1,6 @@
 const express = require("express");
-// const { validateRegistrationData, validateLoginData } = require("../validators/auth");
-// const checkValid = require("../middleware/checkValid");
+const validateLogin = require("../validator/login");
+const checkValid = require("../middleware/checkValid");
 const { auth } = require("../middleware/auth");
 const {
   register,
@@ -15,8 +15,8 @@ const {
 const router = express.Router();
 
 // Login/Auth
-router.put("/register", register);
-router.post("/login", login);
+router.put("/register", validateLogin, checkValid, register);
+router.post("/login", validateLogin, checkValid, login);
 router.post("/refresh", refresh);
 
 router.get("/user", auth, getUsers);
