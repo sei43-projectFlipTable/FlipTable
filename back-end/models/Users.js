@@ -21,6 +21,7 @@ const UsersSchema = new mongoose.Schema(
     },
     wasReferred: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now, immutable: true },
+    aboutMe: { type: String },
   },
   { collection: "users" }
 );
