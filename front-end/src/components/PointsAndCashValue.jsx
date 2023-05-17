@@ -6,7 +6,7 @@ import UserContext from "../context/user";
 
 const PointsAndCashValue = () => {
   const userCtx = useContext(UserContext);
-  const [userPoints, setUserPoints] = useState();
+  const [userPoints, setUserPoints] = useState(0);
 
   const getUserPoints = async () => {
     try {
@@ -23,6 +23,7 @@ const PointsAndCashValue = () => {
         setUserPoints(data.points);
       } else throw new Error(data);
     } catch (error) {
+      console.log(error);
       alert(error.message);
     }
   };

@@ -4,6 +4,12 @@ import UserContext from "../context/user";
 import { fetchData } from "../helpers/common";
 
 function InviteCard(props) {
+  //states for invite button
+  const [buttonText, setButtonText] = useState("Invite");
+  const [buttonStyle, setButtonStyle] = useState({ border: 0 });
+  const borderStyle = {
+    border: "none",
+  };
   //adding referred users
   const userCtx = useContext(UserContext);
   const updateReferredUsers = async () => {
@@ -11,7 +17,7 @@ function InviteCard(props) {
       let usersReferred = props.userData.referredCount;
       usersReferred = usersReferred + 1;
       let userPoints = props.userData.points;
-      userPoints = userPoints + usersReferred * 500;
+      userPoints = userPoints + 500;
 
       const { ok, data } = await fetchData(
         "/user",
@@ -35,8 +41,13 @@ function InviteCard(props) {
       );
 
       if (ok && ok2) {
-        alert("referral updated");
-        props.getUsers();
+        setButtonText("Invited");
+        setButtonStyle({
+          backgroundColor: "#FFFFFF",
+          color: "#E88252",
+          border: "none",
+          ...borderStyle,
+        });
         props.getUserData();
       } else {
         console.log(data, data2);
@@ -52,12 +63,12 @@ function InviteCard(props) {
       <div className={styles.nameText}>{splitEmail[0]}</div>
       <button
         className={styles.inviteBtn}
-        style={{ border: "none" }}
+        style={{ ...buttonStyle }}
         onClick={() => {
           updateReferredUsers();
         }}
       >
-        Invite
+        {buttonText}
       </button>
     </div>
   );

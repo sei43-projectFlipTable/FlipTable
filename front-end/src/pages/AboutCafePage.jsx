@@ -50,7 +50,7 @@ function AboutCafePage() {
       }
     } catch (error) {
       console.error(error.message);
-      alert("Error getting user info");
+      throw new Error("Error getting user info");
     }
   }
 
@@ -69,7 +69,7 @@ function AboutCafePage() {
       }
     } catch (error) {
       console.error(error.message);
-      alert("Error getting cafe info");
+      throw new Error("Error getting cafe info");
     }
   }
 
@@ -87,7 +87,7 @@ function AboutCafePage() {
       }
     } catch (error) {
       console.error(error.message);
-      alert("Error getting cafe menu");
+      throw new Error("Error getting cafe menu");
     }
   }
 
@@ -105,7 +105,7 @@ function AboutCafePage() {
       }
     } catch (error) {
       console.error(error.message);
-      alert("Error getting cafe reviews");
+      throw new Error("Error getting cafe reviews");
     }
   }
 
@@ -156,10 +156,14 @@ function AboutCafePage() {
 
   useEffect(() => {
     if (userCtx.accessToken != "") {
-      postUser();
-      postCafe();
-      postMenu();
-      postReviews();
+      try {
+        postUser();
+        postCafe();
+        postMenu();
+        postReviews();
+      } catch (error) {
+        alert("Error loading cafe");
+      }
     }
   }, [userCtx.accessToken]);
 
