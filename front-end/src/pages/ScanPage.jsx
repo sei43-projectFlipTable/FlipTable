@@ -176,7 +176,7 @@ function ScanPage() {
             Collect Points
           </Button>
           <br />
-          <Link to="/redeem">
+          <Link to="/scan/redeem">
             <Button
               variant="contained"
               sx={{
