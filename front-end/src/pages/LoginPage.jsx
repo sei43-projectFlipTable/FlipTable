@@ -48,8 +48,7 @@ function LoginPage() {
       const refreshToken = localStorage.getItem("flipRefresh");
       if (refreshToken) {
         const chkDecoded = jwtDecode(refreshToken);
-        console.log(new Date().setUTCSeconds(chkDecoded.exp).toString());
-        if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() > 0) {
+        if (new Date(chkDecoded.exp * 1000) - new Date() > 0) {
           userCtx.getAccessToken();
           navigate("/home");
           alert("Old session found, resuming old session...");
@@ -106,7 +105,9 @@ function LoginPage() {
           inputRef={emailRef}
         />
         <FormControl sx={{ width: "50%" }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">
+            Password
+          </InputLabel>
           <Input
             id="standard-adornment-password"
             type={showPW ? "text" : "password"}
