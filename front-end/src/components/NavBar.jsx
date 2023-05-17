@@ -30,6 +30,7 @@ function NavBar() {
           <div className={styles.iconLabel}>Explore</div>
         </div>
       </NavLink>
+
       <NavLink
         className={(navData) => (navData.isActive ? styles.activeScan : "")}
         to="/scan"
