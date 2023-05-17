@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Button, Modal, IconButton, Dialog, Card } from "@mui/material";
+import { Box, Button, Modal, IconButton } from "@mui/material";
 import NavBar from "../components/NavBar";
 import styles from "./css/RedeemPage.module.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -51,22 +51,25 @@ function RedeemPage() {
 
   const redeemPoints = async (value) => {
     try {
-      const totalpoints = userCtx.payload.points - value * 10;
+      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
+        id: userCtx.payload.id,
+      });
+      console.log("user.points is ", userData.points);
+
+      const totalPoints = userData.points - value * 10;
+
       const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        email: userCtx.payload.email,
-        points: totalpoints,
+        id: userCtx.payload.id,
+        points: totalPoints,
       });
 
       if (ok) {
         alert("points updated");
-        console.log(data.points);
-        const updatedPoints = { ...userCtx.payload, points: data.points };
-        userCtx.setPayload(updatedPoints);
       } else {
         throw new Error(data);
       }
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -196,7 +199,7 @@ function RedeemPage() {
           <div className={styles.cameraView} ref={scannerRef}>
             <QrScanner
               videoId="scanner"
-              scanDelay={500}
+              scanDelay={100}
               onDecode={(result) => {
                 setShowRedeem(true);
                 setRedeem(result);

@@ -58,10 +58,12 @@ function App() {
       }
       setAccessToken(access);
       setPayload(decoded);
+      return access;
     } else {
       // Reuse existing access token
       setAccessToken(accessTkn);
       setPayload(chkDecoded);
+      return accessTkn;
     }
   }
 
@@ -81,10 +83,7 @@ function App() {
         }}
       >
         <Routes>
-          <Route
-            path="/"
-            element={<LoginPage getAccessToken={getAccessToken} />}
-          />
+          <Route path="/" element={<LoginPage getAccessToken={getAccessToken} />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/redeem" element={<RedeemPage />} />

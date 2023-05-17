@@ -91,38 +91,34 @@ function ScanPage() {
   };
 
   const saveImg = async (img) => {
-    const res = await fetch(import.meta.env.VITE_SERVER + "/scan/img", {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        receipt: img,
-      }),
-    });
+    const { ok, data } = await fetchData("/scan/img", userCtx.accessToken, "PUT", { receipt: img });
 
-    if (res.status === 200) {
+    if (ok) {
       alert("image saved");
     } else alert("an error has occured");
   };
 
-  const updatePoints = async (value) => {
+  const collectPoints = async (value) => {
     try {
-      const totalpoints = userCtx.payload.points + value * 10;
+      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
+        id: userCtx.payload.id,
+      });
+      console.log("user.points is ", userData.points);
+
+      const totalPoints = userData.points + value * 10;
+
       const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        email: userCtx.payload.email,
-        points: totalpoints,
+        id: userCtx.payload.id,
+        points: totalPoints,
       });
 
       if (ok) {
         alert("points updated");
-        const updatedPoints = { ...userCtx.payload, points: data.points };
-        userCtx.setPayload(updatedPoints);
       } else {
         throw new Error(data);
       }
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -131,7 +127,7 @@ function ScanPage() {
     if (!amount) {
       alert("cannot submit empty field");
     } else {
-      updatePoints(amount);
+      collectPoints(amount);
       setAmountSubmitted(true);
     }
   };
