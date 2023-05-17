@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
@@ -17,18 +17,22 @@ function App() {
   const [accessToken, setAccessToken] = useState("");
   const [payload, setPayload] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Call refresh endpoint to refresh access token, if refresh not expired
   async function refreshAccessToken() {
     const refreshTkn = localStorage.getItem("flipRefresh");
-    if (!refreshTkn) {
-      return { decoded: "error" };
-    }
-    const chkDecoded = jwtDecode(refreshTkn);
-    if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() < 0) {
-      return { decoded: "error" };
-    } else {
-      try {
+    console.log("handling refresh token");
+    try {
+      if (!refreshTkn) {
+        console.log("Refresh token not found!");
+        throw new Error("refresh token not found");
+      }
+      const chkDecoded = jwtDecode(refreshTkn);
+      if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
+        console.log("Refresh token expired!");
+        throw new Error("refresh token expired");
+      } else {
         const { ok, data } = await fetchData("/refresh", undefined, "POST", {
           refresh: refreshTkn,
         });
@@ -39,18 +43,18 @@ function App() {
         } else {
           throw new Error(data);
         }
-      } catch (error) {
-        alert(error.message);
       }
+    } catch (error) {
+      alert(error.message);
+      return { decoded: "error", message: error.message };
     }
   }
 
   async function getAccessToken() {
-    //check expiry
+    //Check existing token
     const accessTkn = localStorage.getItem("flipAccess");
-    const chkDecoded = jwtDecode(accessTkn);
-    if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() < 0) {
-      // Get new access token
+    if (!accessTkn) {
+      // Get new access token if no existing token
       const { access, decoded } = await refreshAccessToken();
       if (decoded === "error") {
         navigate("/");
@@ -58,17 +62,28 @@ function App() {
       }
       setAccessToken(access);
       setPayload(decoded);
-      return access;
     } else {
-      // Reuse existing access token
-      setAccessToken(accessTkn);
-      setPayload(chkDecoded);
-      return accessTkn;
+      // Check expiry of existing token
+      const chkDecoded = jwtDecode(accessTkn);
+      if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
+        // Get new access token if existing expired
+        const { access, decoded } = await refreshAccessToken();
+        if (decoded === "error") {
+          navigate("/");
+          return;
+        }
+        setAccessToken(access);
+        setPayload(decoded);
+      } else {
+        // Reuse existing, unexpired access token
+        setAccessToken(accessTkn);
+        setPayload(chkDecoded);
+      }
     }
   }
 
   useEffect(() => {
-    getAccessToken();
+    if (location.pathname != "/") getAccessToken();
   }, []);
 
   return (
@@ -83,7 +98,10 @@ function App() {
         }}
       >
         <Routes>
-          <Route path="/" element={<LoginPage getAccessToken={getAccessToken} />} />
+          <Route
+            path="/"
+            element={<LoginPage getAccessToken={getAccessToken} />}
+          />
           <Route path="/home" element={<HomePage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/redeem" element={<RedeemPage />} />
