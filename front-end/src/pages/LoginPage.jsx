@@ -90,13 +90,13 @@ function LoginPage() {
       <div className={styles.login}>
         <AppHeader />
         <TextField
-          sx={styles}
+          sx={{ width: "50%" }}
           id="standard-basic"
           label="Email"
           variant="standard"
           inputRef={emailRef}
         />
-        <FormControl sx={styles} variant="standard">
+        <FormControl sx={{ width: "50%" }} variant="standard">
           <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
           <Input
             id="standard-adornment-password"
