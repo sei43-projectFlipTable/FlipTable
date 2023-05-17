@@ -273,7 +273,7 @@
 .referralBodyDescription {
   flex-direction: column;
   width: 340px;
-  height: 41px;
+  height: 100px;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -287,6 +287,8 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  overflow: scroll;
+  text-overflow: clip;
 }
 .noborder {
   border: none;
