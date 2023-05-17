@@ -19,7 +19,7 @@ router.put("/register", register);
 router.post("/login", login);
 router.post("/refresh", refresh);
 
-router.get("/user", getUsers);
+router.get("/user", auth, getUsers);
 router.patch("/user", auth, patchUser);
 router.post("/user", auth, postUser);
 router.post("/user/cafes", auth, postSavedCafes);
