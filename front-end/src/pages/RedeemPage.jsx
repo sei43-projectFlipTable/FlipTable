@@ -51,25 +51,40 @@ function RedeemPage() {
 
   const redeemPoints = async (value) => {
     try {
-      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
-        id: userCtx.payload.id,
-      });
-      console.log("user.points is ", userData.points);
+      const { ok: userOk, data: userData } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
 
       const totalPoints = userData.points - value * 10;
 
-      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        id: userCtx.payload.id,
-        points: totalPoints,
-      });
+      if (totalPoints >= 0) {
+        const { ok, data } = await fetchData(
+          "/user",
+          userCtx.accessToken,
+          "PATCH",
+          {
+            id: userCtx.payload.id,
+            points: totalPoints,
+          }
+        );
 
-      if (ok) {
-        alert("points updated");
+        if (ok) {
+          return true;
+        } else {
+          throw new Error(data);
+        }
       } else {
-        throw new Error(data);
+        alert("Insufficient points");
+        return false;
       }
     } catch (error) {
-      alert(error.message);
+      alert("Error redeeming points");
+      return false;
     }
   };
 
@@ -77,13 +92,15 @@ function RedeemPage() {
     setPopUpHelp(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!amount) {
-      alert("cannot submit empty field");
+      alert("Please input Redeem Amount");
     } else {
-      redeemPoints(amount);
-      setAmountSubmitted(true);
+      const success = await redeemPoints(amount);
+      if (success) {
+        setAmountSubmitted(true);
+      }
     }
   };
 
@@ -130,7 +147,6 @@ function RedeemPage() {
                 required
                 type="number"
                 minLength={1}
-                ref={redeemAmtRef}
                 placeholder={redeem}
                 onChange={(e) => setAmount(e.target.value)}
               ></input>
@@ -164,7 +180,13 @@ function RedeemPage() {
       {popUpHelp && (
         <Box
           onClose={handleHelpClose}
-          sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute", zIndex: 9 }}
+          sx={{
+            height: "90%",
+            top: "44px",
+            borderRadius: "8px",
+            position: "absolute",
+            zIndex: 9,
+          }}
         >
           <IconButton
             sx={{
@@ -191,7 +213,9 @@ function RedeemPage() {
         <div className={styles.helpicon}>
           <HelpIcon onClick={handleHelp} />
         </div>
-        <div className={styles.instructions}>Scan a FlipTable QR Code to redeem cash!</div>
+        <div className={styles.instructions}>
+          Scan a FlipTable QR Code to redeem cash!
+        </div>
 
         {/* QR scannner */}
 
@@ -202,6 +226,7 @@ function RedeemPage() {
               scanDelay={100}
               onDecode={(result) => {
                 setShowRedeem(true);
+                setAmount(result);
                 setRedeem(result);
               }}
               onError={(error) => console.log(error?.message)}
