@@ -7,12 +7,10 @@ function InviteCard(props) {
   //adding referred users
   const userCtx = useContext(UserContext);
   const updateReferredUsers = async () => {
-    console.log(props.email);
-    console.log(userCtx.payload.email);
     try {
-      let usersReferred = userCtx.payload.referredCount;
+      let usersReferred = props.userData.referredCount;
       usersReferred = usersReferred + 1;
-      let userPoints = userCtx.payload.points;
+      let userPoints = props.userData.points;
       userPoints = userPoints + usersReferred * 500;
 
       const { ok, data } = await fetchData(
@@ -20,7 +18,7 @@ function InviteCard(props) {
         userCtx.accessToken,
         "PATCH",
         {
-          email: userCtx.payload.email,
+          id: userCtx.payload.id,
           referredCount: usersReferred,
           points: userPoints,
         }
@@ -31,20 +29,15 @@ function InviteCard(props) {
         userCtx.accessToken,
         "PATCH",
         {
-          email: props.email,
+          id: props.id,
           wasReferred: true,
         }
       );
 
       if (ok && ok2) {
         alert("referral updated");
-        const updatedReferredCount = {
-          ...userCtx.payload,
-          referredCount: usersReferred,
-          points: userPoints,
-        };
-        userCtx.setPayload(updatedReferredCount);
         props.getUsers();
+        props.getUserData();
       } else {
         console.log(data, data2);
       }
@@ -52,11 +45,11 @@ function InviteCard(props) {
       console.log(error.message);
     }
   };
-
+  const splitEmail = props.email.split("@");
   return (
     <div className={styles.nameTextFrame}>
       <div className={styles.profilePic}></div>
-      <div className={styles.nameText}>{props.email}</div>
+      <div className={styles.nameText}>{splitEmail[0]}</div>
       <button
         className={styles.inviteBtn}
         style={{ border: "none" }}

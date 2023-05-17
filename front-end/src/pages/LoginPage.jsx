@@ -82,7 +82,12 @@ function LoginPage() {
           variant="standard"
           inputRef={emailRef}
         />
-        <TextField id="standard-basic2" label="Password" variant="standard" inputRef={pwRef} />
+        <TextField
+          id="standard-basic2"
+          label="Password"
+          variant="standard"
+          inputRef={pwRef}
+        />
         <Button onClick={handleLogin}>Login</Button>
 
         <Button onClick={handleRegister}>Register</Button>
