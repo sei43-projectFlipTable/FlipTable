@@ -164,7 +164,7 @@ function ScanPage() {
               fontSize: "20px",
               fontFamily: "Poppins",
               color: "white",
-              fontWeight: 700,
+              fontWeight: 600,
             }}
           >
             Collect Points
@@ -182,7 +182,7 @@ function ScanPage() {
                 fontSize: "20px",
                 fontFamily: "Poppins",
                 color: "white",
-                fontWeight: 700,
+                fontWeight: 600,
               }}
             >
               Redeem Cash
