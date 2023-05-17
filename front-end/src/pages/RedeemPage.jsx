@@ -51,11 +51,12 @@ function RedeemPage() {
 
   const redeemPoints = async (value) => {
     try {
-      const user = await fetchData("/user", userCtx.accessToken, "POST", {
+      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
         id: userCtx.payload.id,
       });
+      console.log("user.points is ", userData.points);
 
-      totalPoints = user.points - value * 10;
+      const totalPoints = userData.points - value * 10;
 
       const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
         id: userCtx.payload.id,
@@ -198,7 +199,7 @@ function RedeemPage() {
           <div className={styles.cameraView} ref={scannerRef}>
             <QrScanner
               videoId="scanner"
-              scanDelay={500}
+              scanDelay={100}
               onDecode={(result) => {
                 setShowRedeem(true);
                 setRedeem(result);

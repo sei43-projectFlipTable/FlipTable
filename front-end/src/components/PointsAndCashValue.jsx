@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./css/PointsAndCashValue.module.css";
 import { fetchData } from "../helpers/common";
 
@@ -6,7 +6,7 @@ import UserContext from "../context/user";
 
 const PointsAndCashValue = () => {
   const userCtx = useContext(UserContext);
-  let userPoints;
+  const [userPoints, setUserPoints] = useState();
 
   const getUserPoints = async () => {
     try {
@@ -15,8 +15,7 @@ const PointsAndCashValue = () => {
       });
 
       if (ok) {
-        console.log(data.points);
-        userPoints = data.points;
+        setUserPoints(data.points);
       } else throw new Error(data);
     } catch (error) {
       alert(error.message);
@@ -24,15 +23,17 @@ const PointsAndCashValue = () => {
   };
 
   useEffect(() => {
-    getUserPoints();
-  }, []);
+    if (userCtx.accessToken != "") {
+      getUserPoints();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>
       <div className={styles.pointsTracker}>
         <div className={styles.pointsBox}>
           <div className={styles.points}>Points</div>
-          <div className={styles.pointsDisplay}>{userPoints} </div>
+          <div className={styles.pointsDisplay}>{userPoints}</div>
         </div>
         <div className={styles.equalBox}>
           <div className={styles.equal}>=</div>

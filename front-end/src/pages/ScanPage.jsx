@@ -90,21 +90,6 @@ function ScanPage() {
     outline: 0,
   };
 
-  // const saveImg = async (img) => {
-  //   const res = await fetch(import.meta.env.VITE_SERVER + "/scan/img", {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       receipt: img,
-  //     }),
-  //   });
-
-  //   if (res.status === 200) {
-  //     alert("image saved");
-  //   } else alert("an error has occured");
-  // };
   const saveImg = async (img) => {
     const { ok, data } = await fetchData("/scan/img", userCtx.accessToken, "PUT", { receipt: img });
 
@@ -115,11 +100,12 @@ function ScanPage() {
 
   const collectPoints = async (value) => {
     try {
-      const userPoints = await fetchData("/user", userCtx.accessToken, "POST", {
+      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
         id: userCtx.payload.id,
       });
+      console.log("user.points is ", userData.points);
 
-      totalPoints = userPoints.points + value * 10;
+      const totalPoints = userData.points + value * 10;
 
       const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
         id: userCtx.payload.id,

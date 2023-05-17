@@ -49,7 +49,7 @@ function LoginPage() {
         navigate("/home");
         alert("login successful");
       } else {
-        alert("login un successful, try again");
+        alert("login unsuccessful, try again");
       }
     } catch (error) {
       console.log(error.message);
@@ -57,15 +57,19 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem("flipRefresh");
-    if (refreshToken) {
-      const chkDecoded = jwtDecode(refreshToken);
-      if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() > 0) {
-        userCtx.getAccessToken();
-        navigate("/home");
-        alert("Resuming old session...");
-      } else {
-        localStorage.removeItem("flipRefresh");
+    if (!localStorage.getItem("flipAccess")) {
+      return;
+    } else {
+      const refreshToken = localStorage.getItem("flipRefresh");
+      if (refreshToken) {
+        const chkDecoded = jwtDecode(refreshToken);
+        if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() > 0) {
+          userCtx.getAccessToken();
+          navigate("/home");
+          alert("Resuming old session...");
+        } else {
+          localStorage.removeItem("flipRefresh");
+        }
       }
     }
   }, []);
