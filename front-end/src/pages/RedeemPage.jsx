@@ -51,22 +51,40 @@ function RedeemPage() {
 
   const redeemPoints = async (value) => {
     try {
-      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
-        id: userCtx.payload.id,
-      });
+      const { ok: userOk, data: userData } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
 
       const totalPoints = userData.points - value * 10;
 
-      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        id: userCtx.payload.id,
-        points: totalPoints,
-      });
+      if (totalPoints >= 0) {
+        const { ok, data } = await fetchData(
+          "/user",
+          userCtx.accessToken,
+          "PATCH",
+          {
+            id: userCtx.payload.id,
+            points: totalPoints,
+          }
+        );
 
-      if (!ok) {
-        throw new Error(data);
+        if (ok) {
+          return true;
+        } else {
+          throw new Error(data);
+        }
+      } else {
+        alert("Insufficient points");
+        return false;
       }
     } catch (error) {
       alert("Error redeeming points");
+      return false;
     }
   };
 
@@ -74,13 +92,15 @@ function RedeemPage() {
     setPopUpHelp(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!amount) {
       alert("Please input Redeem Amount");
     } else {
-      redeemPoints(amount);
-      setAmountSubmitted(true);
+      const success = await redeemPoints(amount);
+      if (success) {
+        setAmountSubmitted(true);
+      }
     }
   };
 
@@ -160,7 +180,13 @@ function RedeemPage() {
       {popUpHelp && (
         <Box
           onClose={handleHelpClose}
-          sx={{ height: "90%", top: "44px", borderRadius: "8px", position: "absolute", zIndex: 9 }}
+          sx={{
+            height: "90%",
+            top: "44px",
+            borderRadius: "8px",
+            position: "absolute",
+            zIndex: 9,
+          }}
         >
           <IconButton
             sx={{
@@ -187,7 +213,9 @@ function RedeemPage() {
         <div className={styles.helpicon}>
           <HelpIcon onClick={handleHelp} />
         </div>
-        <div className={styles.instructions}>Scan a FlipTable QR Code to redeem cash!</div>
+        <div className={styles.instructions}>
+          Scan a FlipTable QR Code to redeem cash!
+        </div>
 
         {/* QR scannner */}
 
