@@ -10,9 +10,14 @@ const PointsAndCashValue = () => {
 
   const getUserPoints = async () => {
     try {
-      const { ok, data } = await fetchData("/user", userCtx.accessToken, "POST", {
-        id: userCtx.payload.id,
-      });
+      const { ok, data } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
 
       if (ok) {
         setUserPoints(data.points);
@@ -40,7 +45,9 @@ const PointsAndCashValue = () => {
         </div>
         <div className={styles.cashBox}>
           <div className={styles.cash}>Cash Value</div>
-          <div className={styles.cashDisplay}>{`$${(userPoints / 100).toFixed(2)}`}</div>
+          <div className={styles.cashDisplay}>{`$${(userPoints / 100).toFixed(
+            2
+          )}`}</div>
         </div>
       </div>
     </>
