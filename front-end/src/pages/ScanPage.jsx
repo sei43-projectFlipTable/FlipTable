@@ -359,7 +359,7 @@ function ScanPage() {
         )}
       </div>
 
-      <NavBar />
+      <NavBar setShowModal={setShowModal} />
     </>
   );
 }
