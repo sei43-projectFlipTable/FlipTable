@@ -22,63 +22,53 @@ function App() {
   // Call refresh endpoint to refresh access token, if refresh not expired
   async function refreshAccessToken() {
     const refreshTkn = localStorage.getItem("flipRefresh");
-    console.log("handling refresh token");
-    try {
-      if (!refreshTkn) {
-        console.log("Refresh token not found!");
-        throw new Error("refresh token not found");
-      }
-      const chkDecoded = jwtDecode(refreshTkn);
-      if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
-        console.log("Refresh token expired!");
-        throw new Error("refresh token expired");
+    if (!refreshTkn) {
+      console.log("Refresh token not found! Please login!");
+      throw new Error("refresh token not found");
+    }
+    const chkDecoded = jwtDecode(refreshTkn);
+    if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
+      console.log("Refresh token expired! Please login again!");
+      throw new Error("refresh token expired");
+    } else {
+      const { ok, data } = await fetchData("/refresh", undefined, "POST", {
+        refresh: refreshTkn,
+      });
+      if (ok) {
+        localStorage.setItem("flipAccess", data.access);
+        const decoded = jwtDecode(data.access);
+        return { access: data.access, decoded };
       } else {
-        const { ok, data } = await fetchData("/refresh", undefined, "POST", {
-          refresh: refreshTkn,
-        });
-        if (ok) {
-          localStorage.setItem("flipAccess", data.access);
-          const decoded = jwtDecode(data.access);
-          return { access: data.access, decoded };
-        } else {
-          throw new Error(data);
-        }
+        throw new Error(data);
       }
-    } catch (error) {
-      alert(error.message);
-      return { decoded: "error", message: error.message };
     }
   }
 
   async function getAccessToken() {
     //Check existing token
     const accessTkn = localStorage.getItem("flipAccess");
-    if (!accessTkn) {
-      // Get new access token if no existing token
-      const { access, decoded } = await refreshAccessToken();
-      if (decoded === "error") {
-        navigate("/");
-        return;
-      }
-      setAccessToken(access);
-      setPayload(decoded);
-    } else {
-      // Check expiry of existing token
-      const chkDecoded = jwtDecode(accessTkn);
-      if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
-        // Get new access token if existing expired
+    try {
+      if (!accessTkn) {
+        // Get new access token if no existing token
         const { access, decoded } = await refreshAccessToken();
-        if (decoded === "error") {
-          navigate("/");
-          return;
-        }
         setAccessToken(access);
         setPayload(decoded);
       } else {
-        // Reuse existing, unexpired access token
-        setAccessToken(accessTkn);
-        setPayload(chkDecoded);
+        // Check expiry of existing token
+        const chkDecoded = jwtDecode(accessTkn);
+        if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
+          // Get new access token if existing expired
+          const { access, decoded } = await refreshAccessToken();
+          setAccessToken(access);
+          setPayload(decoded);
+        } else {
+          // Reuse existing, unexpired access token
+          setAccessToken(accessTkn);
+          setPayload(chkDecoded);
+        }
       }
+    } catch (error) {
+      alert(error.message);
     }
   }
 
