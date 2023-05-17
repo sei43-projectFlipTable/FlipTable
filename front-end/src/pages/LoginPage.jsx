@@ -36,10 +36,10 @@ function LoginPage() {
         emailRef.current.value = "";
         pwRef.current.value = "";
       } else {
-        console.log(data);
+        throw new Error(data);
       }
     } catch (error) {
-      console.log(error.message);
+      alert("Registration Failed");
     }
   };
 
@@ -105,9 +105,7 @@ function LoginPage() {
           inputRef={emailRef}
         />
         <FormControl sx={{ width: "50%" }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
           <Input
             id="standard-adornment-password"
             type={showPW ? "text" : "password"}
