@@ -8,6 +8,7 @@ import ReferralBox from "../components/ReferralBox";
 import styles from "./css/ProfilePage.module.css";
 import AboutMe from "../components/AboutMe";
 import UserContext from "../context/user";
+import LogoutButton from "../components/LogoutButton";
 
 function ProfilePage() {
   const userCtx = useContext(UserContext);
@@ -32,15 +33,20 @@ function ProfilePage() {
     }
   };
   useEffect(() => {
-    getUserBio();
+    if (userCtx.accessToken != "") {
+      getUserBio();
+    }
   }, [userCtx.accessToken]);
   return (
     <>
       <PhoneTopBar />
       <AppHeader />
-      <div className={styles.profilePicSpace}>
-        <img className={styles.profilePic} src="/catProfilePic.png" />
-        <div className={styles.username}>{userBio}</div>
+
+      <div className={styles.profileContainer}>
+        <div className={styles.profilePicSpace}>
+          <img className={styles.profilePic} src="/catProfilePic.png" />
+          <div className={styles.username}>{userBio}</div>
+        </div>
       </div>
       <div className={styles.emptyDiv}></div>
       <div className={styles.scrollable}>
@@ -51,7 +57,7 @@ function ProfilePage() {
           <AboutMe />
         </div>
       </div>
-
+      <LogoutButton />
       <NavBar />
     </>
   );

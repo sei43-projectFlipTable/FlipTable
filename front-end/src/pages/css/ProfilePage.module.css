@@ -25,9 +25,15 @@
 }
 
 .scrollable {
-  /* position: absolute; */
-  height: calc(100vh -250);
-  overflow: scroll;
+  /* position: absolute;
+  height: calc(100vh -200);
+  overflow: scroll; */
+  position: absolute;
+  top: 290px; /* Adjust the top value to leave space for the header */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
 }
 
 .emptyDiv {
@@ -37,31 +43,29 @@
   border-radius: 25px 25px 0px 0px;
   position: relative;
 }
-
+.profileContainer {
+  padding: 15px 0;
+  margin-bottom: 18.5px;
+}
 .profilePicSpace {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px;
 
   width: 430px;
   height: 120px;
   left: calc(50% - 430px / 2);
-  top: 132px;
+  top: 135px;
 }
 
 .profilePic {
   width: 96px;
   height: 96px;
   border-radius: 48px 48px 48px 48px;
-  /* background: url(image.png); */
-  /* 2dp | Button */
 
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.16))
     drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.12))
     drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.1));
-
-  /* Inside auto layout */
 
   flex: none;
   order: 0;
@@ -70,9 +74,7 @@
 
 .username {
   width: 168px;
-  height: 24px;
-
-  /* FlipTable Text Styles/20 sp • H6 Headline */
+  height: 30px;
 
   font-family: "Poppins";
   font-style: normal;
@@ -82,12 +84,11 @@
   text-align: center;
   letter-spacing: 0.15px;
 
-  /* ◇ Light/FlipTable Colours/Primary Color */
-
   color: #264343;
 
-  /* Inside auto layout */
-
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   flex: none;
   order: 1;
   flex-grow: 0;
