@@ -3,6 +3,6 @@ const router = express.Router();
 const { saveImg } = require("../controllers/collectionImg");
 const { auth } = require("../middleware/auth");
 
-router.put("/img", saveImg);
+router.put("/img", auth, saveImg);
 
 module.exports = router;
