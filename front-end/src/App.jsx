@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
@@ -16,7 +16,6 @@ import { fetchData } from "./helpers/common";
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [payload, setPayload] = useState({});
-  const navigate = useNavigate();
   const location = useLocation();
 
   // Call refresh endpoint to refresh access token, if refresh not expired
