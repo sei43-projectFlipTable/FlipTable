@@ -69,63 +69,50 @@ const AboutMe = () => {
 
   return (
     <>
-      <div className={styles.homePageScroll}>
+      <div className={styles.aboutMeComponentSpace}>
         {editing ? (
-          <div>
-            <div className={styles.referralComponentSpace}>
-              <div className={styles.referralHeaderSpace}>
-                <div className={styles.referralHeaderTextSpace}>
-                  <div className={styles.referralHeaderText}>About Me</div>
-                </div>
+          <div className={styles.titleAndInputBox}>
+            <div className={styles.title}>About Me</div>
+            <div className={styles.inputBoxEditable}>
+              <div className={styles.referralBodyDescription}>
+                <input
+                  className={styles.noborder}
+                  style={{
+                    width: 35 + "ch",
+                    //this is how u control the textbox width, u can just put 35
+                  }}
+                  type="text"
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Write your bio here!"
+                  // maxLength="200"
+                />
               </div>
-              <div className={styles.aboutMeBodySpace}>
-                <div className={styles.referralBodyDescriptionSpace}>
-                  <div className={styles.referralBodyDescription}>
-                    <input
-                      className={styles.noborder}
-                      style={{
-                        width: 35 + "ch",
-                        //this is how u control the textbox width, u can just put 35
-                      }}
-                      type="text"
-                      onChange={(e) => setInputText(e.target.value)}
-                      placeholder="Write your bio here!"
-                      // maxLength="200"
-                    />
+
+              <div className={styles.aboutMeButton}>
+                <div className={styles.referralButtonSpace}>
+                  <div
+                    onClick={updateUserBio}
+                    className={styles.referralButton}
+                  >
+                    Update
                   </div>
                 </div>
-                <div className={styles.aboutMeButton}>
-                  <div className={styles.referralButtonSpace}>
-                    <div
-                      onClick={updateUserBio}
-                      className={styles.referralButton}
-                    >
-                      Update
-                    </div>
-                  </div>
-                  <div className={styles.referralButtonSpace}>
-                    <div
-                      onClick={closeUpdateBox}
-                      className={styles.referralButton}
-                    >
-                      Cancel
-                    </div>
+                <div className={styles.referralButtonSpace}>
+                  <div
+                    onClick={closeUpdateBox}
+                    className={styles.referralButton}
+                  >
+                    Cancel
                   </div>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className={styles.referralComponentSpace}>
-            <div className={styles.referralHeaderSpace}>
-              <div className={styles.referralHeaderTextSpace}>
-                <div className={styles.referralHeaderText}>About Me</div>
-              </div>
-            </div>
-            <div onClick={openUpdateBox} className={styles.referralBodySpace}>
-              <div className={styles.referralBodyDescriptionSpace}>
-                <div className={styles.referralBodyDescription}>{userBio}</div>
-              </div>
+          <div className={styles.titleAndInputBox}>
+            <div className={styles.title}>About Me</div>
+            <div onClick={openUpdateBox} className={styles.inputBox}>
+              <div className={styles.referralBodyDescription}>{userBio}</div>
             </div>
           </div>
         )}
