@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
@@ -16,59 +16,63 @@ import { fetchData } from "./helpers/common";
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [payload, setPayload] = useState({});
-  const navigate = useNavigate();
+  const location = useLocation();
 
   // Call refresh endpoint to refresh access token, if refresh not expired
   async function refreshAccessToken() {
     const refreshTkn = localStorage.getItem("flipRefresh");
     if (!refreshTkn) {
-      return { decoded: "error" };
+      console.log("Refresh token not found! Please login!");
+      throw new Error("refresh token not found");
     }
     const chkDecoded = jwtDecode(refreshTkn);
-    if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() < 0) {
-      return { decoded: "error" };
+    if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
+      console.log("Refresh token expired! Please login again!");
+      throw new Error("refresh token expired");
     } else {
-      try {
-        const { ok, data } = await fetchData("/refresh", undefined, "POST", {
-          refresh: refreshTkn,
-        });
-        if (ok) {
-          localStorage.setItem("flipAccess", data.access);
-          const decoded = jwtDecode(data.access);
-          return { access: data.access, decoded };
-        } else {
-          throw new Error(data);
-        }
-      } catch (error) {
-        alert(error.message);
+      const { ok, data } = await fetchData("/refresh", undefined, "POST", {
+        refresh: refreshTkn,
+      });
+      if (ok) {
+        localStorage.setItem("flipAccess", data.access);
+        const decoded = jwtDecode(data.access);
+        return { access: data.access, decoded };
+      } else {
+        throw new Error(data);
       }
     }
   }
 
   async function getAccessToken() {
-    //check expiry
+    //Check existing token
     const accessTkn = localStorage.getItem("flipAccess");
-    const chkDecoded = jwtDecode(accessTkn);
-    if (new Date().setUTCSeconds(chkDecoded.exp) - new Date() < 0) {
-      // Get new access token
-      const { access, decoded } = await refreshAccessToken();
-      if (decoded === "error") {
-        navigate("/");
-        return;
+    try {
+      if (!accessTkn) {
+        // Get new access token if no existing token
+        const { access, decoded } = await refreshAccessToken();
+        setAccessToken(access);
+        setPayload(decoded);
+      } else {
+        // Check expiry of existing token
+        const chkDecoded = jwtDecode(accessTkn);
+        if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
+          // Get new access token if existing expired
+          const { access, decoded } = await refreshAccessToken();
+          setAccessToken(access);
+          setPayload(decoded);
+        } else {
+          // Reuse existing, unexpired access token
+          setAccessToken(accessTkn);
+          setPayload(chkDecoded);
+        }
       }
-      setAccessToken(access);
-      setPayload(decoded);
-      return access;
-    } else {
-      // Reuse existing access token
-      setAccessToken(accessTkn);
-      setPayload(chkDecoded);
-      return accessTkn;
+    } catch (error) {
+      alert(error.message);
     }
   }
 
   useEffect(() => {
-    getAccessToken();
+    if (location.pathname != "/") getAccessToken();
   }, []);
 
   return (
@@ -83,7 +87,10 @@ function App() {
         }}
       >
         <Routes>
-          <Route path="/" element={<LoginPage getAccessToken={getAccessToken} />} />
+          <Route
+            path="/"
+            element={<LoginPage getAccessToken={getAccessToken} />}
+          />
           <Route path="/home" element={<HomePage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/scan/redeem" element={<RedeemPage />} />

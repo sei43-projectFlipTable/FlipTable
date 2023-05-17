@@ -105,8 +105,10 @@ const patchUser = async (req, res) => {
     if (req.body.name) updateInfo.name = req.body.name;
     if (req.body.savedPlaces) updateInfo.savedPlaces = req.body.savedPlaces;
     if (req.body.points) updateInfo.points = req.body.points;
-    if (req.body.referredCount) updateInfo.referredCount = req.body.referredCount;
+    if (req.body.referredCount)
+      updateInfo.referredCount = req.body.referredCount;
     if (req.body.wasReferred) updateInfo.wasReferred = req.body.wasReferred;
+    if (req.body.aboutMe) updateInfo.aboutMe = req.body.aboutMe;
 
     await UserModel.findByIdAndUpdate(req.body.id, updateInfo);
 
@@ -130,14 +132,18 @@ const postUser = async (req, res) => {
 
 async function postSavedCafes(req, res) {
   try {
-    const targetUserCafes = await UserModel.findById(req.body.id).select("savedPlaces");
+    const targetUserCafes = await UserModel.findById(req.body.id).select(
+      "savedPlaces"
+    );
     const cafeArray = await CafesModel.find({
       _id: { $in: targetUserCafes.savedPlaces },
     });
     res.json(cafeArray);
   } catch (error) {
     console.error(error.message);
-    res.status(400).json({ status: "error", message: "error getting saved places" });
+    res
+      .status(400)
+      .json({ status: "error", message: "error getting saved places" });
   }
 }
 

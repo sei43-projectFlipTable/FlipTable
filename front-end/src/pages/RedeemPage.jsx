@@ -54,7 +54,6 @@ function RedeemPage() {
       const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
         id: userCtx.payload.id,
       });
-      console.log("user.points is ", userData.points);
 
       const totalPoints = userData.points - value * 10;
 
@@ -64,12 +63,12 @@ function RedeemPage() {
       });
 
       if (ok) {
-        alert("points updated");
+        alert("Points Updated");
       } else {
         throw new Error(data);
       }
     } catch (error) {
-      alert(error.message);
+      alert("Error redeeming points");
     }
   };
 
@@ -80,7 +79,7 @@ function RedeemPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) {
-      alert("cannot submit empty field");
+      alert("Please input Redeem Amount");
     } else {
       redeemPoints(amount);
       setAmountSubmitted(true);

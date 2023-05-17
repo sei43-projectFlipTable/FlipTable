@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useContext, useEffect } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 import PhoneTopBar from "../components/PhoneTopBar";
 import AppHeader from "../components/AppHeader";
 import { Link, useLocation } from "react-router-dom";
@@ -20,7 +20,9 @@ function ScanPage() {
   const webcamRef = useRef(null);
   const [amount, setAmount] = useState();
   const [img, setImg] = useState(null);
-  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
+  const [showModal, setShowModal] = useState(
+    location.state?.promptScanCollect || false
+  );
   const [showCollection, setShowCollection] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
@@ -91,7 +93,12 @@ function ScanPage() {
   };
 
   const saveImg = async (img) => {
-    const { ok, data } = await fetchData("/scan/img", userCtx.accessToken, "PUT", { receipt: img });
+    const { ok, data } = await fetchData(
+      "/scan/img",
+      userCtx.accessToken,
+      "PUT",
+      { receipt: img }
+    );
 
     if (ok) {
       alert("image saved");
@@ -100,17 +107,27 @@ function ScanPage() {
 
   const collectPoints = async (value) => {
     try {
-      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
-        id: userCtx.payload.id,
-      });
+      const { ok: userOk, data: userData } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "POST",
+        {
+          id: userCtx.payload.id,
+        }
+      );
       console.log("user.points is ", userData.points);
 
       const totalPoints = userData.points + value * 10;
 
-      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
-        id: userCtx.payload.id,
-        points: totalPoints,
-      });
+      const { ok, data } = await fetchData(
+        "/user",
+        userCtx.accessToken,
+        "PATCH",
+        {
+          id: userCtx.payload.id,
+          points: totalPoints,
+        }
+      );
 
       if (ok) {
         alert("points updated");
@@ -260,7 +277,9 @@ function ScanPage() {
               <p className={styles.result}>
                 $ {amount} ({Math.floor(amount * 10)} points)
               </p>
-              <p className={styles.ack}>Your receipt will be verified within 24hrs</p>
+              <p className={styles.ack}>
+                Your receipt will be verified within 24hrs
+              </p>
             </div>
           )}
         </Box>
@@ -306,7 +325,9 @@ function ScanPage() {
             <div className={styles.helpicon}>
               <HelpIcon onClick={handleHelp} />
             </div>
-            <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
+            <div className={styles.instructions}>
+              Scan your receipt purchase to collect points!
+            </div>
 
             {/* conditional formatting to toggle webcam and screenshot */}
             {img === null ? (

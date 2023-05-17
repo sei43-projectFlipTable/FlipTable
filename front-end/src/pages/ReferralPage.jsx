@@ -16,7 +16,7 @@ function ReferralPage() {
   const [userData, setUserData] = useState([]);
 
   //get data of user that is logged in
-  const getUserData = async (req, res) => {
+  const getUserData = async () => {
     const { ok, data } = await fetchData(
       "/user/",
       userCtx.accessToken,
@@ -32,14 +32,11 @@ function ReferralPage() {
       console.log(data);
     }
   };
-  //run once on mount
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   //toggling for invite and share drawers
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
   const toggleInviteDrawer = (anchor, open) => () => {
+    getUsers();
     setInviteDrawer({ [anchor]: open });
   };
   const [shareDrawer, setShareDrawer] = useState({ bottom: false });
@@ -49,23 +46,20 @@ function ReferralPage() {
 
   //fetch users
   const getUsers = async () => {
-    const { ok, data } = await fetchData("/user");
+    const { ok, data } = await fetchData("/user", userCtx.accessToken);
     //filter out only users with wasReferred:false
-    const onlyNotReferredUsers = data.filter((user) => {
-      return user.wasReferred === false && user.email !== userCtx.payload.email;
-    });
     if (ok) {
+      const onlyNotReferredUsers = data.filter((user) => {
+        return (
+          user.wasReferred === false && user.email !== userCtx.payload.email
+        );
+      });
+
       setUsers(onlyNotReferredUsers);
     } else {
       console.log(data);
     }
   };
-  //run fetch on mount
-  useEffect(() => {
-    if (userCtx.accessToken != "") {
-      getUsers();
-    }
-  }, [userCtx.accessToken]);
 
   //states for copy button
   const [buttonText, setButtonText] = useState("Copy");
@@ -88,6 +82,14 @@ function ReferralPage() {
       console.error("Failed to copy:", error);
     }
   };
+
+  //run once on mount
+  useEffect(() => {
+    if (userCtx.accessToken != "") {
+      getUserData();
+      getUsers();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>
@@ -147,7 +149,7 @@ function ReferralPage() {
                 </div>
               </div>
               <div className={styles.referralPointsEarnedFrame}>
-                <div>{userData.referredCount * 500}</div>
+                <div>{(userData.referredCount || 0) * 500}</div>
                 <div className={styles.referralsUsedText}>
                   Points earned through referrals
                 </div>
