@@ -5,9 +5,10 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import CropFreeIcon from "@mui/icons-material/CropFree";
 import PersonIcon from "@mui/icons-material/Person";
-import { Link, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
-function NavBar() {
+function NavBar(props) {
+  const location = useLocation();
   return (
     <div className={styles.navBar}>
       <NavLink
@@ -39,7 +40,16 @@ function NavBar() {
       >
         <div className={styles.scanIconFrame}>
           <CropFreeIcon sx={{ color: "#FFFFFF" }} />
-          <div className={styles.iconLabel}>Scan</div>
+          <div
+            className={styles.iconLabel}
+            onClick={() => {
+              if (location.pathname == "/scan") {
+                props.setShowModal(true);
+              }
+            }}
+          >
+            Scan
+          </div>
         </div>
       </NavLink>
       <NavLink
