@@ -8,6 +8,7 @@ function LogoutButton() {
 
   function handleLogout() {
     localStorage.clear();
+    alert("Logging out...");
     navigate("/");
   }
   return (
