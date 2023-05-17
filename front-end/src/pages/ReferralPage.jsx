@@ -40,6 +40,7 @@ function ReferralPage() {
   //toggling for invite and share drawers
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
   const toggleInviteDrawer = (anchor, open) => () => {
+    getUsers();
     setInviteDrawer({ [anchor]: open });
   };
   const [shareDrawer, setShareDrawer] = useState({ bottom: false });
