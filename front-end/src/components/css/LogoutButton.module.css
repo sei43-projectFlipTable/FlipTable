@@ -1,0 +1,16 @@
+.logoutContainer {
+  display: flex;
+  position: absolute;
+  column-gap: 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #264343;
+  width: 330px;
+  height: 30px;
+  bottom: 60px;
+  left: 30px;
+}

@@ -8,6 +8,7 @@ import ReferralBox from "../components/ReferralBox";
 import styles from "./css/ProfilePage.module.css";
 import AboutMe from "../components/AboutMe";
 import UserContext from "../context/user";
+import LogoutButton from "../components/LogoutButton";
 
 function ProfilePage() {
   const userCtx = useContext(UserContext);
@@ -51,7 +52,7 @@ function ProfilePage() {
           <AboutMe />
         </div>
       </div>
-
+      <LogoutButton />
       <NavBar />
     </>
   );
