@@ -62,9 +62,7 @@ function RedeemPage() {
         points: totalPoints,
       });
 
-      if (ok) {
-        alert("Points Updated");
-      } else {
+      if (!ok) {
         throw new Error(data);
       }
     } catch (error) {
@@ -129,7 +127,6 @@ function RedeemPage() {
                 required
                 type="number"
                 minLength={1}
-                ref={redeemAmtRef}
                 placeholder={redeem}
                 onChange={(e) => setAmount(e.target.value)}
               ></input>
@@ -201,6 +198,7 @@ function RedeemPage() {
               scanDelay={100}
               onDecode={(result) => {
                 setShowRedeem(true);
+                setAmount(result);
                 setRedeem(result);
               }}
               onError={(error) => console.log(error?.message)}
