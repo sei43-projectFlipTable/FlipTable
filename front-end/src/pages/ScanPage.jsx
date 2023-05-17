@@ -20,9 +20,7 @@ function ScanPage() {
   const webcamRef = useRef(null);
   const [amount, setAmount] = useState();
   const [img, setImg] = useState(null);
-  const [showModal, setShowModal] = useState(
-    location.state?.promptScanCollect || false
-  );
+  const [showModal, setShowModal] = useState(location.state?.promptScanCollect || false);
   const [showCollection, setShowCollection] = useState(false);
   const [amountSubmitted, setAmountSubmitted] = useState(false);
   const [popUpHelp, setPopUpHelp] = useState(false);
@@ -70,7 +68,7 @@ function ScanPage() {
     fontSize: "20px",
     fontFamily: "Poppins",
     color: "#264343",
-    fontWeight: 700,
+    fontWeight: 600,
     spacing: "1px",
     outline: 0,
   };
@@ -79,7 +77,7 @@ function ScanPage() {
     position: "absolute",
     textAlign: "center",
     width: "382px",
-    height: "232px",
+    height: "fit-content",
     left: "24px",
     borderRadius: "8px",
     bgcolor: "#264343",
@@ -93,41 +91,24 @@ function ScanPage() {
   };
 
   const saveImg = async (img) => {
-    const { ok, data } = await fetchData(
-      "/scan/img",
-      userCtx.accessToken,
-      "PUT",
-      { receipt: img }
-    );
+    const { ok, data } = await fetchData("/scan/img", userCtx.accessToken, "PUT", { receipt: img });
 
-    if (ok) {
-      alert("image saved");
-    } else alert("an error has occured");
+    if (!ok) alert("error saving receipt");
   };
 
   const collectPoints = async (value) => {
     try {
-      const { ok: userOk, data: userData } = await fetchData(
-        "/user",
-        userCtx.accessToken,
-        "POST",
-        {
-          id: userCtx.payload.id,
-        }
-      );
+      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
+        id: userCtx.payload.id,
+      });
       console.log("user.points is ", userData.points);
 
       const totalPoints = userData.points + value * 10;
 
-      const { ok, data } = await fetchData(
-        "/user",
-        userCtx.accessToken,
-        "PATCH",
-        {
-          id: userCtx.payload.id,
-          points: totalPoints,
-        }
-      );
+      const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
+        id: userCtx.payload.id,
+        points: totalPoints,
+      });
 
       if (ok) {
         alert("points updated");
@@ -243,7 +224,7 @@ function ScanPage() {
           </IconButton>
           {!amountSubmitted && (
             <>
-              <p style={{ marginBottom: "16px" }}>Receipt Total Amount</p>
+              <p style={{ marginBottom: "16px", fontWeight: 600 }}>Receipt Total Amount</p>
               <input
                 id="collect-amount"
                 className={styles.collectAmt}
@@ -262,7 +243,7 @@ function ScanPage() {
                   backgroundColor: "#E88252",
                   fontSize: "20px",
                   fontFamily: "Poppins",
-                  fontWeight: 700,
+                  fontWeight: 600,
                   p: 0,
                 }}
                 onClick={handleSubmit}
@@ -277,9 +258,7 @@ function ScanPage() {
               <p className={styles.result}>
                 $ {amount} ({Math.floor(amount * 10)} points)
               </p>
-              <p className={styles.ack}>
-                Your receipt will be verified within 24hrs
-              </p>
+              <p className={styles.ack}>Your receipt will be verified within 24 hrs</p>
             </div>
           )}
         </Box>
@@ -325,9 +304,7 @@ function ScanPage() {
             <div className={styles.helpicon}>
               <HelpIcon onClick={handleHelp} />
             </div>
-            <div className={styles.instructions}>
-              Scan your receipt purchase to collect points!
-            </div>
+            <div className={styles.instructions}>Scan your receipt purchase to collect points!</div>
 
             {/* conditional formatting to toggle webcam and screenshot */}
             {img === null ? (
