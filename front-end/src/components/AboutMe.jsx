@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import React, { useEffect, useState, useContext } from "react";
 import styles from "./css/AboutMe.module.css";
 import { fetchData } from "../helpers/common";
@@ -64,7 +63,9 @@ const AboutMe = () => {
   };
 
   useEffect(() => {
-    getUserBio();
+    if (userCtx.accessToken != "") {
+      getUserBio();
+    }
   }, [userCtx.accessToken]);
 
   return (
@@ -75,13 +76,10 @@ const AboutMe = () => {
             <div className={styles.title}>About Me</div>
             <div className={styles.inputBoxEditable}>
               <div className={styles.referralBodyDescription}>
-                <input
+                <textarea
                   className={styles.noborder}
-                  style={{
-                    width: 35 + "ch",
-                    //this is how u control the textbox width, u can just put 35
-                  }}
                   type="text"
+                  style={{ height: "100px" }}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="Write your bio here!"
                   // maxLength="200"

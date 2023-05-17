@@ -33,7 +33,9 @@ function ProfilePage() {
     }
   };
   useEffect(() => {
-    getUserBio();
+    if (userCtx.accessToken != "") {
+      getUserBio();
+    }
   }, [userCtx.accessToken]);
   return (
     <>
