@@ -32,10 +32,6 @@ function ReferralPage() {
       console.log(data);
     }
   };
-  //run once on mount
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   //toggling for invite and share drawers
   const [inviteDrawer, setInviteDrawer] = useState({ bottom: false });
@@ -52,21 +48,18 @@ function ReferralPage() {
   const getUsers = async () => {
     const { ok, data } = await fetchData("/user");
     //filter out only users with wasReferred:false
-    const onlyNotReferredUsers = data.filter((user) => {
-      return user.wasReferred === false && user.email !== userCtx.payload.email;
-    });
     if (ok) {
+      const onlyNotReferredUsers = data.filter((user) => {
+        return (
+          user.wasReferred === false && user.email !== userCtx.payload.email
+        );
+      });
+
       setUsers(onlyNotReferredUsers);
     } else {
       console.log(data);
     }
   };
-  //run fetch on mount
-  useEffect(() => {
-    if (userCtx.accessToken != "") {
-      getUsers();
-    }
-  }, [userCtx.accessToken]);
 
   //states for copy button
   const [buttonText, setButtonText] = useState("Copy");
@@ -89,6 +82,14 @@ function ReferralPage() {
       console.error("Failed to copy:", error);
     }
   };
+
+  //run once on mount
+  useEffect(() => {
+    if (userCtx.accessToken != "") {
+      getUserData();
+      getUsers();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <>
