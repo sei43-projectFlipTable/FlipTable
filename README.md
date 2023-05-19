@@ -213,7 +213,9 @@ Users can log in to their own individual accounts to access the app’s services
 
 ### Main pages
 
-![Home Page](front-end/public/markdownAssets/homePage/homePage.png)![Explore Page](front-end/public/markdownAssets/explorePage/explorePage.png)![Saved Cafes Page](front-end/public/markdownAssets/savedPage/SavedPage.png)![Profile Page](front-end/public/markdownAssets/profilePage/profilePage.png)
+![Home Page](front-end/public/markdownAssets/homePage/homePage.png)![Explore Page](front-end/public/markdownAssets/explorePage/explorePage.png)
+
+![Saved Cafes Page](front-end/public/markdownAssets/savedPage/SavedPage.png)![Profile Page](front-end/public/markdownAssets/profilePage/profilePage.png)
 
 ### Scan/Redeem page
 
