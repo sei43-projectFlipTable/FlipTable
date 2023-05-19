@@ -105,7 +105,9 @@ function LoginPage() {
           inputRef={emailRef}
         />
         <FormControl sx={{ width: "50%" }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">
+            Password
+          </InputLabel>
           <Input
             id="standard-adornment-password"
             type={showPW ? "text" : "password"}

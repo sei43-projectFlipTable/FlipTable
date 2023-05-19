@@ -51,27 +51,17 @@ function RedeemPage() {
 
   const redeemPoints = async (value) => {
     try {
-      const { ok: userOk, data: userData } = await fetchData(
-        "/user",
-        userCtx.accessToken,
-        "POST",
-        {
-          id: userCtx.payload.id,
-        }
-      );
+      const { ok: userOk, data: userData } = await fetchData("/user", userCtx.accessToken, "POST", {
+        id: userCtx.payload.id,
+      });
 
       const totalPoints = userData.points - value * 10;
 
       if (totalPoints >= 0) {
-        const { ok, data } = await fetchData(
-          "/user",
-          userCtx.accessToken,
-          "PATCH",
-          {
-            id: userCtx.payload.id,
-            points: totalPoints,
-          }
-        );
+        const { ok, data } = await fetchData("/user", userCtx.accessToken, "PATCH", {
+          id: userCtx.payload.id,
+          points: totalPoints,
+        });
 
         if (ok) {
           return true;
@@ -140,7 +130,9 @@ function RedeemPage() {
           </IconButton>
           {!amountSubmitted ? (
             <div className={styles.redeemPrompt}>
-              <p style={{ marginBottom: "16px" }}>Cash Redemption Value</p>
+              <p style={{ marginBottom: "16px", fontWeight: 500, fontFamily: "Poppins" }}>
+                Cash Redemption Value
+              </p>
               <input
                 id="collect-amount"
                 className={styles.redeemAmt}
@@ -160,7 +152,7 @@ function RedeemPage() {
                   backgroundColor: "#E88252",
                   fontSize: "20px",
                   fontFamily: "Poppins",
-                  fontWeight: 700,
+                  fontWeight: 600,
                 }}
                 onClick={handleSubmit}
               >
@@ -213,9 +205,7 @@ function RedeemPage() {
         <div className={styles.helpicon}>
           <HelpIcon onClick={handleHelp} />
         </div>
-        <div className={styles.instructions}>
-          Scan a FlipTable QR Code to redeem cash!
-        </div>
+        <div className={styles.instructions}>Scan a FlipTable QR Code to redeem cash!</div>
 
         {/* QR scannner */}
 

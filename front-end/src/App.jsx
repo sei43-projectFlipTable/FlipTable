@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
@@ -17,18 +17,19 @@ function App() {
   const [accessToken, setAccessToken] = useState("");
   const [payload, setPayload] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Call refresh endpoint to refresh access token, if refresh not expired
   async function refreshAccessToken() {
     const refreshTkn = localStorage.getItem("flipRefresh");
     if (!refreshTkn) {
-      console.log("Refresh token not found! Please login!");
-      throw new Error("refresh token not found");
+      console.error("Refresh token not found! Please login!");
+      throw new Error("Refresh token not found, please login again");
     }
     const chkDecoded = jwtDecode(refreshTkn);
     if (new Date(chkDecoded.exp * 1000) - new Date() < 0) {
-      console.log("Refresh token expired! Please login again!");
-      throw new Error("refresh token expired");
+      console.error("Refresh token expired! Please login again!");
+      throw new Error("Refresh token expired, please login again");
     } else {
       const { ok, data } = await fetchData("/refresh", undefined, "POST", {
         refresh: refreshTkn,
@@ -67,6 +68,9 @@ function App() {
         }
       }
     } catch (error) {
+      if (error.message.slice(0, 7) == "refresh") {
+        navigate("/");
+      }
       alert(error.message);
     }
   }
