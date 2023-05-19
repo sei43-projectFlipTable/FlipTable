@@ -231,7 +231,7 @@ Users can log in to their own individual accounts to access the app’s services
 
 ## Routes Web
 
-![Route Web](front-end/public/markdownAssets/RouteWeb.jpg)
+![Route Web](front-end/public/markdownAssets/wireframe.png)
 
 # Created by
 
