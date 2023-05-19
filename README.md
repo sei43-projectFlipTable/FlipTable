@@ -14,7 +14,7 @@ This app was built with Javascript, utilizing the React.js framework for front-e
 
 ### <a href="https://react.dev" target="_blank" >React.js</a>
 
-This app was built with the React.js library, with several grand components acting as pages linked via React Router v6.11. For each page, specialized components were built to display information as required or enable functionality as desired.
+This app was built with the React.js, with several grand components acting as pages, linked via React Router v6.11. For each page, specialized components were built to display information as required or enable functionality as desired.
 
 ### CSS & <a href="https://getbootstrap.com/" target="_blank" >Bootstrap</a>
 
@@ -67,8 +67,6 @@ The design of our app was largely controlled by the prototype handed over to us 
 <br/>
 
 ## Front-end
-
-<hr/>
 
 ### Login page
 
@@ -129,8 +127,6 @@ The filter function built for the About Cafes page was also re-styled and reused
 <br/>
 
 ## Back-end
-
-<hr/>
 
 ### Models
 
