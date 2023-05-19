@@ -144,6 +144,8 @@ For authentication purposes, our user model stores a user’s email and a hash o
 
 #### Collection Image Model
 
+This model was created for storage of receipts images. Documents of this collection would store incoming bin64 strings as a buffer object, to be decoded into images via post-prototype functionalities where these images would be used for verifying points collection.
+
 ### Controllers
 
 We started off with generic controllers for each of our models, getters, putters and patchers to insert and modify documents into our database and as we progressed with development, we gradually added more and more specific controllers to fulfil specific demands, such as creating an endpoint in our controller to simultaneously query the User model for a user’s saved cafes and the Cafe model to retrieve information about these cafes to be displayed in the front end’s Saved Cafes page.
